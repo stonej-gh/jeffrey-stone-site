@@ -61,7 +61,7 @@
       <p class="ch-tag">01 · Falling is flying</p>
       <h2>The Space Station is falling right now</h2>
       <div class="prose">
-        <p>Ask anyone why astronauts float and you'll hear <em>"there's no gravity up there."</em> Not even close. At the Space Station's altitude, Earth's gravity is still nearly <b>nine-tenths</b> as strong as it is on your kitchen floor. The station isn't beyond gravity. It's falling, right now, as hard as gravity can pull it. It just keeps <b>missing</b>. Douglas Adams called that the whole art of flying: throw yourself at the ground and miss.</p>
+        <p>Ask anyone why astronauts float and you'll hear <em>"there's no gravity up there."</em> Not even close. At the Space Station's altitude, Earth's gravity is still nearly <b>nine-tenths</b> as strong as it is on your kitchen floor. The station isn't beyond gravity. It's falling, right now, as hard as gravity can pull it. It just keeps <b>missing</b>. And the astronauts are falling right alongside it, at the same rate, which is why nothing presses them to the floor. Douglas Adams called that the whole art of flying: throw yourself at the ground and miss.</p>
         <p>Isaac Newton saw how to miss on purpose while writing up his laws of motion in the 1680s. Put a cannon on an impossibly tall mountain, above the air. Fire gently and the ball arcs into the ground. Fire harder and it lands farther away. Now fire hard enough that the ground (which is round, remember) <em>curves away underneath the ball as fast as the ball falls toward it</em>. The ball falls all the way around the world and comes back to smack the cannon in the rear. That's all an orbit is: <b>gravity, plus enough sideways</b>.</p>
       </div>
       <div class="lab-frame">
@@ -73,7 +73,7 @@
           <button class="lab-btn" id="cannon-clear" type="button">Clear</button>
         </div>
       </div>
-      <p class="lab-cap"><b>Newton's mountain.</b> Slide the speed, fire, and leave the trails up to compare. Somewhere near <b>7,900&nbsp;m/s</b> the cannonball stops hitting the planet and starts missing it: orbit. Push past <b>11,200&nbsp;m/s</b> and it leaves forever. Those aren't game numbers; they're Earth's real ones.</p>
+      <p class="lab-cap"><b>Newton's mountain.</b> Slide the speed, fire, and leave the trails up to compare. Set the dial to <b>7,900&nbsp;m/s</b>, Earth's real orbit speed, and the cannonball misses the planet all the way around: orbit. Push past <b>11,200&nbsp;m/s</b> and it leaves forever. Those aren't game numbers; they're Earth's real ones.</p>
     </div>
 
     <!-- ······································ the shape of speed ·· -->
@@ -81,12 +81,12 @@
       <p class="ch-tag">02 · The shape of speed</p>
       <h2>You steer the orbit from the other side</h2>
       <div class="prose">
-        <p>Orbits aren't circles. Circles are the rare special case. The honest shape is a stretched circle, an <b>ellipse</b>, with the thing you're orbiting sitting off-center at a point called the focus. Johannes Kepler figured that out four hundred years ago by staring at Mars until the circles he'd been told to believe in gave up. In the game, the dashed guide line under your ship is exactly that ellipse, with the black hole at the focus.</p>
+        <p>Orbits aren't circles. Circles are the rare special case. The real shape is a stretched circle, an <b>ellipse</b>, with the thing you're orbiting sitting off-center at a point called the focus. Johannes Kepler figured that out four hundred years ago by staring at Mars until the circles he'd been told to believe in gave up. In the game, the dashed guide line under your ship is exactly that ellipse, with the black hole at the focus.</p>
         <p>Here's the part that breaks everyone's intuition the first time: <b>a burn never changes your orbit where you are</b>. It changes it on the <em>opposite side</em>. Speed up here, and the far side of your orbit rises; brake here, and the far side dips toward the hole. (Your speed changes on the spot, of course, but the <em>path</em> bends over there: where you are is simply the one point the new orbit must still pass through.) You're always steering your future, half a lap ahead. More boomerang than steering wheel.</p>
         <p>And watch the speed readout as the ship swings around: <b>closer is faster, always</b>. Every orbiter runs hardest at the bottom of its orbit and coasts laziest at the top. Comets spend decades loafing in the dark and then whip around the Sun in weeks. Kepler measured that too. Your ship, and every shot you fire, lives by the same rule.</p>
       </div>
       <div class="lab-frame">
-        <canvas data-lab="burn" width="960" height="540" aria-label="Interactive toy: a ship orbits a black hole. Hold prograde or retrograde burn buttons and watch the dashed future-orbit ellipse reshape on the far side."></canvas>
+        <canvas data-lab="burn" width="960" height="540" aria-label="Interactive toy: a ship orbits a black hole. Hold the prograde or retrograde burn button and watch the dashed future-orbit ellipse reshape on the far side."></canvas>
         <div class="lab-bar">
           <button class="lab-btn" id="burn-retro" type="button">&#9664; Brake</button>
           <button class="lab-btn" id="burn-pro" type="button">Burn &#9654;</button>
@@ -96,7 +96,7 @@
           <span class="lab-read">LAP TIME <b id="burn-lap">–</b></span>
         </div>
       </div>
-      <p class="lab-cap"><b>One burn, whole new orbit.</b> Hold a burn and watch the dashed guide (that's your <em>future</em>) reshape while the ship stays put. Brake too deep and the hole collects you; push too hard and you reach escape velocity and never come back. LAP TIME is how long one full orbit takes.</p>
+      <p class="lab-cap"><b>One burn, whole new orbit.</b> Hold a burn and watch the dashed guide (that's your <em>future</em>) reshape on the far side while the ship sails on. Brake too deep and the hole collects you; push too hard and you reach escape velocity and never come back. LAP TIME is how long one full orbit takes.</p>
     </div>
 
     <!-- ······································ brakes = gas ·· -->
@@ -104,8 +104,8 @@
       <p class="ch-tag">03 · The overtaking paradox</p>
       <h2>To catch someone ahead of you, hit the brakes</h2>
       <div class="prose">
-        <p>Suppose your opponent is on your exact orbit, a quarter lap ahead. Instinct says: burn forward, go faster, run them down. Try it and something maddening happens: the burn <em>raises</em> the far side of your orbit, higher orbits take <em>longer</em> to get around, and your target pulls further ahead while you climb. You floored the gas and lost ground.</p>
-        <p>The real move is the opposite one. <b>Brake.</b> You drop to a lower, tighter orbit, and lower orbits are faster laps. You undercut your opponent, gain on them lap after lap, and when you've caught up, a forward burn lifts you back up, plus one more when you arrive, to round the orbit off so you stay. Every spacecraft that has ever docked with the Space Station played this game: <b>slow down to catch up</b>. Prove it to yourself in <a href="#shape">the toy above</a>: hold the brake gently and watch LAP TIME fall.</p>
+        <p>Suppose your opponent is on your exact orbit, a quarter lap ahead. Instinct says: burn forward, go faster, run them down. Try it and something maddening happens: the burn <em>raises</em> the far side of your orbit, higher orbits take <em>longer</em> to get around, and your target pulls farther ahead while you climb. You floored the gas and lost ground.</p>
+        <p>The real move is the opposite one. <b>Brake.</b> You drop to a lower, tighter orbit, and lower orbits are faster laps. You undercut your opponent and gain on them lap after lap. When you've caught up, a forward burn lifts you back up, and one more when you arrive rounds the orbit off so you stay. Every spacecraft that has ever docked with the Space Station played this game: <b>slow down to catch up</b>. Prove it to yourself in <a href="#shape">the toy above</a>: hold the brake gently and watch LAP TIME fall.</p>
       </div>
     </div>
 
@@ -115,7 +115,7 @@
       <h2>Stop aiming at the enemy</h2>
       <div class="prose">
         <p>The black hole pulls on <b>everything</b>: you, your opponent, and every laser either of you fires. The moment a shot leaves your ship it's just another falling object, curving through the same gravity you are. Which means the straight shot you want usually doesn't exist. And a shot you'd never take in flat space, aimed at empty sky, bends around the well and arrives. The best players stop aiming at the enemy. They aim at <b>where gravity is going</b>. (Over in <a href="../research/worm/">the lab notebooks</a>, a tiny neural network taught itself the same trick, last of all.)</p>
-        <p>If bending bullets sounds like a game gimmick, look up. Gravity bends <b>light</b>. In 1919, Arthur Eddington photographed stars whose light grazed the eclipse-darkened edge of the Sun, and caught their apparent positions shifted, exactly as Einstein had predicted. It was the measurement that made him famous overnight. Today astronomers use whole galaxies as lenses, reading the bent light of things hiding behind them. The universe shoots around corners too.</p>
+        <p>If bending bullets sounds like a game gimmick, look up. Gravity bends <b>light</b>. In 1919, Arthur Eddington photographed stars whose light grazed the eclipse-darkened edge of the Sun, and caught their apparent positions shifted, exactly as Einstein had predicted. It was the measurement that made Einstein famous overnight. Today astronomers use whole galaxies as lenses, reading the bent light of things hiding behind them. The universe shoots around corners too.</p>
       </div>
       <div class="lab-frame">
         <canvas data-lab="laser" width="960" height="540" aria-label="Interactive toy: a target hides behind the black hole. Drag to aim, release to fire, and bend the shot around the hole to hit it."></canvas>
@@ -134,7 +134,7 @@
       <h2>The slingshot is real, mostly</h2>
       <div class="prose">
         <p>Dive close to the hole and two things happen: you become, briefly, the fastest thing on the screen (closer is faster, chapter 02) and your path whips through a violent turn that would shred any ship trying it with engines. Good pilots use the dive as a weapon: fall in, whip around, come out pointed somewhere nobody expected, and take the shot while you're still the fastest thing in the duel.</p>
-        <p>But here's the honest print: around a black hole that's just <em>sitting there</em>, the slingshot gives you a free <b>turn</b>, not free <b>speed</b>. You leave exactly as fast as you arrived: gravity pays back on the way out what it lent on the way in. The famous slingshots were grander because their anchors <em>move</em>: Voyager&nbsp;2 swung behind Jupiter and stole a sliver of the planet's own motion around the Sun, leaving thousands of meters per second faster while Jupiter slowed by less than an atom's width per century. When someone says "slingshot," ask what's moving.</p>
+        <p>But here's the fine print: around a black hole that's just <em>sitting there</em>, the slingshot gives you a free <b>turn</b>, not free <b>speed</b>. You leave exactly as fast as you arrived: gravity pays back on the way out what it lent on the way in. The famous slingshots were grander because their anchors <em>move</em>: Voyager&nbsp;2 swung behind Jupiter and stole a sliver of the planet's own motion around the Sun, leaving thousands of meters per second faster while Jupiter slowed by less than an atom's width per century. When someone says "slingshot," ask what's moving.</p>
       </div>
     </div>
 
@@ -143,8 +143,8 @@
       <p class="ch-tag">06 · What we left out</p>
       <h2>A real black hole is much worse</h2>
       <div class="prose">
-        <p>The game's hole is an honest Newtonian toy: it pulls on everything, and it kills on contact. A real one is more theatrical. Fall toward a small black hole feet-first and the gravity at your feet so overwhelms the gravity at your head that you'd be drawn out like taffy. The technical term, and astrophysicists really do use it, is <b>spaghettification</b>. Watch a friend fall in instead, and you'd never see them cross the edge: their clock runs slower than yours in the deepening gravity, their image reddens and dims and freezes at the horizon, a bookmark the universe never turns.</p>
-        <p>Honesty also cuts the other way: the game <em>exaggerates</em>. Real light barely bends: starlight grazing the Sun deflects by an angle about as wide as a human hair seen from across a room; Eddington needed an eclipse and heroic bookkeeping to catch it at all. Your lasers bend like garden hoses because that's where the fun lives. We kept the true shape of gravity, turned its volume up until you can see it, and left out the parts that would kill you before you learned anything.</p>
+        <p>The game's hole is a plain Newtonian toy: it pulls on everything, and it kills on contact. A real one is more theatrical. Fall toward a small black hole feet-first and the gravity at your feet so overwhelms the gravity at your head that you'd be drawn out like taffy. The technical term, and astrophysicists really do use it, is <b>spaghettification</b>. Watch a friend fall in instead, and you'd never see them cross the edge: their clock runs slower than yours in the deepening gravity, their image reddens and dims and freezes at the horizon, a bookmark the universe never turns.</p>
+        <p>The fine print cuts the other way too: the game <em>exaggerates</em>. Real light barely bends: starlight grazing the Sun deflects by an angle about as wide as a human hair seen from across a room; Eddington needed an eclipse and heroic bookkeeping to catch it at all. Your lasers bend like garden hoses because that's where the fun lives. We kept the true shape of gravity, turned its volume up until you can see it, and left out the parts that would kill you before you learned anything.</p>
       </div>
     </div>
 
@@ -177,8 +177,8 @@
     </div>
     <div class="foot-bar">
       <span>&copy; 2026 Jeffrey Stone</span>
-      <span class="free">Free forever · no ads · no tracking</span>
-      <span><a href="../">jeffrey-stone.com</a></span>
+      <span class="free">Free forever · no ads · no tracking · <a class="tip" href="https://buymeacoffee.com/jeffreystone">tip jar</a></span>
+      <span>The mailbox is open: <a href="mailto:letters@jeffrey-stone.com">letters@jeffrey-stone.com</a></span>
     </div>
   </div>
 </footer>

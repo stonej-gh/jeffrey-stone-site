@@ -235,12 +235,13 @@
       ctx.beginPath(); ctx.moveTo(MUZ.x, MUZ.y); ctx.lineTo(MUZ.x + 15, MUZ.y);
       ctx.lineWidth = 4; ctx.strokeStyle = INK; ctx.stroke();
 
-      var anyOrbit = false, anyEscape = false;
+      var anyOrbit = false, anyEscape = false, anyFaroff = false;
       for (var i = 0; i < shots.length; i++) {
         var s = shots[i];
         var col = trailColor(s);
         if (s.orbited) anyOrbit = true;
         if (s.state === 'escape') anyEscape = true;
+        if (s.state === 'faroff') anyFaroff = true;
         if (s.trail.length >= 4) {
           ctx.beginPath();
           ctx.moveTo(s.trail[0], s.trail[1]);
@@ -261,6 +262,7 @@
       }
       if (anyOrbit) label(ctx, 22, 32, 'ORBIT: it keeps missing', CYAN);
       if (anyEscape) label(ctx, 22, anyOrbit ? 54 : 32, 'ESCAPED: gone for good', VIOLET);
+      if (anyFaroff) label(ctx, 22, 32 + (anyOrbit ? 22 : 0) + (anyEscape ? 22 : 0), 'LONG WAY OUT: still falling back, just not on this screen', INK);
       label(ctx, 22, 518, 'fire a few and compare the trails', MUTED);
     }
 
@@ -496,7 +498,7 @@
       }
 
       drawShip(ctx, SHIP.x, SHIP.y, aim, INK, false);
-      label(ctx, 22, 518, 'drag anywhere to aim - release to fire', MUTED);
+      label(ctx, 22, 518, 'drag anywhere to aim · release to fire', MUTED);
     }
 
     register({
