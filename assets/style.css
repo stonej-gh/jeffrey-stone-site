@@ -183,7 +183,9 @@ footer { border-top: 1px solid var(--line); padding: 68px 0 54px; }
 .foot-bar a { color: var(--muted); }
 .foot-bar a:hover { color: var(--ink); text-decoration: none; }
 .foot-bar .free { color: var(--cyan); }
-.foot-bar .tip { color: var(--cyan); text-decoration: underline; text-underline-offset: 3px; }
+.foot-bar .tip { display:inline-block; background:#FFDD00; border-radius:4px; padding:2px 3px; line-height:0; vertical-align:-4px; }
+.foot-bar .tip img { height:13px; display:block; }
+.foot-bar .tip:hover { background:#ffe84d; }
 
 /* ---------- research page ---------- */
 .video-frame { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: #000; }
