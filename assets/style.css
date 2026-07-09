@@ -194,7 +194,7 @@ footer { border-top: 1px solid var(--line); padding: 68px 0 54px; }
 .chip-learner { background: #d95926; box-shadow: 0 0 10px 1px #d9592688; }
 .chip-scripted { background: #3987e5; box-shadow: 0 0 10px 1px #3987e588; }
 
-.chapter { margin-top: 78px; }
+.chapter { margin-top: 78px; scroll-margin-top: 84px; }
 .chapter .ch-tag { font-family: var(--font-mono); font-size: 12px; letter-spacing: .2em;
   text-transform: uppercase; color: var(--cyan); margin-bottom: 12px; }
 .chapter h2 { font-size: clamp(1.5rem, 3.2vw, 2.1rem); }
@@ -229,6 +229,8 @@ footer { border-top: 1px solid var(--line); padding: 68px 0 54px; }
 @media (max-width: 680px) { .quote-strip { grid-template-columns: 1fr; } }
 .quote-strip blockquote { background: var(--panel); margin: 0; padding: 22px 24px;
   font-size: 1.02rem; color: #c3ccdb; font-style: italic; }
+/* odd quote counts: let the last one span the row instead of leaving a hole */
+.quote-strip blockquote:last-child:nth-child(odd) { grid-column: 1 / -1; }
 
 /* tiered deep dives: .deep-learn (engineer's bridge, orange) sits above
    .deep-ds (field-native, cyan = the .deep default) in each chapter */
@@ -274,5 +276,27 @@ footer { border-top: 1px solid var(--line); padding: 68px 0 54px; }
 .lock-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 26px;
   font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); }
 .lock-bar .badge { border-color: #d9592688; color: #ff9d6c; }
+
+/* ---------- /orbits/ lab toys ---------- */
+.lab-frame { border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
+  background: #03050a; margin-top: 26px; }
+.lab-frame canvas { display: block; width: 100%; height: auto; }
+.lab-frame canvas[data-lab="laser"] { touch-action: none; cursor: crosshair; }
+.lab-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px;
+  padding: 13px 18px; background: var(--panel); border-top: 1px solid var(--line);
+  font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); }
+.lab-bar input[type="range"] { accent-color: var(--cyan); width: min(240px, 42vw); }
+.lab-btn { font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--ink); background: var(--panel-2);
+  border: 1px solid var(--line); border-radius: 7px; padding: 9px 15px; cursor: pointer;
+  touch-action: none; user-select: none; -webkit-user-select: none; }
+.lab-btn:hover { border-color: var(--cyan-dim); color: var(--cyan); }
+.lab-btn.primary { background: var(--cyan); color: #04110f; border-color: transparent; font-weight: 700; }
+.lab-btn.primary:hover { background: #58ece2; color: #04110f; }
+.lab-read { color: var(--muted); letter-spacing: .06em; }
+.lab-read b { color: var(--cyan); font-weight: 500; }
+.lab-cap { font-family: var(--font-mono); font-size: 12.5px; color: var(--muted);
+  margin-top: 12px; line-height: 1.9; max-width: 52em; }
+.lab-cap b { color: var(--ink); font-weight: 500; }
 
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
