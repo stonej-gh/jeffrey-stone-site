@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <radialGradient id="bg" cx="38%" cy="34%" r="82%">
+      <stop offset="0" stop-color="#111a28"/>
+      <stop offset="1" stop-color="#05070c"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0"    stop-color="#6a3fb0" stop-opacity="0.95"/>
+      <stop offset="0.55" stop-color="#6a3fb0" stop-opacity="0.38"/>
+      <stop offset="1"    stop-color="#6a3fb0" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="hull" x1="0" y1="-1" x2="0" y2="1">
+      <stop offset="0"  stop-color="#f4f8ff"/>
+      <stop offset="1"  stop-color="#a7e9e2"/>
+    </linearGradient>
+  </defs>
+
+  <!-- app-icon rounded square -->
+  <rect x="0" y="0" width="64" height="64" rx="14" fill="url(#bg)"/>
+
+  <!-- faint elliptical orbit trace (much thinner than the hole rim), around the hole and through the ship -->
+  <ellipse cx="30.32" cy="33.68" rx="23.00" ry="20.54"
+           transform="rotate(135.00 30.32 33.68)"
+           fill="none" stroke="#35e0d5" stroke-width="0.55" stroke-opacity="0.38"/>
+
+  <!-- black hole: violet accretion glow -> cyan event-horizon rim -> black core -->
+  <circle cx="23.0" cy="41.0" r="28.0" fill="url(#glow)"/>
+  <circle cx="23.0" cy="41.0" r="14.0" fill="#04060a" stroke="#35e0d5" stroke-width="2.27" stroke-opacity="0.92"/>
+
+  <!-- the interceptor: exact game-hull silhouette, no outline, tangent to the orbit -->
+  <g transform="translate(48.45 19.60) rotate(323.94) scale(0.207)">
+    <path d="M 0 -26 L 5 -6 L 7 7 L 16 16 L 8 11 L 5 19 L -5 19 L -8 11 L -16 16 L -7 7 L -5 -6 Z"
+          fill="url(#hull)"/>
+  </g>
+</svg>

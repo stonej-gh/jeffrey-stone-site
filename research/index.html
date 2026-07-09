@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Research — Jeffrey Stone</title>
+<meta name="description" content="Machine-learning lab notebooks behind Spacewar: Orbital Duel — a tiny net that flies the ship, and a tiny net that watches the screen. Each written at three depths, from plain story to working data science.">
+<meta name="color-scheme" content="dark">
+<meta property="og:title" content="Research — the lab notebooks">
+<meta property="og:description" content="Two tiny neural networks: one flies the ship, one watches the screen. Lab notebooks at three depths — plain story, engineer's bridge, working data science.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Jeffrey Stone">
+<meta property="og:url" content="https://jeffrey-stone.com/research/">
+<meta property="og:image" content="https://jeffrey-stone.com/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Spacewar: Orbital Duel — a ship riding a glowing cyan orbit around a black hole.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Research — the lab notebooks">
+<meta name="twitter:description" content="Two tiny neural networks: one flies the ship, one watches the screen.">
+<meta name="twitter:image" content="https://jeffrey-stone.com/assets/og-cover.png">
+<link rel="icon" type="image/svg+xml" href="../assets/icon.svg">
+<link rel="icon" href="../assets/apple-touch-icon.png" sizes="180x180">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../"><span class="dot"></span> Jeffrey&nbsp;Stone</a>
+    <nav class="nav-links">
+      <a href="../spacewar/">Spacewar</a>
+      <a href="../research/" aria-current="page">Research</a>
+      <a href="../support/">Support</a>
+      <a href="../privacy/">Privacy</a>
+      <a href="../share/">Share</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-head" style="padding-bottom:0;">
+  <div class="wrap">
+    <p class="eyebrow">Research</p>
+    <h1>The lab notebooks.</h1>
+    <p class="lede">Behind <a href="../spacewar/">Spacewar: Orbital Duel</a> sits a small machine-learning lab, and these are its experiments — real models, real training runs, real failures, written up honestly. Tiny networks only: brains measured in kilobytes, built to show the whole pipeline from first principles to a shipped artifact.</p>
+    <p class="tier-legend">Every experiment is written at <b style="color:var(--ink)">three depths</b>, and you choose per chapter: the plain story anyone can read; <span class="t-learn">▸ FOR THE LEARNERS</span>, which rebuilds the machinery from engineering ground for readers fluent in the math but rusty in the field; and <span class="t-ds">▸ FOR THE DATA SCIENTISTS</span>, the working notebook in the field's own language, with references to go deeper still.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="exp-grid" style="margin-top:0;">
+
+      <a class="exp-card" href="worm/">
+        <p class="ch-tag">Experiment 01 · the pilot</p>
+        <h3>Half a worm, flying a spaceship.</h3>
+        <p>A 6,220-weight network — half a worm's brain — starts with zero knowledge and teaches itself to fly, fight, cheat, get caught, and bend lasers around the black hole. With the three-minute film.</p>
+        <p class="exp-meta"><b>6,220 params</b> · reinforcement learning · self-play · sim-to-real</p>
+      </a>
+
+      <a class="exp-card" href="spotter/">
+        <p class="ch-tag">Experiment 02 · the eye</p>
+        <h3>The net that watches the screen.</h3>
+        <p>The pilot got its senses served on a plate. Real systems get pixels. A 28,000-parameter network watches raw game frames and paints every ship, laser, and the hole — then gets squeezed into 8-bit integers you can't tell from the original.</p>
+        <p class="exp-meta"><b>28k params</b> · convolutional segmentation · int8 · pixels in, game out</p>
+      </a>
+
+      <a class="exp-card" href="demo/" hidden data-priv="demo">
+        <p class="ch-tag">Private · mechanism canary</p>
+        <h3>demo</h3>
+        <p>Test fixture for the private-experiment machinery.</p>
+        <p class="exp-meta"><span class="lock-badge">Encrypted</span></p>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="homage">
+      <p class="eyebrow">Standing on shoulders</p>
+      <p>A modern tribute to <em>Spacewar!</em> — created in 1962 by Steve Russell and friends on MIT's PDP&#8209;1, one of the first video games ever made. Sixty years on, the pull of the star still decides the duel.</p>
+    </div>
+    <div class="foot-bar">
+      <span>&copy; 2026 Jeffrey Stone</span>
+      <span class="free">Free forever · no ads · no tracking</span>
+      <span><a href="../">jeffrey-stone.com</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/research-lock.js"></script>
+</body>
+</html>

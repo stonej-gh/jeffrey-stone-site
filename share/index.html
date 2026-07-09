@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Share — Jeffrey Stone</title>
+<meta name="description" content="Share jeffrey-stone.com phone to phone — scan the code, or copy the link. Home of Spacewar: Orbital Duel.">
+<meta name="color-scheme" content="dark">
+<meta property="og:title" content="Share — Jeffrey Stone">
+<meta property="og:description" content="Scan to open jeffrey-stone.com on another phone. Home of Spacewar: Orbital Duel.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Jeffrey Stone">
+<meta property="og:url" content="https://jeffrey-stone.com/share/">
+<meta property="og:image" content="https://jeffrey-stone.com/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Spacewar: Orbital Duel — a ship riding a glowing cyan orbit around a black hole.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Share — Jeffrey Stone">
+<meta name="twitter:description" content="Scan to open jeffrey-stone.com on another phone.">
+<meta name="twitter:image" content="https://jeffrey-stone.com/assets/og-cover.png">
+<link rel="icon" type="image/svg+xml" href="../assets/icon.svg">
+<link rel="icon" href="../assets/apple-touch-icon.png" sizes="180x180">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  /* ---- Share page: QR + actions ---- */
+  .share-grid { display: grid; grid-template-columns: auto 1fr; gap: 52px; align-items: center; }
+  @media (max-width: 720px) { .share-grid { grid-template-columns: 1fr; gap: 34px; justify-items: center; text-align: center; } }
+
+  .qr-col { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  /* light tile so any camera reads it reliably; a cyan orbit ring ties it to the theme */
+  .qr-card { position: relative; background: #f5f8fc; border-radius: 22px; padding: 22px;
+    box-shadow: 0 16px 44px rgba(0,0,0,0.5); }
+  .qr-card::before { content: ""; position: absolute; inset: -9px; border-radius: 30px;
+    border: 1px solid var(--cyan-dim); opacity: 0.5; pointer-events: none; }
+  .qr-card img { display: block; width: 208px; height: 208px; }
+  .qr-url { font-family: var(--mono); font-size: 13px; letter-spacing: .06em; color: var(--cyan); }
+
+  .share-copy .sub-label { margin: 0 0 14px; }
+  .share-copy h2 { font-size: clamp(1.6rem, 3.4vw, 2.2rem); }
+  .share-copy .lede { margin-top: 16px; }
+  .share-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 26px; }
+  @media (max-width: 720px) { .share-actions { justify-content: center; } }
+  button.btn { font-family: var(--font-mono); font: inherit; }
+  #copyBtn { font-family: var(--font-mono); }
+  .share-note { margin-top: 22px; color: var(--muted); font-size: 0.97rem; max-width: 34em; }
+  .share-note b { color: var(--ink); font-weight: 600; }
+  .share-second { margin-top: 30px; padding-top: 22px; border-top: 1px solid var(--line);
+    color: var(--muted); font-size: 0.97rem; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../"><span class="dot"></span> Jeffrey&nbsp;Stone</a>
+    <nav class="nav-links">
+      <a href="../spacewar/">Spacewar</a>
+      <a href="../research/">Research</a>
+      <a href="../support/">Support</a>
+      <a href="../privacy/">Privacy</a>
+      <a href="../share/" aria-current="page">Share</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-head">
+  <div class="wrap">
+    <p class="eyebrow">Share</p>
+    <h1>Spread the word.</h1>
+    <p class="lede">Know any other iPhone/iPad users that would love to Beta Test Spacewar: Orbital Duel?</p>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="share-grid">
+      <div class="qr-col">
+        <div class="qr-card">
+          <img src="../assets/qr-site.svg" alt="QR code that opens jeffrey-stone.com">
+        </div>
+        <span class="qr-url">jeffrey-stone.com</span>
+      </div>
+
+      <div class="share-copy">
+        <p class="sub-label">Scan · tap · copy</p>
+        <h2>Three ways across.</h2>
+        <p class="lede">Hold a camera to the code and it offers to open the site. On a phone already, use the share sheet or grab the link.</p>
+        <div class="share-actions">
+          <button class="btn btn-primary" id="copyBtn" type="button">Copy link</button>
+          <button class="btn btn-ghost" id="shareBtn" type="button" hidden>Share&hellip;</button>
+        </div>
+        <p class="share-second">Sharing the beta instead? Send testers to the <a href="../support/">TestFlight invite</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="homage">
+      <p class="eyebrow">Standing on shoulders</p>
+      <p>A modern tribute to <em>Spacewar!</em> — created in 1962 by Steve Russell and friends on MIT's PDP&#8209;1, one of the first video games ever made. Sixty years on, the pull of the star still decides the duel.</p>
+    </div>
+    <div class="foot-bar">
+      <span>&copy; 2026 Jeffrey Stone</span>
+      <span class="free">Free forever · no ads · no tracking</span>
+      <span><a href="../">jeffrey-stone.com</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var url = 'https://jeffrey-stone.com';
+  var copyBtn = document.getElementById('copyBtn');
+  var shareBtn = document.getElementById('shareBtn');
+
+  copyBtn.addEventListener('click', function () {
+    var done = function () {
+      var prev = copyBtn.textContent;
+      copyBtn.textContent = 'Link copied ✓';
+      setTimeout(function () { copyBtn.textContent = prev; }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(done).catch(function () { window.prompt('Copy this link:', url); });
+    } else {
+      window.prompt('Copy this link:', url);
+    }
+  });
+
+  if (navigator.share) {
+    shareBtn.hidden = false;
+    shareBtn.addEventListener('click', function () {
+      navigator.share({
+        title: 'Jeffrey Stone — Independent Games',
+        text: 'Spacewar: Orbital Duel — battle at the singularity.',
+        url: url
+      }).catch(function () {});
+    });
+  }
+})();
+</script>
+</body>
+</html>

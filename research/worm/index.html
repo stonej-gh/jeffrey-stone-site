@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Half a worm, flying a spaceship — Research — Jeffrey Stone</title>
+<meta name="description" content="How a neural network the size of half a worm's brain taught itself to fly, cheat, and bend lasers around a black hole — the machine-learning lab notebook behind Spacewar: Orbital Duel.">
+<meta name="color-scheme" content="dark">
+<meta property="og:title" content="Half a worm, flying a spaceship">
+<meta property="og:description" content="A 6,220-weight neural network taught itself to duel at the singularity. The three-minute film, and the lab notebook behind it.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Jeffrey Stone">
+<meta property="og:url" content="https://jeffrey-stone.com/research/worm/">
+<meta property="og:image" content="https://jeffrey-stone.com/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Spacewar: Orbital Duel — a ship riding a glowing cyan orbit around a black hole.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Half a worm, flying a spaceship">
+<meta name="twitter:description" content="A 6,220-weight neural network taught itself to duel at the singularity.">
+<meta name="twitter:image" content="https://jeffrey-stone.com/assets/og-cover.png">
+<link rel="icon" type="image/svg+xml" href="../../assets/icon.svg">
+<link rel="icon" href="../../assets/apple-touch-icon.png" sizes="180x180">
+<link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../../"><span class="dot"></span> Jeffrey&nbsp;Stone</a>
+    <nav class="nav-links">
+      <a href="../../spacewar/">Spacewar</a>
+      <a href="../" aria-current="page">Research</a>
+      <a href="../../support/">Support</a>
+      <a href="../../privacy/">Privacy</a>
+      <a href="../../share/">Share</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-head" style="padding-bottom:0;">
+  <div class="wrap">
+    <p class="crumb"><a href="../">Research</a> / the pilot</p>
+    <p class="eyebrow">Experiment 01</p>
+    <h1>Half a worm, <span style="color:var(--cyan)">flying a spaceship</span>.</h1>
+    <p class="lede">The robot pilots you duel in <a href="../../spacewar/">Spacewar: Orbital Duel</a> are hand-tuned code — every move written by a human. This page is about the other kind: a neural network smaller than half a worm's brain that started with <b>zero knowledge</b> — not even physics — and taught itself to fly, fight, cheat, get caught, and finally bend its shots around the black hole.</p>
+    <p class="tier-legend">Every chapter reads plainly on its own. Under each one, <span class="t-learn">▸ FOR THE LEARNERS</span> rebuilds the machinery from engineering ground — written for someone fluent in the math who wants to genuinely follow the field again — and <span class="t-ds">▸ FOR THE DATA SCIENTISTS</span> is the actual lab notebook, in the field's own language, each ending with a few references that go deeper still. Read a chapter's learner note, then its deep dive: every sentence should land.</p>
+    <div class="cta-row" style="margin-top:28px;">
+      <button class="btn btn-ghost" type="button" data-deep-toggle="learn"
+              data-expand="Expand all learner notes" data-collapse="Collapse all learner notes"></button>
+      <button class="btn btn-ghost" type="button" data-deep-toggle="ds"
+              data-expand="Expand all deep dives" data-collapse="Collapse all deep dives"></button>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+
+    <!-- ······································ the film ·· -->
+    <div class="chapter" style="margin-top:0;">
+      <p class="ch-tag">01 · The film — three minutes, silent by design</p>
+      <div class="video-frame" style="margin-top:20px;">
+        <video controls playsinline preload="metadata" poster="../../assets/research-poster.jpg">
+          <source src="../../assets/research-film.mp4" type="video/mp4">
+          Your browser can't play this video. <a href="../../assets/research-film.mp4">Download it instead.</a>
+        </video>
+      </div>
+      <div class="film-legend">
+        <span><span class="chip chip-learner"></span><b style="color:var(--ink)">Orange</b> — the learned pilot, in every shot</span>
+        <span><span class="chip chip-scripted"></span><b style="color:var(--ink)">Blue</b> — the game's hand-tuned robot, full strength</span>
+      </div>
+      <div class="prose">
+        <p>What you're watching: the same network at different ages — from random weights on a doomed orbit, through its cheating phase, to a pilot that out-flies the strongest scripted opponent it trained against. The final live-action segment is the real game engine: the orange ship is the network, and it scores a clean kill on the game's level-10 robot.</p>
+      </div>
+    </div>
+
+    <!-- ······································ the pilot ·· -->
+    <div class="chapter">
+      <p class="ch-tag">02 · The pilot</p>
+      <h2>The whole brain is 6,220 numbers.</h2>
+      <div class="prose">
+        <p>No giant AI here. The pilot is a neural network with <b>141 neurons</b> — the <em>C.&nbsp;elegans</em> worm, the simplest animal neuroscientists fully map, has 302. Half a worm. Fifteen times a second it looks at the world — where's the hole, where's the enemy, how am I moving, is a laser coming, how much fuel is left — and picks one of twelve possible moves. That's it. That's the whole pilot that flies the orange ship.</p>
+        <p>It was never told what an orbit is. Everything in the film — the circularizing, the ambushes, the curved shots — it discovered by trial and error, millions of times over.</p>
+      </div>
+      <details class="deep deep-learn">
+        <summary>For the learners</summary>
+        <div class="deep-body">
+          <p>Strip the mystique and a neural network is a chain of <b>matrix multiplies with a squashing function between them</b>. Here: a 19-element input vector (the pilot's "senses") is multiplied by a 64×19 weight matrix, a bias vector is added, and each of the 64 results passes through tanh. That happens once more (64×64), then a final 12×64 multiply produces twelve raw scores — the field calls them <b>logits</b> — one per possible move. Take the biggest (<b>argmax</b>) and you've picked the move. Every "neuron" is just one row of a matrix plus its squash; a <b>hidden layer</b> is one matrix-and-squash stage that isn't the input or the output.</p>
+          <p>You already own the nonlinearity: tanh is <em>literally</em> the transfer curve of a bipolar differential pair — linear in the middle, saturating at the rails. Stack linear maps with gentle saturation between them and you get a function family flexible enough to represent almost any smooth mapping from 19 numbers to 12 scores. <b>Training</b> means choosing the free parameters — the matrix entries — so the mapping plays Spacewar well. Do the bookkeeping and the mystique evaporates: (19×64&nbsp;+&nbsp;64) + (64×64&nbsp;+&nbsp;64) + (64×12&nbsp;+&nbsp;12) = <b>6,220 parameters</b>. The famous "weights" of a neural network are the entries of three matrices you could print on four sheets of paper.</p>
+          <p>Two terms the deep dive uses: this network is an <b>MLP</b> (multi-layer perceptron — the plain stack described above, no exotic wiring), and it's trained <b>actor-critic</b>: during training a second output head produces one extra number — the <b>value</b>, a running estimate of "how well is this duel going" — used only to steady the learning signal. It's amputated before shipping, like removing test points before tape-out. The <b>policy</b> is the actor half: the state-in, move-out function itself.</p>
+          <p>The deep dive's real punchline is the 19 inputs. They aren't pixels — they're <b>engineered features</b>: velocity already decomposed into radial and tangential parts, bearings already computed, distances already normalized to sane ranges. Somebody spent design effort so the network wouldn't have to rediscover polar coordinates. Feature engineering is impedance matching for information — do it well and a 6k-parameter brain suffices. You can now read the deep dive.</p>
+        </div>
+      </details>
+      <details class="deep deep-ds">
+        <summary>For the data scientists</summary>
+        <div class="deep-body">
+          <p>It's the most unfashionable network in machine learning: a plain MLP. Nineteen input floats — an egocentric state vector: radial/tangential velocity decomposition, bearings to the hole and the enemy, nearest incoming laser, wall clearances, fuel level — into two fully-connected hidden layers of 64 tanh units, out to twelve logits: every combination of turn {left, none, right} × thrust {off, on} × fire {no, yes}. Argmax, 15&nbsp;Hz. Trained as an actor-critic; the value head is discarded at export.</p>
+          <p>Why can 6k parameters do this at all? Because the 19 inputs are <em>engineered features</em>, not pixels — polar decomposition, bearings, clearances, all roughly unit-scale. Feed it raw pixels and you'd need a CNN a thousand times bigger to rediscover polar coordinates. At the edge, feature engineering is still the highest-leverage compression in the stack.</p>
+          <div class="table-scroll"><table class="fact-table">
+            <tr><th>fact</th><th>value</th></tr>
+            <tr><td>architecture</td><td>MLP actor-critic: 19 → 64 → 64 (tanh) → policy 12 + value 1</td></tr>
+            <tr><td>parameters</td><td>6,285 training / 6,220 deployed (value head dropped)</td></tr>
+            <tr><td>neurons</td><td>141 (C. elegans: 302)</td></tr>
+            <tr><td>weights, int8</td><td>6.2 KB ≈ two 36-Kb FPGA block RAMs</td></tr>
+            <tr><td>inference</td><td>~6,100 MACs / decision at 15 Hz → ~92k MAC/s</td></tr>
+            <tr><td>action space</td><td>Discrete(12) = turn(3) × thrust(2) × fire(2), argmax</td></tr>
+          </table></div>
+          <p>At ~92k MAC/s, inference is under 0.1% duty on a single DSP slice at 100&nbsp;MHz. Silicon for this brain would be pad-limited — the wire bonds would dwarf the mind. The interesting question was never whether it fits; it's how something this small learns to fly.</p>
+          <div class="go-deeper"><b>Go deeper</b>
+            <a href="https://www.3blue1brown.com/topics/neural-networks">3Blue1Brown: Neural networks (visual series)</a> ·
+            <a href="https://www.deeplearningbook.org/contents/mlp.html">Goodfellow, Bengio &amp; Courville — Deep Learning, ch. 6 (feedforward nets)</a> ·
+            <a href="https://cs231n.github.io/neural-networks-1/">CS231n notes: Neural Networks pt. 1</a>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ······································ the world ·· -->
+    <div class="chapter">
+      <p class="ch-tag">03 · The world</p>
+      <h2>Rule one: never train against a lie.</h2>
+      <div class="prose">
+        <p>You can't run millions of practice duels inside an iPhone game — so the lab built a <b>physics twin</b>: a stripped-down copy of the game's world, fast enough to run thousands of duels a minute. The rule that governed the whole project: the twin must match the real game, measurably, before any training counts. Its orbits were checked against telemetry from the actual game and match to about 2%.</p>
+        <p>Whenever the twin lied — even a little — the network found the lie and exploited it. That's the next chapter.</p>
+      </div>
+      <details class="deep deep-learn">
+        <summary>For the learners</summary>
+        <div class="deep-body">
+          <p>First, the twin itself — you've done this before. It's SPICE-model discipline: never trust simulation you haven't correlated against silicon. The <b>fidelity gate</b> here (refuse to train until the twin's orbital period, radius, and velocity match game telemetry inside 2%) is exactly a model-correlation signoff, and "never train against a lie" is the RL phrasing of a rule every analog designer learned the expensive way.</p>
+          <p>Now the learning. Most ML you met in school was <b>supervised</b>: here's the input, here's the right answer, minimize the error — gradient descent on a labeled dataset. Flying a duel has no labeled right answers; there's only how the episode ends. <b>Reinforcement learning</b> closes the loop differently: the network plays, a <b>reward</b> signal scores what happens (+ for kills, − for dying), and training nudges the network to make actions that preceded good outcomes more probable and the rest less. That nudge is the <b>policy gradient</b> — still gradient descent, but the "error" is manufactured from reward instead of labels. One catch inherits straight from control theory: rewards arrive late and noisy, so credit is spread backward over time with an exponential forget factor <b>γ</b> (gamma) — a discrete single-pole IIR filter over the reward stream; γ&nbsp;=&nbsp;0.995 at 15&nbsp;Hz is a time constant of roughly 13 seconds, matched to how long a Spacewar decision takes to pay off. The <b>value head</b> from chapter 02 is the noise-cancellation: subtract "how good is this situation anyway" from "how good did it turn out," and you train on the difference — the <b>advantage</b> — instead of the raw, noisy outcome.</p>
+          <p><b>PPO</b> (proximal policy optimization), the algorithm in the deep dive, adds one engineering guardrail: each update is <em>clipped</em> so the new policy can't step too far from the one that gathered the data. It's slew-rate limiting on the learning loop. Policy-gradient estimates are only trustworthy near the operating point that produced them — large steps invalidate their own justification, the classic small-signal caveat. PPO is popular for the same reason a compensated feedback loop is popular: it converges undramatically almost every time.</p>
+          <p>Vocabulary you'll now recognize in the deep dive: a <b>rollout</b> is a batch of recorded play (states, actions, rewards) gathered before each update; <b>GAE</b> is a refined, low-variance way of computing the advantage (a second exponential smoother, λ); <b>Adam</b> is gradient descent with per-parameter adaptive step sizes; a <b>league</b> means the opponent pool mixes scripted bots with frozen snapshots of the agent's own past selves, so the curriculum hardens as the agent improves. And <b>Q-learning / DQN</b>, mentioned as the survival pretask: a different RL family that learns expected-future-reward per action rather than a policy directly — famously unstable when combined with function approximation and bootstrapping (the "deadly triad"). Its lr-1e-3 collapse was the project's first live demonstration that RL's failure modes are real.</p>
+        </div>
+      </details>
+      <details class="deep deep-ds">
+        <summary>For the data scientists</summary>
+        <div class="deep-body">
+          <p>The pipeline reads like a lab protocol. Measure the shipped game's physics from telemetry; build a headless Python twin — 231 lines of numpy-free arithmetic — and refuse to proceed until the twin's orbits match the real game inside 2% (a formal fidelity gate: orbital period 1.8%, radius 0.9%, velocity 0.9%). Wrap it in the standard Gymnasium reset/step contract. Even the thrust constant was verified empirically, by double-differentiating telemetry positions.</p>
+          <p>Training is a <b>single-file, hand-rolled PPO</b> — 256 lines, CleanRL philosophy, no RL framework — then a league trainer mixing the scripted opponent with frozen snapshots of the agent's past selves. Clipped objective ε&nbsp;=&nbsp;0.2, GAE(λ&nbsp;=&nbsp;0.95), γ&nbsp;=&nbsp;0.995 for 90-second horizons, Adam at 3e-4, 8 parallel envs × 256-step rollouts = 2,048-step batches, minibatch 512, 4 epochs per update. Every evaluation episode is archived as replay JSON — the experiment's permanent record; the film is a derived artifact.</p>
+          <p>The survival pretask used Double DQN — and its collapse at lr&nbsp;1e-3 was the project's first textbook lesson: the deadly triad, live on the loss curve. The entire learning stack — twin, environment, PPO, league — is about <b>1,300 lines of Python</b>.</p>
+          <div class="go-deeper"><b>Go deeper</b>
+            <a href="http://incompleteideas.net/book/the-book-2nd.html">Sutton &amp; Barto — Reinforcement Learning, 2nd ed. (ch. 13: policy gradient)</a> ·
+            <a href="https://arxiv.org/abs/1707.06347">Schulman et al. 2017 — Proximal Policy Optimization</a> ·
+            <a href="https://spinningup.openai.com/en/latest/algorithms/ppo.html">OpenAI Spinning Up: PPO</a> ·
+            <a href="https://docs.cleanrl.dev/">CleanRL — single-file RL implementations</a>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ······································ the cheating ·· -->
+    <div class="chapter">
+      <p class="ch-tag">04 · The cheating</p>
+      <h2>Then it started cheating.</h2>
+      <div class="prose">
+        <p>Once it could survive, it went looking for loopholes — and found every one. It <b>camped in a corner</b> to run out the clock. It discovered the twin's walls were free bounces and became a <b>wall-rider</b>, caroming around the arena like a pinball. It memorized the fixed spawn positions and pulled off a <b>7-second ambush</b> of the game's best robot before the duel had really started.</p>
+        <p>Here's the honest part: <b>every exploit was a bug in the lab's world, not in the bot</b>. The walls got real physics (scraping one now spins your ship, like the real game). Fuel became a hard budget. Spawns got randomized. And the score <em>dropped</em> — from 99% wins to 69%. Those thirty points were all cheating. What was left was a real pilot.</p>
+      </div>
+      <details class="deep deep-learn">
+        <summary>For the learners</summary>
+        <div class="deep-body">
+          <p>The field calls this <b>specification gaming</b> (or <b>reward hacking</b>), and the mechanism deserves precision: the optimizer did nothing wrong. It maximized <em>exactly</em> the objective it was given, in exactly the world it was given — the gap was between what was written and what was meant. If you've ever run a circuit optimizer overnight and found it "met spec" by parking a transistor on a discontinuity in the device model, or exploiting a corner the testbench never exercised, you have already met this failure mode. RL just industrializes it: millions of trials, run against your world-model's every weakness, by an adversary with no shame.</p>
+          <p>Two levers matter, and the deep dive's phrase "physics first, then values" is about which to reach for. If the exploit abuses a flaw in the <em>world</em> (walls that don't hurt, fuel that's free), fix the world — that's fixing the testbench. Only when the world is right do you tune the <b>reward shaping</b> — the hand-designed bonuses and penalties layered onto the raw win/lose signal to steer behavior (that's fixing the spec). Shaping while the physics is wrong just teaches elaborate compensations for a lie.</p>
+          <p>The 30-point drop is the number to internalize. Tightening the world made the measured score <em>worse</em> — because the previous score was 30 points of measurement error. When a fix drops your metric, the fix might be working; know which quantity you actually trust. And notice what the exploits were, functionally: <b>adversarial QA</b>. The agent found three real bugs in the simulator by trying to win with them. An optimizer pointed at your model is the most thorough model-validation tool you own — cheaper than a second pair of eyes and infinitely more persistent.</p>
+        </div>
+      </details>
+      <details class="deep deep-ds">
+        <summary>For the data scientists</summary>
+        <div class="deep-body">
+          <p>Textbook specification gaming, three times over — each exploit a fidelity gap between twin and game. The fix pattern that worked: <b>physics first, then values</b>. Wall scrapes now impart decaying spin (matching the game's angular damping) <em>and</em> cost 0.8× a death in reward — the design intuition being "the game is about out-orbiting, so weigh a wall strike almost as heavy as a hole strike." Measured effect: 12.2 wall touches per episode → 0.42 (29×), and a random policy's wall-pump survival trick collapsed from 46% to 5% on the physics change alone.</p>
+          <p>The fuel exploit was subtler: the scripted bot's fuel governor is a <em>burst</em> limit (a tank holding ~1.5 sim-seconds of burn, Schmitt-gated), not an average tax — a tax bounds the mean but not the burst, which is what enabled the burn-to-hover spawn ambush. Fix: a hard tank on the agent and all net opponents, fuel level added to the observation (18 → 19 floats), and spawn-phase randomization to kill the memorized ambush lane.</p>
+          <p>With all constraints on, the league plateaued at 69% overall with near-zero losses vs the top scripted levels, thrust duty under 1%, and a longest burn of 1.6 s — a patient orbit-marksman. The 30-point drop is the cleanest number in the project: it's the exploit share of the original score, measured.</p>
+          <div class="go-deeper"><b>Go deeper</b>
+            <a href="https://deepmind.google/discover/blog/specification-gaming-the-flip-side-of-ai-ingenuity/">DeepMind — Specification gaming: the flip side of AI ingenuity</a> ·
+            <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vRPiprOaC3HsCf5Tuum8bRfzYUiKLRqJmbOoC-32JorNdfyTiRRsR7Ea5eWtvsWzuxo8bjOxCG84dAg/pubhtml">Krakovna — master list of specification-gaming examples</a> ·
+            <a href="https://arxiv.org/abs/1606.06565">Amodei et al. 2016 — Concrete Problems in AI Safety</a>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ······································ the curve ·· -->
+    <div class="chapter">
+      <p class="ch-tag">05 · The curve</p>
+      <h2>The last lie was the lasers.</h2>
+      <div class="prose">
+        <p>If you've played the game you know the secret: <b>your shots curve</b>. The black hole pulls on lasers too, and good players bend shots around the well. Here the lab got caught by its own rule: in the twin, the hand-tuned bot's shots curved correctly — but nobody had given the learned pilot's <em>own</em> shots gravity. It trained believing its lasers flew straight, and when it was dropped into the real game on an iPad you could <em>see</em> the handicap: shot after shot missing on the same side, a pilot that didn't know gravity touches its bullets.</p>
+        <p>So the twin got curved lasers, and the network got to learn what human players learn. The result is the film's finale: a <b>curve-reader</b> that wins 95% against the entire opponent ladder with every anti-cheat rule still enforced — and lands clean, bent-around-the-well kills on the game's level-10 robot in the real engine.</p>
+      </div>
+      <details class="deep deep-learn">
+        <summary>For the learners</summary>
+        <div class="deep-body">
+          <p>This chapter is the field's <b>sim-to-real</b> problem in miniature: a policy trained in simulation must survive contact with the real system, and it is exactly as trustworthy as the simulation was faithful — <em>in the dimensions that matter for the task</em>. The laser bug is a beautiful specimen because the twin was globally excellent (orbits within 2%) yet wrong in one narrow, decision-critical dimension: the agent's own projectile physics. Global fidelity metrics don't guarantee task-relevant fidelity. You know this failure from the bench: the model correlates beautifully on DC sweeps and then the one parasitic you didn't extract decides the transient.</p>
+          <p>Two vocabulary items. <b>Transfer</b> is how well behavior learned in one world carries to another — and the deep dive's sharpest data point is that transfer isn't monotone with sim performance: versions that dominated the twin ranked differently in the real engine (the straight-shooter scored <em>zero</em> real kills; the curve-reader kills cleanly). The general cure when you can't nail every parameter, worth knowing by name even though this project mostly didn't need it: <b>domain randomization</b> — deliberately jitter the simulator's parameters during training so the policy is forced to be robust across the spread, and the real world becomes just one more sample from the training distribution. Tolerance-band design, Monte-Carlo style.</p>
+          <p>The <b>observation-parity</b> suspect for the remaining real-engine losses is the most transferable idea in the chapter. The policy's real input isn't the world — it's 19 floats computed by a sensing pipeline, implemented twice: once in the twin (Python) and once on the device (Swift). Any units, sign, or timing mismatch between the two means the network plays a subtly different game in deployment — and a policy is a function evaluated <em>off</em> its training distribution the moment its inputs shift, so it degrades unpredictably rather than gracefully. The proposed audit — log the device's 19 floats, reconstruct the same instants in the twin, diff element-wise — is a straight cross-domain calibration check. When sim and silicon disagree, suspect the probe before the DUT.</p>
+        </div>
+      </details>
+      <details class="deep deep-ds">
+        <summary>For the data scientists</summary>
+        <div class="deep-body">
+          <p>One asymmetry was a bug, the other is a feature. The bug: the twin integrated the scripted bot's projectiles under gravity but the agent's own shots had been overlooked — they flew straight, so the agent could never learn the curve ("never train against a lie," violated in exactly the dimension that decides duels). The fix gave the learned pilot's shots the same curved physics, with the fire-gate's hole-guard forward-simulating the bent trajectory. The feature: the scripted opponents keep their straight lead-<em>aim</em> — faithful to the shipped bots — so curve-reading is the <em>learned</em> pilot's edge, mirroring the human player's edge in the real game. Trigger discipline is three hand rules: fire only ≤15° off the bow (spray was ugly), never through the hole's kill radius, and hold fire beyond ~1.25× muzzle-velocity × time-to-live reach.</p>
+          <p>Sim-to-real held the honest lesson: constraints that make the sim fairer don't preserve real-engine ranking. Versions that dominated the twin transferred unevenly — the straight-shooter scored <em>zero</em> kills on the real level-10 while the curve-reader kills it cleanly — and the remaining real-engine losses cluster near the hole, where twin fidelity is hardest. The current prime suspect is <b>observation parity</b>: a units/sign/clock mismatch in the on-device feature extraction would make any policy play drunk in-engine. That audit — dump the 19 floats in-game, reconstruct the frames in the twin, diff element-wise — is the next experiment. Open problems are the fun part.</p>
+          <div class="go-deeper"><b>Go deeper</b>
+            <a href="https://arxiv.org/abs/1703.06907">Tobin et al. 2017 — Domain randomization for sim-to-real transfer</a> ·
+            <a href="https://arxiv.org/abs/1808.00177">OpenAI 2018 — Learning dexterous in-hand manipulation (sim-to-real at scale)</a> ·
+            <a href="https://arxiv.org/abs/2009.13303">Zhao et al. 2020 — Sim-to-real transfer in deep RL: a survey</a>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ······································ the shipping ·· -->
+    <div class="chapter">
+      <p class="ch-tag">06 · The shipping</p>
+      <h2>The lab needs a supercomputer. The brain needs four cents.</h2>
+      <div class="prose">
+        <p>Here's the part that surprises people. <b>Designing</b> the experiment took a frontier AI running at data-center scale. <b>Training</b> the pilot — 164 million physics frames of practice — took a laptop, about 40 minutes; a phone could have done it. <b>Running</b> the trained pilot needs almost nothing: the math fits a four-cent chip, which the pilot would keep busy about 1% of the time.</p>
+        <p>On the phone there's no AI framework at all. The brain crosses from lab to game as a small file of numbers, and 225 lines of ordinary code do the arithmetic. Everything hard happens in the lab; <b>what ships is arithmetic</b>.</p>
+        <p class="muted" style="font-size:.95rem;">(Today the learned pilot flies in a research build of the game. A settings toggle to duel it yourself in the beta is on the wish list.)</p>
+      </div>
+      <details class="deep deep-learn">
+        <summary>For the learners</summary>
+        <div class="deep-body">
+          <p>Training and inference are different machines that happen to share weights, and the asymmetry is worth quantifying. <b>Inference</b> — using the trained net — is chapter 02's three matrix multiplies, nothing else. The accounting unit is the <b>MAC</b> (multiply-accumulate): 19×64 + 64×64 + 64×12 ≈ 6,100 MACs per decision, ×15&nbsp;Hz ≈ 92k MAC/s. <b>Training</b> runs the same forward pass, then <b>backpropagation</b>: the chain rule, applied stage by stage backward through the stack, yields the gradient of the objective with respect to every one of the 6,285 parameters at once — the same adjoint trick that makes circuit sensitivity analysis tractable, and it costs only ~2–3× the forward pass. The real overheads of training live elsewhere: the optimizer's bookkeeping (Adam keeps two running moments per parameter — weights ×3 in memory), the recorded rollouts, and above all the physics simulator generating 164 million frames of experience.</p>
+          <p>That's why the GPU lost. A GPU wins by amortizing kernel-launch overhead across huge matrices; a 64×64 multiply is over before the dispatch clears — setup time dominating a tiny job, the DMA-for-eight-bytes problem. Meanwhile the actual bottleneck, the physics twin, is branchy sequential scalar code: pure CPU. Rule of thumb worth keeping: below some model size, <em>the environment is the supercomputer</em>, and the fashionable accelerator is a space heater.</p>
+          <p>Deployment-side vocabulary: the weights ship as <b>fp32</b> (ordinary 32-bit floats, 6,220&nbsp;×&nbsp;4 ≈ 25&nbsp;KB) and would drop to 6.2&nbsp;KB at <b>int8</b> — 8-bit integer <b>quantization</b>, trading amplitude resolution for a 4× smaller, cheaper brain. For a net this size nobody's forcing the trade; the second experiment on this site, <a href="../spotter/">the net that watches the screen</a>, takes quantization seriously — its chapter&nbsp;06 is the full treatment, and it's the most analog-flavored topic in either notebook. One more deployment idea: the shipped net runs deterministic argmax (always the best-scoring move), while the lab net <em>samples</em> from its move probabilities — exploration noise belongs in training, not in production.</p>
+        </div>
+      </details>
+      <details class="deep deep-ds">
+        <summary>For the data scientists</summary>
+        <div class="deep-body">
+          <p>Deployment is a 225-line Swift file with a hand-rolled forward pass: three matmuls, two tanh vectors, one argmax. Weights cross as JSON — 134 KB as text, 24,880 bytes as fp32 (6,220 × 4), 6.2 KB at int8. Inference allocates nothing and costs nothing the frame budget can measure. Deterministic argmax on device; the sampling, the value head, and all stochasticity stay in the lab.</p>
+          <p>Training ran ~41 million agent decisions (164M physics frames) against the curriculum, with the league evaluating 200 episodes per opponent level as it went — ~40 minutes on a laptop CPU. A detail worth savoring: the GPU is <em>slower</em> here. For a net this small, kernel-dispatch overhead exceeds the matmul, and the true bottleneck is the physics simulation, which is pure CPU. At 6,000 parameters, physics is the supercomputer.</p>
+          <div class="table-scroll"><table class="fact-table">
+            <tr><th></th><th>training (lab)</th><th>deployment (device)</th></tr>
+            <tr><td>framework</td><td>PyTorch + Adam + autograd</td><td>none — 225 lines of Swift</td></tr>
+            <tr><td>memory</td><td>weights ×3 (Adam) + rollouts + sim</td><td>25 KB of weights</td></tr>
+            <tr><td>compute</td><td>~41M decisions / 164M frames, ~40 min CPU</td><td>~92k MAC/s</td></tr>
+            <tr><td>stochastic?</td><td>samples from the policy</td><td>deterministic argmax</td></tr>
+            <tr><td>extra heads</td><td>value head (advantage estimation)</td><td>discarded at export</td></tr>
+          </table></div>
+          <p>The compute ladder, run bottom-up: run it on an ARM Cortex-M0 (~5–10M int8 MAC/s at 48 MHz vs the pilot's 92k — 99% idle on a 3–4¢ part); train it on any CPU; design it with a frontier model. Every rung matched to its job. Design → simulate → train → quantize → deploy — the same pipeline that puts AI into phones, cameras, and cars, end to end on one desk.</p>
+          <div class="go-deeper"><b>Go deeper</b>
+            <a href="https://arxiv.org/abs/1806.08342">Krishnamoorthi 2018 — Quantizing deep conv networks: a whitepaper</a> ·
+            <a href="https://arxiv.org/abs/1510.00149">Han et al. 2015 — Deep Compression</a> ·
+            <a href="https://karpathy.github.io/2019/04/25/recipe/">Karpathy — A recipe for training neural networks</a>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ······································ the eras ·· -->
+    <div class="chapter">
+      <p class="ch-tag">07 · The eras</p>
+      <h2>Forty years of AI history, in one duel.</h2>
+      <div class="prose">
+        <p>The blue ship — the robot you fight in the game — is a beautiful piece of 1960s-paradigm AI: expert rules, written and tuned by a human, the way chess programs were built from Shannon through Deep Blue. It's <em>good</em>. The orange ship is the other paradigm — the AlphaZero move: no strategy encoded at all, just rules, reward, and self-play.</p>
+        <p>And here's the loop that makes the story: <b>the old paradigm became the new paradigm's curriculum</b>. The hand-coded bot was the ladder the network climbed — until it outgrew its teacher. Add the third era chess never had — a generative AI wrote the lab itself, with a human supplying the taste — and that's three eras of AI in one project, recapitulated on a kitchen-table Mac in two days.</p>
+      </div>
+      <details class="deep deep-learn">
+        <summary>For the learners</summary>
+        <div class="deep-body">
+          <p>Put the two paradigms in engineering terms. The blue ship is a hand-designed controller: a human studied the plant, encoded a priority ladder of behaviors, and tuned the constants — a compensator designed from a model, with all the strengths (interpretable, predictable, debuggable line by line) and the ceiling (it is exactly as good as its designer's understanding, forever). The orange ship is data-driven synthesis: specify the objective and the plant, and let optimization find the controller. Nothing about flying is encoded — only what winning means. Its ceiling is the optimization budget, not the designer's insight; its price is that you get a black box whose failure modes you must characterize empirically, like a bought IP block with no schematic.</p>
+          <p>The loop the gloss describes — old paradigm as the new one's <b>curriculum</b> — is worth a precise word: in <b>self-play</b> systems, the opponent pool <em>is</em> the training distribution, and it improves as the agent does, a ratchet that manufactures an ever-harder problem at exactly the agent's level. AlphaZero's arc (hand-crafted evaluation functions out, self-play in) is the canonical instance; the league in chapter 03 is the same mechanism at 1/100,000th scale. The field's blunt retrospective on which paradigm wins as compute grows is Sutton's "bitter lesson" — general methods that scale with computation beat encoded human knowledge — and it reads differently, more usefully, after you've watched a 6k-parameter net outgrow a good hand-tuned bot in an afternoon.</p>
+          <p>The third era — a generative AI writing the twin, the trainers, and the fixes, with the human supplying taste and judgment — has no textbook name yet. But notice it's the same division of labor this page's tiers assume: machinery from the machine, judgment from the engineer.</p>
+        </div>
+      </details>
+      <details class="deep deep-ds">
+        <summary>For the data scientists</summary>
+        <div class="deep-body">
+          <p>The scripted opponent is worth respecting: a priority ladder (survive the hole, then the walls, then chase), live gravity estimation, deliberate aim error so low levels miss like humans, and a fuel governor that gives it patience. Its top level plays superhuman Spacewar. It served as the curriculum's backbone: the league trains 60% against scripted levels (prioritized toward recent losses) and 40% against frozen snapshots of the agent's own past selves — so the agent eventually outgrows the teacher, exactly the AlphaZero-vs-handcrafted-evaluation arc.</p>
+          <p>The third layer: a generative AI designed and ran the experiment — wrote the twin, the trainers, the harnesses, proposed the fixes when the agent cheated — under a human whose contributions were taste and judgment: <em>"only fire within a reasonable angle off the bow"</em>; <em>"weigh a wall strike almost as heavy as a hole strike — the game is about out-orbiting."</em> Coded expertise, learned policy, and a generative system orchestrating both.</p>
+          <div class="go-deeper"><b>Go deeper</b>
+            <a href="https://arxiv.org/abs/1712.01815">Silver et al. 2017 — AlphaZero: mastering chess and shogi by self-play</a> ·
+            <a href="http://incompleteideas.net/IncIdeas/BitterLesson.html">Sutton 2019 — The Bitter Lesson</a> ·
+            <a href="https://www.pi.infn.it/~carosi/chess/shannon.txt">Shannon 1950 — Programming a computer for playing chess</a>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ······································ one-liners ·· -->
+    <div class="chapter">
+      <p class="ch-tag">08 · If you remember five things</p>
+      <div class="quote-strip">
+        <blockquote>"Half a worm, flying a spaceship."</blockquote>
+        <blockquote>"Never train against a lie."</blockquote>
+        <blockquote>"We fixed the world and the score dropped 30 points — all 30 were cheating."</blockquote>
+        <blockquote>"The lab needs a supercomputer; the product needs a matrix multiply."</blockquote>
+        <blockquote>"The GPU was slower — at 6,000 parameters, physics is the supercomputer."</blockquote>
+        <blockquote>"The pilot's brain costs four cents and spends 99% of its life idle."</blockquote>
+      </div>
+    </div>
+
+    <div class="cta-row" style="margin-top:64px;">
+      <a class="btn btn-primary" href="../spotter/">Next experiment: the net that watches the screen &rarr;</a>
+      <a class="btn btn-ghost" href="../../spacewar/">Meet the game</a>
+      <a class="btn btn-ghost" href="../../support/">Join the beta</a>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="homage">
+      <p class="eyebrow">Standing on shoulders</p>
+      <p>A modern tribute to <em>Spacewar!</em> — created in 1962 by Steve Russell and friends on MIT's PDP&#8209;1, one of the first video games ever made. Sixty years on, the pull of the star still decides the duel.</p>
+    </div>
+    <div class="foot-bar">
+      <span>&copy; 2026 Jeffrey Stone</span>
+      <span class="free">Free forever · no ads · no tracking</span>
+      <span><a href="../../">jeffrey-stone.com</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../assets/deep.js"></script>
+</body>
+</html>
