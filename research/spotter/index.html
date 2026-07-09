@@ -161,7 +161,7 @@
       <p class="ch-tag">04 · The traps</p>
       <h2>99.9% in the lab, blind in the field</h2>
       <div class="prose">
-        <p>The first version trained on small cropped tiles and aced them: <b>99.9% accurate</b>. Run on full frames, it saw <b>nothing</b>. It called every pixel background. Not degraded: blind. The second trap was quieter: the way tiles were being labeled made the 3-pixel lasers <em>mathematically invisible</em>: most laser tiles didn't count as laser at all, so the net was being taught to ignore them.</p>
+        <p>The first version trained on small cropped tiles and aced them: <b>99.9% accurate</b>. Run on full frames, it saw <b>nothing</b>. It called every pixel background. Not degraded: blind. The second trap was quieter: the way tiles were being labeled made the 3-pixel lasers <em>mathematically invisible</em>. Most laser tiles didn't count as laser at all, so the net was being taught to ignore them.</p>
         <p>Both traps share a moral the pilot's notebook already taught once: <b>the test you pass must be the test you'll face</b>. The training views weren't the deployment views, and the score was measuring the wrong world. Fix the world (train on full frames, label tiles by what's <em>present</em> in them) and the same architecture that was blind sees everything.</p>
       </div>
       <details class="deep deep-learn">
