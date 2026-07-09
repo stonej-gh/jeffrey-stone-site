@@ -45,7 +45,7 @@
   <div class="wrap">
     <p class="crumb"><a href="../">Research</a> / the eye</p>
     <p class="eyebrow">Experiment 02</p>
-    <h1>The net that <span style="color:var(--cyan)">watches the screen</span>.</h1>
+    <h1>The net that <span style="color:var(--cyan)">watches the screen</span></h1>
     <p class="lede">The <a href="../worm/">first experiment's pilot</a> got its senses served on a plate: nineteen tidy, hand-engineered numbers. Real systems don't get that gift: they get pixels. This experiment closes the gap. A <b>28,000-parameter</b> convolutional network watches raw game frames and paints what it understands (every ship, every laser, the black hole) live, while the game plays. Then it gets squeezed into 8-bit integers, and you get to try to tell the difference. Perception and policy: the two halves of an autonomy stack, both small enough to read.</p>
     <p class="tier-legend">Same rules as the pilot's notebook: the plain story reads on its own; <span class="t-learn">▸ FOR THE LEARNERS</span> rebuilds the machinery from first principles for any scientifically curious reader (this experiment is the more physical of the two, all sampling, resolution, and dynamic range); <span class="t-ds">▸ FOR THE DATA SCIENTISTS</span> is the working notebook, with references to go deeper.</p>
     <div class="cta-row" style="margin-top:28px;">
@@ -88,7 +88,7 @@
     <!-- ······································ the eye ·· -->
     <div class="chapter" id="eye">
       <p class="ch-tag">02 · The eye</p>
-      <h2>The whole eye is 28,000 numbers.</h2>
+      <h2>The whole eye is 28,000 numbers</h2>
       <div class="prose">
         <p>The pilot's brain was 6,220 numbers; the eye is about 28,000. Big enough to see, still small enough to print. It's a <b>convolutional network</b>: instead of looking at all 61,440 pixels at once, it sweeps small learned patterns across the image, the same trick your visual cortex opens with. Feed it a raw 320×192 frame and it answers, for every single pixel: <em>background, interceptor, fighter, laser, or hole</em>.</p>
         <p>The two ships get told apart by <b>shape, not color</b>: the classes were designed so the narrow dart and the broad wedge differ in silhouette, and the test set proves the net isn't just color-matching. The black hole's glowing halo is deliberately labeled <em>background</em>: the eye learns that only the dark disk at the center kills you. The glow is scenery.</p>
@@ -128,7 +128,7 @@
     <!-- ······································ the labels ·· -->
     <div class="chapter" id="labels">
       <p class="ch-tag">03 · The labels</p>
-      <h2>A million perfect labels, free.</h2>
+      <h2>A million perfect labels, free</h2>
       <div class="prose">
         <p>Vision projects usually die in labeling: humans drawing boxes, arguing over edges, at dollars per image. This one has a loophole: <b>the game draws its own answers</b>. The lab's renderer draws every entity twice from the same geometry: once shaded into the pretty frame, once flat into an answer sheet where each pixel carries its true class. No labelers, no label review, no licensing. The only human check is looking at a contact sheet to confirm the renderer itself draws correctly. And "a million" undersells it: 2,857 training frames × 61,440 labeled pixels is about <b>175 million labels</b>, free.</p>
         <p>The training diet is seeded and synthetic (random legal scenes, plus about a third real recorded duels for realistic orbits and firefights), and one entire recorded duel was locked away untouched. That held-out duel is the film in chapter 01. One scope note, honestly given: "the game" throughout this page is the lab's faithful re-rendering of it: same physics, same geometry, drawn at 320×192. Pointing the eye at captures from the shipped engine itself is a future experiment.</p>
@@ -159,7 +159,7 @@
     <!-- ······································ the traps ·· -->
     <div class="chapter" id="traps">
       <p class="ch-tag">04 · The traps</p>
-      <h2>99.9% in the lab, blind in the field.</h2>
+      <h2>99.9% in the lab, blind in the field</h2>
       <div class="prose">
         <p>The first version trained on small cropped tiles and aced them: <b>99.9% accurate</b>. Run on full frames, it saw <b>nothing</b>. It called every pixel background. Not degraded: blind. The second trap was quieter: the way tiles were being labeled made the 3-pixel lasers <em>mathematically invisible</em>: most laser tiles didn't count as laser at all, so the net was being taught to ignore them.</p>
         <p>Both traps share a moral the pilot's notebook already taught once: <b>the test you pass must be the test you'll face</b>. The training views weren't the deployment views, and the score was measuring the wrong world. Fix the world (train on full frames, label tiles by what's <em>present</em> in them) and the same architecture that was blind sees everything.</p>
@@ -190,7 +190,7 @@
     <!-- ······································ the plateau ·· -->
     <div class="chapter" id="plateau">
       <p class="ch-tag">05 · The plateau</p>
-      <h2>A ±1-pixel halo was worth forty points.</h2>
+      <h2>A ±1-pixel halo was worth forty points</h2>
       <div class="prose">
         <p>Getting from "one verdict per 8×8 tile" to "a verdict for every pixel" stalled hard. The upgrade path (let the net paint at full resolution by scaling its coarse understanding back up) plateaued at a score of about <b>0.59</b> on the small objects, no matter how long it trained. The reason is honest arithmetic: after squinting down to 1/8 resolution, the information about <em>exactly which pixel</em> an 18-pixel ship hull covers is gone. The net knew <em>what</em> was there and roughly <em>where</em>; it could not know where the edges were.</p>
         <p>The fix cost 1,180 parameters, four percent of the model. Give the decoder <b>shortcut wires</b> from the trunk's earlier, sharper layers, so full-resolution edge detail flows directly to the painting stage instead of dying in the squeeze. The small-object score jumped from 0.585 to <b>0.973</b>. On objects that small, a one-pixel halo of error <em>is</em> the whole score.</p>
@@ -221,7 +221,7 @@
     <!-- ······································ eight bits ·· -->
     <div class="chapter" id="eightbits">
       <p class="ch-tag">06 · Eight bits</p>
-      <h2>The outliers were the lasers.</h2>
+      <h2>The outliers were the lasers</h2>
       <div class="prose">
         <p>The trained net thinks in 32-bit floating point. Cheap silicon thinks in 8-bit integers. <b>Quantization</b> is the conversion. And it's a bargain: a quarter the memory, integer math instead of floating point, and if you do it right, nobody can tell. The film's alternating segment is that claim, live: float and int8, <b>at most six pixels different out of 61,440</b> on its worst frame.</p>
         <p>The one real decision hiding in "do it right" made the best story in the project. Standard practice says: when choosing each signal's numeric range, clip the rarest, brightest extremes. Outliers waste your precious 256 levels. Here, standard practice failed one class: the lasers. Because on these clean synthetic frames the rare bright spikes aren't noise: <b>the rare bright activations <em>are</em> the lasers</b>. Clip them and the eye goes blind to exactly the thing it fought hardest to see. Keep the full range and everything passes. Know your signal before you trust a heuristic about it.</p>
@@ -252,7 +252,7 @@
     <!-- ······································ the handoff ·· -->
     <div class="chapter" id="handoff">
       <p class="ch-tag">07 · The handoff</p>
-      <h2>What ships is a folder anyone can check.</h2>
+      <h2>What ships is a folder anyone can check</h2>
       <div class="prose">
         <p>The experiment's product isn't a demo. It's a <b>frozen bundle</b>: the trained numbers (float and int8), a reference implementation of the math in plain code short enough to read, and a set of <b>golden vectors</b> (known inputs with their exact recorded outputs). Anyone porting the eye to new hardware re-implements the arithmetic on their target, runs the same inputs, and checks against the goldens. One command, one dependency, pass or fail.</p>
         <p>Two properties make the folder trustworthy. It's <b>relocatable</b>: copy it anywhere, it still verifies; it doesn't need the lab. And it's <b>reproducible</b>: the entire experiment re-runs from one seed, dataset through training through export, and lands on the same file, bit for bit. The chapter-01 film honors the same contract: every painted pixel you watched came from this folder through the reference implementation, not from the training framework.</p>
