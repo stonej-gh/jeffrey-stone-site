@@ -66,7 +66,7 @@ header.nav {
 .nav-links a:hover { color: var(--ink); text-decoration: none; }
 .nav-links a[aria-current="page"] { color: var(--ink); }
 /* Mobile: no room for tabs beside the brand, so wrap them onto a second row
-   (keeps every tab reachable — the site has no hamburger menu). */
+   (keeps every tab reachable - the site has no hamburger menu). */
 @media (max-width: 620px) {
   .nav-inner { flex-wrap: wrap; height: auto; padding-top: 11px; padding-bottom: 12px; row-gap: 9px; }
   .brand { order: 1; }
@@ -298,5 +298,45 @@ footer { border-top: 1px solid var(--line); padding: 68px 0 54px; }
 .lab-cap { font-family: var(--font-mono); font-size: 12.5px; color: var(--muted);
   margin-top: 12px; line-height: 1.9; max-width: 52em; }
 .lab-cap b { color: var(--ink); font-weight: 500; }
+
+/* ---------- deployment notebooks: rendered markdown (md-render.js) ---------- */
+/* .md-doc wraps one downloadable document; .md-render styles the rendered body,
+   adapting the mdview theme to the site's palette (see docs/…-hardware-facts). */
+.md-doc { border: 1px solid var(--line); border-radius: 14px; background: var(--panel);
+  margin-top: 34px; overflow: hidden; }
+.md-doc-head { display: flex; align-items: center; justify-content: space-between;
+  gap: 16px 22px; flex-wrap: wrap; padding: 20px 26px; border-bottom: 1px solid var(--line);
+  background: var(--panel-2); }
+.md-doc-head .ch-tag { font-family: var(--font-mono); font-size: 12px; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--cyan); margin-bottom: 8px; }
+.md-doc-head h3 { font-size: 1.15rem; line-height: 1.25; }
+.md-render { padding: 8px 30px 30px; max-width: 46em; }
+.md-render h1, .md-render h2, .md-render h3, .md-render h4 { color: var(--ink);
+  line-height: 1.25; margin: 1.5em 0 .5em; }
+.md-render h1 { font-size: 1.6rem; }
+.md-render h2 { font-size: 1.32rem; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+.md-render h3 { font-size: 1.12rem; color: var(--cyan); }
+.md-render h4 { font-size: 1rem; color: var(--cyan); }
+.md-render p, .md-render li { color: #c3ccdb; font-size: 1.02rem; line-height: 1.7; }
+.md-render p { margin: 14px 0; }
+.md-render ul, .md-render ol { padding-left: 1.5em; margin: 14px 0; }
+.md-render li { margin: 6px 0; }
+.md-render a { color: var(--cyan); }
+.md-render strong { color: var(--ink); font-weight: 600; }
+.md-render em { color: #b6c0d0; }
+.md-render code { font-family: var(--font-mono); font-size: 0.86em; color: var(--ink);
+  background: var(--panel-2); border: 1px solid var(--line); border-radius: 5px; padding: 1px 6px; }
+.md-render pre { background: #03050a; border: 1px solid var(--line); border-radius: 10px;
+  padding: 14px 18px; overflow-x: auto; margin: 18px 0; }
+.md-render pre code { background: none; border: none; padding: 0; font-size: 0.84em;
+  line-height: 1.55; color: #c3ccdb; }
+.md-render blockquote { border-left: 3px solid var(--cyan-dim); margin: 18px 0;
+  padding: 4px 18px; background: var(--panel-2); color: var(--muted); border-radius: 0 8px 8px 0; }
+.md-render hr { border: none; border-top: 1px solid var(--line); margin: 28px 0; }
+.md-render table { border-collapse: collapse; width: 100%; margin: 18px 0;
+  font-size: 0.95rem; display: block; overflow-x: auto; }
+.md-render th, .md-render td { border: 1px solid var(--line); padding: 8px 12px; text-align: left; }
+.md-render th { color: var(--cyan); font-weight: 500; letter-spacing: .04em; background: var(--panel-2); }
+.md-render td:first-child { color: var(--ink); }
 
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }

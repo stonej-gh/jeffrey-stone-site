@@ -1,15 +1,14 @@
 <!doctype html>
-<!-- Private-slug shell, the template for any private experiment:
-     copy this file into site/research/<slug>/, change the <title>, the
-     eyebrow/h1 copy, and the slug string in ResearchLock.init at the bottom.
-     Content lives encrypted next to this file (built by
-     scripts/encrypt-research.py <slug> from private/research-src/<slug>/). -->
+<!-- Private-slug shell for the watcher Deployment notebook (Experiment 02).
+     Content is encrypted next to this file (scripts/encrypt-research.py
+     watcher-deploy). Single-key model: one passphrase unlocks this, the worm
+     notebook, and the spotter experiment (see assets/research-lock.js). -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>demo · Research · Jeffrey Stone</title>
-<meta name="description" content="Private experiment, encrypted at rest.">
+<title>watcher · Deployment · Research · Jeffrey Stone</title>
+<meta name="description" content="Private deployment notebook, encrypted at rest.">
 <meta name="robots" content="noindex, nofollow">
 <meta name="color-scheme" content="dark">
 <link rel="icon" type="image/svg+xml" href="../../assets/icon.svg">
@@ -37,10 +36,10 @@
 <!-- login (the only thing visible until the passphrase unlocks the payload) -->
 <section class="page-head" id="exp-login">
   <div class="wrap">
-    <p class="crumb"><a href="../">Research</a> / demo</p>
-    <p class="eyebrow">Private experiment</p>
-    <h1>Mechanism canary.</h1>
-    <p class="lede">A test fixture for the private-experiment machinery. It's stored <b>encrypted</b>. Enter the passphrase and your browser decrypts it locally. Nothing you type leaves this page.</p>
+    <p class="crumb"><a href="../">Research</a> / watcher · Deployment</p>
+    <p class="eyebrow">Private deployment notebook</p>
+    <h1>Deploying the eye on Versal.</h1>
+    <p class="lede">How the <a href="../spotter/">watcher</a> vision net could run on the AMD Versal VCK190 board: on the AI Engine array, out to HDMI, with a live float-vs-int8 toggle. It's stored <b>encrypted</b>. Enter the passphrase and your browser decrypts it locally. Nothing you type leaves this page.</p>
     <form id="exp-form" autocomplete="off">
       <div class="pass-row">
         <input class="pass-input" id="exp-pass" type="password" placeholder="passphrase" autocomplete="current-password" autofocus>
@@ -56,10 +55,6 @@
   <div class="wrap">
     <div class="lock-bar" id="exp-bar">
       <span class="badge">Unlocked · private</span>
-      <button class="btn btn-ghost" type="button" data-deep-toggle="learn"
-              data-expand="Expand all learner notes" data-collapse="Collapse all learner notes"></button>
-      <button class="btn btn-ghost" type="button" data-deep-toggle="ds"
-              data-expand="Expand all deep dives" data-collapse="Collapse all deep dives"></button>
       <button class="btn btn-ghost" id="exp-lock" type="button">Lock &amp; forget this browser</button>
     </div>
     <div id="exp-content"></div>
@@ -70,15 +65,16 @@
   <div class="wrap">
     <div class="foot-bar">
       <span>&copy; 2026 Jeffrey Stone</span>
-      <span class="free">Private experiment · encrypted at rest</span>
+      <span class="free">Private notebook · encrypted at rest</span>
       <span><a href="../../">jeffrey-stone.com</a></span>
     </div>
   </div>
 </footer>
 
 <script src="../../assets/exp-crypto.js"></script>
+<script src="../../assets/md-render.js"></script>
 <script src="../../assets/deep.js"></script>
 <script src="../../assets/research-lock.js"></script>
-<script>ResearchLock.init({ slug: 'demo' });</script>
+<script>ResearchLock.init({ slug: 'watcher-deploy' });</script>
 </body>
 </html>

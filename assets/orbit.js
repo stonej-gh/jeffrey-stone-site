@@ -1,4 +1,4 @@
-/* Keplerian-orbit hero: a ship rides a real ellipse around the singularity —
+/* Keplerian-orbit hero: a ship rides a real ellipse around the singularity -
    the game's own motif (cyan "YOUR PATH" trail + dashed guide orbit).
    No-ops on pages that don't include a #orbit canvas. */
 (function () {
@@ -47,7 +47,7 @@
   }
 
   function drawGuide(f, s) {
-    // faint dashed "guide orbit" — the ideal ellipse
+    // faint dashed "guide orbit" - the ideal ellipse
     ctx.save();
     ctx.translate(f.x, f.y);
     ctx.rotate(rot);
@@ -89,14 +89,14 @@
     drawGuide(f, s);
     drawHole(f);
 
-    // advance ship (variable speed via Kepler — faster near the hole)
+    // advance ship (variable speed via Kepler - faster near the hole)
     M += dt * 0.55;
     var p = posAt(M);
     var sx = f.x + p.x * s, sy = f.y + p.y * s;
     trail.push({ x: sx, y: sy });
     if (trail.length > 150) trail.shift();
 
-    // YOUR PATH — cyan fading trail
+    // YOUR PATH - cyan fading trail
     for (var j = 1; j < trail.length; j++) {
       var t = j / trail.length;
       ctx.beginPath();

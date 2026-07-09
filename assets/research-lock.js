@@ -1,26 +1,50 @@
-/* Unlock module for private research experiments.
+/* Unlock module for private research experiments - SINGLE-KEY model.
+
    Each private experiment is a slug directory under /research/ holding
-   check.enc + content.enc (+ media *.enc), all AES-256-GCM with a
-   PER-EXPERIMENT passphrase (see scripts/encrypt-research.py; crypto
-   primitives in exp-crypto.js). The derived key is cached per slug:
-     localStorage jsExpK:<slug> (key) / jsExpS:<slug> (salt guard —
+   check.enc + content.enc (+ media *.enc / doc *.md.enc), all AES-256-GCM.
+   As of the deployment-notebooks work there is ONE passphrase for all
+   private content: entering it on any private page unlocks that page AND
+   every sibling slug in PRIVATE_SLUGS whose check.enc verifies with the
+   same passphrase (each slug keeps its own salt, so keys are derived
+   per-slug). Derived keys are cached per slug:
+     localStorage jsExpK:<slug> (key) / jsExpS:<slug> (salt guard -
      rotating the passphrase re-salts every file and invalidates old keys).
 
    On ANY page that loads this script it also unhides [data-priv="<slug>"]
-   elements (hub cards) whose slug key is cached — private experiments stay
+   elements (hub cards) whose slug key is cached - private experiments stay
    invisible to browsers that never unlocked them.
+
+   Sibling check.enc files are fetched by ABSOLUTE url derived from this
+   script's own src (captured below), so unlock works whether the site is
+   served at the apex root or under the mirror's /spacewar-mirror/ subpath.
 
    A private experiment page is ~10 lines of glue:
      <script src="../../assets/exp-crypto.js"></script>
+     <script src="../../assets/md-render.js"></script>   (only if it uses data-md docs)
      <script src="../../assets/deep.js"></script>
      <script src="../../assets/research-lock.js"></script>
      <script>ResearchLock.init({ slug: 'demo' });</script>
    Inside the decrypted content, media declares itself with
-   <video data-enc="film.enc"> / <img data-enc="fig.enc"> — fetched from the
-   slug directory and decrypted into blob URLs (tab memory only). */
+   <video data-enc="film.enc"> / <img data-enc="fig.enc"> - fetched from the
+   slug directory and decrypted into blob URLs (tab memory only). A rendered,
+   downloadable markdown doc declares <div data-md="doc.md.enc"
+   data-filename="doc.md"> with a .md-body target and an optional
+   a.md-download button inside it. */
 var ResearchLock = (function () {
   /* the pre-2026-07 /experimental/ area cached un-suffixed keys; retire them */
   try { localStorage.removeItem('jsExpK'); localStorage.removeItem('jsExpS'); } catch (e) {}
+
+  /* Every private slug that shares the single passphrase. Sibling unlock walks
+     this list; a slug encrypted with a different key just fails to verify and
+     is skipped, and a slug that is plaintext on this host (e.g. spotter on the
+     apex, which has no check.enc) 404s and is skipped. Order is cosmetic. */
+  var PRIVATE_SLUGS = ['spotter', 'worm-deploy', 'watcher-deploy', 'demo'];
+
+  /* Absolute URL of the /research/ directory, from this script's own location
+     (…/assets/research-lock.js -> …/research/). currentScript is only valid
+     during initial execution, so capture it now. */
+  var SELF = document.currentScript ? document.currentScript.src : '';
+  var RESEARCH_ROOT = SELF.replace(/assets\/research-lock\.js.*$/, 'research/');
 
   function kKey(slug) { return 'jsExpK:' + slug; }
   function kSalt(slug) { return 'jsExpS:' + slug; }
@@ -39,6 +63,24 @@ var ResearchLock = (function () {
   var MIME = { mp4: 'video/mp4', webm: 'video/webm', jpg: 'image/jpeg',
                jpeg: 'image/jpeg', png: 'image/png', svg: 'image/svg+xml' };
 
+  /* Given a plaintext passphrase, try to unlock every sibling slug: derive its
+     key from its own salt, verify against its check.enc, cache on success.
+     Best-effort - any slug that 404s or fails to verify is silently skipped.
+     Returns after all attempts so a following reveal() sees the fresh keys. */
+  async function unlockSiblings(passphrase) {
+    for (var i = 0; i < PRIVATE_SLUGS.length; i++) {
+      var slug = PRIVATE_SLUGS[i];
+      try {
+        if (localStorage.getItem(kKey(slug))) continue;   /* already cached */
+        var check = await ExpCrypto.fetchEnc(RESEARCH_ROOT + slug + '/check.enc');
+        var key = await ExpCrypto.deriveKey(passphrase, check.salt);
+        await ExpCrypto.decrypt(key, check);               /* throws if wrong */
+        localStorage.setItem(kKey(slug), ExpCrypto.b64(await ExpCrypto.exportKey(key)));
+        localStorage.setItem(kSalt(slug), ExpCrypto.b64(check.salt));
+      } catch (e) { /* not this passphrase, or plaintext here - skip */ }
+    }
+  }
+
   function init(opts) {
     var slug = opts.slug;
     var $ = function (s) { return document.querySelector(s); };
@@ -55,6 +97,20 @@ var ResearchLock = (function () {
       } catch (e) { return null; }
     }
 
+    /* Decrypt a rendered-markdown doc into its .md-body and wire its download. */
+    async function renderMd(key, el) {
+      var name = el.getAttribute('data-md');
+      var buf = await ExpCrypto.decrypt(key, await ExpCrypto.fetchEnc(name));
+      var text = new TextDecoder().decode(buf);
+      var body = el.querySelector('.md-body') || el;
+      body.innerHTML = window.MdRender ? MdRender.toHtml(text) : ('<pre>' + text + '</pre>');
+      var dl = el.querySelector('a.md-download');
+      if (dl) {
+        dl.href = URL.createObjectURL(new Blob([text], { type: 'text/markdown' }));
+        dl.download = el.getAttribute('data-filename') || 'document.md';
+      }
+    }
+
     async function unlock(key) {
       var content = await ExpCrypto.fetchEnc('content.enc');
       var html = new TextDecoder().decode(await ExpCrypto.decrypt(key, content));
@@ -63,7 +119,7 @@ var ResearchLock = (function () {
       $('#exp-shell').hidden = false;
       if (window.DeepDives) DeepDives.wire($('#exp-content'));
       reveal();
-      /* media decrypts into blob URLs — they exist only in this tab's memory */
+      /* media decrypts into blob URLs - they exist only in this tab's memory */
       var media = $('#exp-content').querySelectorAll('[data-enc]');
       for (var i = 0; i < media.length; i++) {
         var name = media[i].getAttribute('data-enc');
@@ -72,6 +128,9 @@ var ResearchLock = (function () {
         media[i].src = URL.createObjectURL(
           new Blob([blob], { type: MIME[ext] || 'application/octet-stream' }));
       }
+      /* rendered + downloadable markdown docs (deployment notebooks) */
+      var docs = $('#exp-content').querySelectorAll('[data-md]');
+      for (var j = 0; j < docs.length; j++) await renderMd(key, docs[j]);
     }
 
     $('#exp-lock') && $('#exp-lock').addEventListener('click', function () {
@@ -83,16 +142,19 @@ var ResearchLock = (function () {
       ev.preventDefault();
       $('#exp-go').disabled = true;
       $('#exp-err').textContent = 'checking…';
+      var pass = $('#exp-pass').value;
       try {
         var check = await ExpCrypto.fetchEnc('check.enc');
-        var key = await ExpCrypto.deriveKey($('#exp-pass').value, check.salt);
+        var key = await ExpCrypto.deriveKey(pass, check.salt);
         await ExpCrypto.decrypt(key, check);           /* throws on a wrong passphrase */
         try {
           localStorage.setItem(kKey(slug), ExpCrypto.b64(await ExpCrypto.exportKey(key)));
           localStorage.setItem(kSalt(slug), ExpCrypto.b64(check.salt));
-        } catch (e) { /* private mode — unlock still works for this visit */ }
+        } catch (e) { /* private mode - unlock still works for this visit */ }
         $('#exp-err').textContent = '';
         await unlock(key);
+        await unlockSiblings(pass);   /* one passphrase opens the whole family */
+        reveal();
       } catch (e) {
         fail('That passphrase doesn’t unlock this content.');
       }
@@ -104,7 +166,7 @@ var ResearchLock = (function () {
         var check = await ExpCrypto.fetchEnc('check.enc');
         var key = await cachedKey(check);
         if (key) await unlock(key);
-      } catch (e) { /* offline or first visit — the form is there */ }
+      } catch (e) { /* offline or first visit - the form is there */ }
     })();
   }
 

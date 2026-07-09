@@ -41,7 +41,7 @@ const ExpCrypto = {
     return crypto.subtle.decrypt({ name: 'AES-GCM', iv: f.iv }, key, f.ct);
   },
 
-  /* base64 helpers — only ever used on small values (16-byte salt, 32-byte key) */
+  /* base64 helpers - only ever used on small values (16-byte salt, 32-byte key) */
   b64(u8) { return btoa(String.fromCharCode.apply(null, u8)); },
   unb64(s) { return Uint8Array.from(atob(s), function (c) { return c.charCodeAt(0); }); }
 };

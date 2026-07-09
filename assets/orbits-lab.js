@@ -1,4 +1,4 @@
-/* /orbits/ — the orbit lab: three hands-on gravity toys on plain canvas.
+/* /orbits/ - the orbit lab: three hands-on gravity toys on plain canvas.
    No libraries. Each toy binds to a canvas[data-lab=…] and its own control
    row, and no-ops if the canvas isn't on the page. Logical space is 960x540
    (the HTML width/height attributes); CSS scales it, resize() keeps it crisp.
@@ -71,7 +71,7 @@
     ctx.font = MONO; ctx.fillStyle = color || MUTED; ctx.fillText(txt, x, y);
   }
 
-  // semi-implicit Euler, fixed substeps — one body, one gravity well
+  // semi-implicit Euler, fixed substeps - one body, one gravity well
   function stepBody(p, GM, cx, cy, dt) {
     var n = Math.max(1, Math.round(dt / (1 / 240)));
     var h = dt / n;
@@ -148,7 +148,7 @@
 
   /* ---------- toy 1: Newton's cannonball ----------
      Real Earth numbers on the dial: the sim's circular speed at the muzzle
-     maps to 7,900 m/s, so escape shows up at ~11,200 m/s — both true. */
+     maps to 7,900 m/s, so escape shows up at ~11,200 m/s - both true. */
   (function cannon() {
     var canvas = document.querySelector('canvas[data-lab="cannon"]');
     if (!canvas) return;
@@ -198,11 +198,11 @@
         if (d > Math.PI) d -= TAU; if (d < -Math.PI) d += TAU;
         s.theta += d; s.lastAng = ang;
         if (Math.abs(s.theta) >= TAU) s.orbited = true;
-        if (Math.abs(s.theta) >= 2.35 * TAU) s.state = 'parked';   // proven — declutter
+        if (Math.abs(s.theta) >= 2.35 * TAU) s.state = 'parked';   // proven - declutter
         if (r <= R) s.state = 'crash';
         if (r > 900) {
           // off-screen: true escape only if unbound (keeps the caption's
-          // 11,200 m/s honest — a huge ellipse is not an escape)
+          // 11,200 m/s honest - a huge ellipse is not an escape)
           var v2 = s.vx * s.vx + s.vy * s.vy;
           s.state = (v2 / 2 - GM / r >= 0) ? 'escape' : 'faroff';
         }
@@ -259,8 +259,8 @@
           ctx.fillStyle = RUST; ctx.fill();
         }
       }
-      if (anyOrbit) label(ctx, 22, 32, 'ORBIT — it keeps missing', CYAN);
-      if (anyEscape) label(ctx, 22, anyOrbit ? 54 : 32, 'ESCAPED — gone for good', VIOLET);
+      if (anyOrbit) label(ctx, 22, 32, 'ORBIT: it keeps missing', CYAN);
+      if (anyEscape) label(ctx, 22, anyOrbit ? 54 : 32, 'ESCAPED: gone for good', VIOLET);
       label(ctx, 22, 518, 'fire a few and compare the trails', MUTED);
     }
 
@@ -269,7 +269,7 @@
 
   /* ---------- toy 2: one burn, whole new orbit ----------
      The dashed guide is the osculating ellipse computed from the ship's
-     state each frame — the burn visibly reshapes the FUTURE while the ship
+     state each frame - the burn visibly reshapes the FUTURE while the ship
      stays put. LAP TIME is the analytic period of that ellipse. */
   (function burn() {
     var canvas = document.querySelector('canvas[data-lab="burn"]');
@@ -290,12 +290,12 @@
     }
     reset();
 
-    // orbital elements from state — guide ellipse + period
+    // orbital elements from state - guide ellipse + period
     function elements() {
       var rx = ship.x - F.x, ry = ship.y - F.y;
       var r = Math.hypot(rx, ry), v2 = ship.vx * ship.vx + ship.vy * ship.vy;
       var eps = v2 / 2 - GM / r;
-      if (eps >= -1e-6) return null;                 // unbound — no ellipse
+      if (eps >= -1e-6) return null;                 // unbound - no ellipse
       var a = -GM / (2 * eps);
       var rv = rx * ship.vx + ry * ship.vy;
       var ex = ((v2 - GM / r) * rx - rv * ship.vx) / GM;
@@ -361,11 +361,11 @@
         ctx.beginPath(); ctx.arc(F.x, F.y, HR + (0.9 - dead) * 90, 0, TAU);
         ctx.strokeStyle = 'rgba(154,108,240,' + (dead / 0.9).toFixed(2) + ')';
         ctx.lineWidth = 3; ctx.stroke();
-        label(ctx, 22, 32, 'SWALLOWED — braked too deep', VIOLET);
+        label(ctx, 22, 32, 'SWALLOWED: braked too deep', VIOLET);
       } else {
         drawShip(ctx, ship.x, ship.y, Math.atan2(ship.vy, ship.vx), INK, !!burnDir);
       }
-      if (escaped) label(ctx, 22, 32, 'ESCAPE VELOCITY — it never comes back', VIOLET);
+      if (escaped) label(ctx, 22, 32, 'ESCAPE VELOCITY: it never comes back', VIOLET);
       if (reduce && !burnDir && dead <= 0) label(ctx, 22, 518, 'hold a burn to move (reduced motion honored)', MUTED);
 
       // readouts
@@ -373,7 +373,7 @@
       var r = Math.hypot(ship.x - F.x, ship.y - F.y);
       if (rSpeed) rSpeed.textContent = Math.round(v);
       if (rAlt) rAlt.textContent = Math.round(r - HR);
-      if (rLap) rLap.textContent = el ? el.T.toFixed(1) + ' s' : '—';
+      if (rLap) rLap.textContent = el ? el.T.toFixed(1) + ' s' : '–';
     }
 
     register({ canvas: canvas, resize: S.resize, need: function () { return dead > 0 || !(reduce && !burnDir); }, step: step, draw: draw });
@@ -382,7 +382,7 @@
   /* ---------- toy 3: bend the shot ----------
      The target hides behind the hole: the straight line is swallowed, the
      curved one connects. GM/speed tuned so hits exist well off the direct
-     bearing (see the tuning scan in scratch — constants baked here). */
+     bearing (see the tuning scan in scratch - constants baked here). */
   (function laser() {
     var canvas = document.querySelector('canvas[data-lab="laser"]');
     if (!canvas) return;
