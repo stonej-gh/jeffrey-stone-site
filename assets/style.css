@@ -183,9 +183,11 @@ footer { border-top: 1px solid var(--line); padding: 68px 0 54px; }
 .foot-bar a { color: var(--muted); }
 .foot-bar a:hover { color: var(--ink); text-decoration: none; }
 .foot-bar .free { color: var(--cyan); }
-.foot-bar .tip { display:inline-block; background:#FFDD00; border-radius:4px; padding:2px 3px; line-height:0; vertical-align:-4px; }
-.foot-bar .tip img { height:13px; display:block; }
-.foot-bar .tip:hover { background:#ffe84d; }
+.foot-bar .tip { color: var(--cyan); display: inline-flex; align-items: center; gap: 7px; vertical-align: -4px; }
+.foot-bar .tip .tip-chip { background: #FFDD00; border-radius: 4px; padding: 2px 3px; line-height: 0; display: inline-block; }
+.foot-bar .tip img { height: 13px; display: block; }
+.foot-bar .tip:hover { color: var(--ink); }
+.foot-bar .tip:hover .tip-chip { background: #ffe84d; }
 
 /* ---------- research page ---------- */
 .video-frame { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: #000; }
@@ -336,6 +338,29 @@ footer { border-top: 1px solid var(--line); padding: 68px 0 54px; }
 .md-render blockquote { border-left: 3px solid var(--cyan-dim); margin: 18px 0;
   padding: 4px 18px; background: var(--panel-2); color: var(--muted); border-radius: 0 8px 8px 0; }
 .md-render hr { border: none; border-top: 1px solid var(--line); margin: 28px 0; }
+
+/* tabs + TOC layout for the implementation notebooks (one page, two .md docs) */
+.md-tabs { display: flex; gap: 8px; margin-top: 40px; border-bottom: 1px solid var(--line); }
+.md-tab { font-family: var(--font-mono); font-size: 13px; letter-spacing: .05em;
+  padding: 12px 20px; background: none; border: 1px solid transparent; border-bottom: none;
+  color: var(--muted); cursor: pointer; border-radius: 10px 10px 0 0; }
+.md-tab:hover { color: var(--ink); }
+.md-tab.active { color: var(--cyan); border-color: var(--line); background: var(--panel); }
+.md-pane { border-top-left-radius: 0; }
+.md-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.md-layout { display: grid; grid-template-columns: 225px minmax(0, 1fr); gap: 0 10px; }
+.md-toc { position: sticky; top: 84px; align-self: start; padding: 22px 6px 22px 24px;
+  font-size: 13.5px; max-height: calc(100vh - 108px); overflow: auto; }
+.md-toc .toc-title { font-family: var(--font-mono); font-size: 11px; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--cyan); margin-bottom: 10px; }
+.md-toc a { display: block; color: var(--muted); padding: 3px 0; line-height: 1.4; }
+.md-toc a.toc-h3 { padding-left: 15px; font-size: 12.5px; }
+.md-toc a:hover { color: var(--cyan); text-decoration: none; }
+.md-render h2, .md-render h3 { scroll-margin-top: 84px; }
+@media (max-width: 880px) {
+  .md-layout { grid-template-columns: 1fr; }
+  .md-toc { position: static; max-height: none; padding: 18px 24px 0; }
+}
 .md-render table { border-collapse: collapse; width: 100%; margin: 18px 0;
   font-size: 0.95rem; display: block; overflow-x: auto; }
 .md-render th, .md-render td { border: 1px solid var(--line); padding: 8px 12px; text-align: left; }

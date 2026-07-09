@@ -1,12 +1,14 @@
-/* Unlock module for private research experiments - SINGLE-KEY model.
+/* Unlock module for private research experiments - keys are PER SLUG GROUP.
 
    Each private experiment is a slug directory under /research/ holding
    check.enc + content.enc (+ media *.enc / doc *.md.enc), all AES-256-GCM.
-   As of the deployment-notebooks work there is ONE passphrase for all
-   private content: entering it on any private page unlocks that page AND
-   every sibling slug in PRIVATE_SLUGS whose check.enc verifies with the
-   same passphrase (each slug keeps its own salt, so keys are derived
-   per-slug). Derived keys are cached per slug:
+   Keys (2026-07-09): the implementation notebooks have one key; spotter on
+   the mirror has its own separate key; the demo canary keeps its own. A
+   passphrase entered on any private page still ATTEMPTS every sibling slug
+   in PRIVATE_SLUGS, but only unlocks the ones whose check.enc verifies with
+   it - slugs on a different key just fail quietly and stay locked (each
+   slug keeps its own salt, so keys are derived per-slug). Derived keys are
+   cached per slug:
      localStorage jsExpK:<slug> (key) / jsExpS:<slug> (salt guard -
      rotating the passphrase re-salts every file and invalidates old keys).
 
@@ -34,11 +36,11 @@ var ResearchLock = (function () {
   /* the pre-2026-07 /experimental/ area cached un-suffixed keys; retire them */
   try { localStorage.removeItem('jsExpK'); localStorage.removeItem('jsExpS'); } catch (e) {}
 
-  /* Every private slug that shares the single passphrase. Sibling unlock walks
-     this list; a slug encrypted with a different key just fails to verify and
-     is skipped, and a slug that is plaintext on this host (e.g. spotter on the
-     apex, which has no check.enc) 404s and is skipped. Order is cosmetic. */
-  var PRIVATE_SLUGS = ['spotter', 'worm-deploy', 'watcher-deploy', 'demo'];
+  /* Every private slug a passphrase should be TRIED against. A slug encrypted
+     with a different key just fails to verify and is skipped, and a slug that
+     is plaintext on this host (e.g. spotter on the apex, which has no
+     check.enc) 404s and is skipped. Order is cosmetic. */
+  var PRIVATE_SLUGS = ['spotter', 'implementation', 'demo'];
 
   /* Absolute URL of the /research/ directory, from this script's own location
      (…/assets/research-lock.js -> …/research/). currentScript is only valid
@@ -97,7 +99,10 @@ var ResearchLock = (function () {
       } catch (e) { return null; }
     }
 
-    /* Decrypt a rendered-markdown doc into its .md-body and wire its download. */
+    /* Decrypt a rendered-markdown doc into its .md-body, then wire download
+       (raw .md as a file), copy (raw .md to the clipboard - the VIEW is
+       rendered but what you take away is Markdown), and an optional TOC
+       (.md-toc nav filled from the rendered h2/h3 headings). */
     async function renderMd(key, el) {
       var name = el.getAttribute('data-md');
       var buf = await ExpCrypto.decrypt(key, await ExpCrypto.fetchEnc(name));
@@ -108,6 +113,39 @@ var ResearchLock = (function () {
       if (dl) {
         dl.href = URL.createObjectURL(new Blob([text], { type: 'text/markdown' }));
         dl.download = el.getAttribute('data-filename') || 'document.md';
+      }
+      var cp = el.querySelector('button.md-copy');
+      if (cp) cp.addEventListener('click', function () {
+        var done = function () {
+          var old = cp.textContent;
+          cp.textContent = 'Copied';
+          setTimeout(function () { cp.textContent = old; }, 1400);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText)
+          navigator.clipboard.writeText(text).then(done, function () { cp.textContent = 'Copy failed'; });
+        else cp.textContent = 'Copy failed';
+      });
+      var toc = el.querySelector('.md-toc');
+      if (toc) {
+        var hs = body.querySelectorAll('h2, h3');
+        if (hs.length < 2) { toc.hidden = true; return; }
+        var title = document.createElement('p');
+        title.className = 'toc-title';
+        title.textContent = 'Contents';
+        toc.appendChild(title);
+        var used = {};
+        for (var i = 0; i < hs.length; i++) {
+          var id = hs[i].textContent.toLowerCase()
+                    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'sec';
+          while (used[id]) id += '-b';
+          used[id] = 1;
+          hs[i].id = id;
+          var a = document.createElement('a');
+          a.href = '#' + id;
+          a.textContent = hs[i].textContent;
+          a.className = hs[i].tagName === 'H3' ? 'toc-h3' : 'toc-h2';
+          toc.appendChild(a);
+        }
       }
     }
 

@@ -1,14 +1,14 @@
 <!doctype html>
-<!-- Private-slug shell for the watcher Deployment notebook (Experiment 02).
-     Content is encrypted next to this file (scripts/encrypt-research.py
-     watcher-deploy). Single-key model: one passphrase unlocks this, the worm
-     notebook, and the spotter experiment (see assets/research-lock.js). -->
+<!-- Private-slug shell for the implementation notebooks (one page, two tabs:
+     Design Engineer / Engineering Manager). Content is encrypted next to this
+     file (scripts/encrypt-research.py implementation). Its key covers ONLY
+     this slug; see private/research-src/implementation/README.md. -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>watcher · Deployment · Research · Jeffrey Stone</title>
-<meta name="description" content="Private deployment notebook, encrypted at rest.">
+<title>Implementation · Research · Jeffrey Stone</title>
+<meta name="description" content="Private implementation notebooks, encrypted at rest.">
 <meta name="robots" content="noindex, nofollow">
 <meta name="color-scheme" content="dark">
 <link rel="icon" type="image/svg+xml" href="../../assets/icon.svg">
@@ -36,10 +36,10 @@
 <!-- login (the only thing visible until the passphrase unlocks the payload) -->
 <section class="page-head" id="exp-login">
   <div class="wrap">
-    <p class="crumb"><a href="../">Research</a> / watcher · Deployment</p>
-    <p class="eyebrow">Private deployment notebook</p>
-    <h1>Deploying the eye</h1>
-    <p class="lede">How the <a href="../spotter/">watcher</a> vision net could run on a target hardware implementation: on its accelerator array, with a live float-vs-int8 toggle. It's stored <b>encrypted</b>. Enter the passphrase and your browser decrypts it locally. Nothing you type leaves this page.</p>
+    <p class="crumb"><a href="../">Research</a> / Implementation</p>
+    <p class="eyebrow">Private implementation notebooks</p>
+    <h1>The implementation notebooks</h1>
+    <p class="lede">Two working documents on running the experiments on a target hardware implementation: one for the design engineer, one for the engineering manager. They are stored <b>encrypted</b>. Enter the passphrase and your browser decrypts them locally. Nothing you type leaves this page.</p>
     <form id="exp-form" autocomplete="off">
       <div class="pass-row">
         <input class="pass-input" id="exp-pass" type="password" placeholder="passphrase" autocomplete="current-password" autofocus>
@@ -65,8 +65,8 @@
   <div class="wrap">
     <div class="foot-bar">
       <span>&copy; 2026 Jeffrey Stone</span>
-      <span class="free">Private notebook · encrypted at rest</span>
-      <span><a href="../../">jeffrey-stone.com</a></span>
+      <span class="free">Private notebooks · encrypted at rest</span>
+      <span>The mailbox is open: <a href="mailto:letters@jeffrey-stone.com">letters@jeffrey-stone.com</a></span>
     </div>
   </div>
 </footer>
@@ -75,6 +75,22 @@
 <script src="../../assets/md-render.js"></script>
 <script src="../../assets/deep.js"></script>
 <script src="../../assets/research-lock.js"></script>
-<script>ResearchLock.init({ slug: 'watcher-deploy' });</script>
+<script>
+ResearchLock.init({ slug: 'implementation' });
+/* tab switching for the decrypted panes (delegated: the panes are injected) */
+document.addEventListener('click', function (ev) {
+  var b = ev.target && ev.target.closest ? ev.target.closest('.md-tab') : null;
+  if (!b) return;
+  var tabs = document.querySelectorAll('.md-tab');
+  var panes = document.querySelectorAll('.md-pane');
+  for (var i = 0; i < tabs.length; i++) {
+    var on = tabs[i] === b;
+    tabs[i].classList.toggle('active', on);
+    tabs[i].setAttribute('aria-selected', on ? 'true' : 'false');
+  }
+  for (var j = 0; j < panes.length; j++)
+    panes[j].hidden = panes[j].getAttribute('data-pane') !== b.getAttribute('data-tab');
+});
+</script>
 </body>
 </html>
