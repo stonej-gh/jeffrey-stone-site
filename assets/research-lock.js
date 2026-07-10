@@ -2,8 +2,9 @@
 
    Each private experiment is a slug directory under /research/ holding
    check.enc + content.enc (+ media *.enc / doc *.md.enc), all AES-256-GCM.
-   Keys (2026-07-09): the implementation notebooks have one key; spotter on
-   the mirror has its own separate key; the demo canary keeps its own. A
+   Keys (2026-07-10): the implementation notebooks have one key; the demo
+   canary keeps its own. (The spotter-on-mirror key is retired: spotter is
+   plaintext on both surfaces since the mirror went lockstep.) A
    passphrase entered on any private page still ATTEMPTS every sibling slug
    in PRIVATE_SLUGS, but only unlocks the ones whose check.enc verifies with
    it - slugs on a different key just fail quietly and stay locked (each
@@ -37,10 +38,9 @@ var ResearchLock = (function () {
   try { localStorage.removeItem('jsExpK'); localStorage.removeItem('jsExpS'); } catch (e) {}
 
   /* Every private slug a passphrase should be TRIED against. A slug encrypted
-     with a different key just fails to verify and is skipped, and a slug that
-     is plaintext on this host (e.g. spotter on the apex, which has no
-     check.enc) 404s and is skipped. Order is cosmetic. */
-  var PRIVATE_SLUGS = ['spotter', 'implementation', 'demo'];
+     with a different key just fails to verify and is skipped. Order is
+     cosmetic. */
+  var PRIVATE_SLUGS = ['implementation', 'demo'];
 
   /* Absolute URL of the /research/ directory, from this script's own location
      (…/assets/research-lock.js -> …/research/). currentScript is only valid
