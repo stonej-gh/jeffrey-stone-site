@@ -220,7 +220,7 @@
       <p class="ch-tag">06 · The shipping</p>
       <h2>What it takes to train, what it takes to run</h2>
       <div class="prose">
-        <p>Here's the part that surprises people: training a network and running it are wildly different amounts of work, and the gap has a unit. That unit is the multiply-add, one weight times one input, accumulated: a <b>MAC</b>. Running the trained pilot is a single forward pass, about 6,100 MACs, taken fifteen times a second, and that is the entire cost, on any chip, for as long as it flies. Training runs that same forward pass and then a backward pass to work out how to adjust every weight, two to three times the arithmetic per step, repeated for every one of about 41 million practice decisions. The network was exercised tens of millions of times over in the lab so that it could run once per frame ever after. And the largest cost never ships at all: the 164 million frames of physics the pilot practiced against, which is where the laptop's forty minutes actually went.</p>
+        <p>Here's the part that surprises people: training a network and running it are wildly different amounts of work, and the gap has a unit. That unit is the multiply-add, one weight times one input, accumulated: a <b>MAC</b>. Running the trained pilot is a single forward pass, about 6,100 MACs, taken fifteen times a second, and that is the entire cost, on any chip, for as long as it flies. Training runs that same forward pass and then a backward pass to work out how to adjust every weight, two to three times the arithmetic per step, repeated for every one of about 41 million practice decisions. The network was exercised tens of millions of times over in the lab so that, deployed, it needs only that single forward pass per decision. And the largest cost never ships at all: the 164 million frames of physics the pilot practiced against, which is where the laptop's forty minutes actually went.</p>
         <p>On the phone there's no AI framework at all. The brain crosses from lab to game as a small file of numbers, and 225 lines of ordinary code do the arithmetic. Everything hard happens in the lab; <b>what ships is arithmetic</b>.</p>
         <p class="muted" style="font-size:.95rem;">(Today the learned pilot flies in a research build of the game, where a settings picker chooses which brain flies the robot: a phone-trained net, a tablet-trained net, or the classic programmed pilot. Bringing that picker to the public beta is on the wish list.)</p>
       </div>
@@ -292,7 +292,7 @@
         <blockquote>"Never train against a lie."</blockquote>
         <blockquote>"We fixed the world and the score dropped 30 points. All 30 were cheating."</blockquote>
         <blockquote>"The GPU was slower: for a net this small, the physics sim is the bottleneck, not the matmul."</blockquote>
-        <blockquote>"Training runs the net tens of millions of times so it can run once per frame forever."</blockquote>
+        <blockquote>"Training runs the net tens of millions of times so it can run once per decision forever."</blockquote>
       </div>
     </div>
 
