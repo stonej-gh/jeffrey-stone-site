@@ -109,7 +109,7 @@
             <tr><td>inference</td><td>~6,100 MACs (multiply-adds; ch. 06) / decision at 15 Hz → ~92k MAC/s</td></tr>
             <tr><td>action space</td><td>Discrete(12) = turn(3) × thrust(2) × fire(2), argmax</td></tr>
           </table></div>
-          <p>At ~92k MAC/s, the pilot wouldn't keep the cheapest chip on the market awake. A four-cent microcontroller runs it at roughly 1% effort. Any silicon made for this brain would be mostly packaging: the case would dwarf the mind. The interesting question was never whether it fits. It's how something this small learns to fly.</p>
+          <p>At ~92k MAC/s, the pilot barely registers on any processor made this century. Any silicon built for this brain would be mostly packaging: the case would dwarf the mind. The interesting question was never whether it fits. It's how something this small learns to fly.</p>
           <div class="go-deeper"><b>Go deeper</b>
             <a href="https://www.3blue1brown.com/topics/neural-networks">3Blue1Brown: Neural networks (visual series)</a> ·
             <a href="https://www.deeplearningbook.org/contents/mlp.html">Goodfellow, Bengio &amp; Courville: Deep Learning, ch. 6 (feedforward nets)</a> ·
@@ -218,9 +218,9 @@
     <!-- ······································ the shipping ·· -->
     <div class="chapter" id="shipping">
       <p class="ch-tag">06 · The shipping</p>
-      <h2>The lab needs a supercomputer. The brain needs four cents</h2>
+      <h2>What it takes to train, what it takes to run</h2>
       <div class="prose">
-        <p>Here's the part that surprises people. <b>Designing</b> the experiment took a frontier AI running at data-center scale. <b>Training</b> the pilot (164 million physics frames of practice; the physics ticks four times for every decision the pilot makes) took a laptop and about 40 minutes; a phone could have done it. <b>Running</b> the trained pilot needs almost nothing: the math fits a four-cent chip, which the pilot would keep busy about 1% of the time.</p>
+        <p>Here's the part that surprises people: training a network and running it are wildly different amounts of work, and the gap has a unit. That unit is the multiply-add, one weight times one input, accumulated: a <b>MAC</b>. Running the trained pilot is a single forward pass, about 6,100 MACs, taken fifteen times a second, and that is the entire cost, on any chip, for as long as it flies. Training runs that same forward pass and then a backward pass to work out how to adjust every weight, two to three times the arithmetic per step, repeated for every one of about 41 million practice decisions. The network was exercised tens of millions of times over in the lab so that it could run once per frame ever after. And the largest cost never ships at all: the 164 million frames of physics the pilot practiced against, which is where the laptop's forty minutes actually went.</p>
         <p>On the phone there's no AI framework at all. The brain crosses from lab to game as a small file of numbers, and 225 lines of ordinary code do the arithmetic. Everything hard happens in the lab; <b>what ships is arithmetic</b>.</p>
         <p class="muted" style="font-size:.95rem;">(Today the learned pilot flies in a research build of the game, where a settings picker chooses which brain flies the robot: a phone-trained net, a tablet-trained net, or the classic programmed pilot. Bringing that picker to the public beta is on the wish list.)</p>
       </div>
@@ -228,7 +228,7 @@
         <summary>For the learners</summary>
         <div class="deep-body">
           <p>Training and inference are different activities that happen to share the same weights, and the asymmetry is worth quantifying. <b>Inference</b> (using the trained net) is chapter 02's three matrix multiplies, nothing else. The accounting unit is the <b>MAC</b> (one multiply-plus-add): 19×64 + 64×64 + 64×12 ≈ 6,100 MACs per decision, fifteen times a second ≈ 92,000 per second. <b>Training</b> runs the same forward pass, then <b>backpropagation</b>: the chain rule from calculus, applied stage by stage backward through the stack, prices every one of the 6,285 parameters at once (how much each is to blame for the current error) for only about 2–3× the cost of the forward pass. That one-backward-sweep-blames-every-knob trick is the quiet engine under all of deep learning (<b>autograd</b>, when you meet the word, is just the software that does the chain-rule bookkeeping automatically). The real overheads of training live elsewhere: the optimizer's bookkeeping (Adam keeps two running averages per parameter, memory ×3), the recorded rollouts, and above all the physics simulator generating 164 million frames of practice.</p>
-          <p>That's why the GPU lost. A GPU is a freight train: unbeatable per ton, expensive to load. It wins by spreading a fixed launch cost over enormous matrix multiplies, and a 64×64 multiply is finished before the paperwork clears: all setup, no haul. Meanwhile the actual bottleneck, the physics twin, is branchy, one-step-after-another code: exactly what a CPU is for. Rule of thumb worth keeping: below some model size, <em>the environment is the supercomputer</em>, and the fashionable accelerator is a space heater.</p>
+          <p>That's why the GPU lost. A GPU is a freight train: unbeatable per ton, expensive to load. It wins by spreading a fixed launch cost over enormous matrix multiplies, and a 64×64 multiply is finished before the paperwork clears: all setup, no haul. Meanwhile the actual bottleneck, the physics twin, is branchy, one-step-after-another code: exactly what a CPU is for. Rule of thumb worth keeping: below some model size, the bottleneck is the environment, not the matrix multiply, and the CPU that steps the environment sets the pace.</p>
           <p>Deployment-side vocabulary: the weights ship as <b>fp32</b> (ordinary 32-bit floating-point numbers, 6,220&nbsp;×&nbsp;4 bytes ≈ 25&nbsp;KB) and would drop to 6.2&nbsp;KB as <b>int8</b>, every weight rounded onto a scale of 256 integer levels, called <b>quantization</b>: fine-grained precision traded for a 4× smaller, cheaper brain. For a net this size nobody's forcing the trade; the second experiment on this site, <a href="../spotter/">the net that watches the screen</a>, takes quantization seriously. Its <a href="../spotter/#eightbits">chapter&nbsp;06</a> is the full treatment, and the most physical topic in either notebook. One more deployment idea: the shipped net always plays its best-scoring move (deterministic argmax), while the lab net <em>samples</em> moves in proportion to its confidence (the twelve scores become odds, higher score better odds, and the move is drawn like a weighted dice roll). Exploration belongs in training, not in production.</p>
         </div>
       </details>
@@ -236,7 +236,7 @@
         <summary>For the data scientists</summary>
         <div class="deep-body">
           <p>Deployment is a 225-line Swift file with a hand-rolled forward pass: three matmuls, two tanh vectors, one argmax. Weights cross as JSON: 134 KB as text, 24,880 bytes as fp32 (6,220 × 4), 6.2 KB at int8. Inference allocates nothing and costs nothing the frame budget can measure. Deterministic argmax on device; the sampling, the value head, and all stochasticity stay in the lab.</p>
-          <p>Training ran ~41 million agent decisions (164M physics frames) against the curriculum, with the league evaluating 200 episodes per opponent level as it went, ~40 minutes on a laptop CPU. A detail worth savoring: the GPU is <em>slower</em> here. For a net this small, kernel-dispatch overhead exceeds the matmul, and the true bottleneck is the physics simulation, which is pure CPU. At 6,000 parameters, physics is the supercomputer.</p>
+          <p>Training ran ~41 million agent decisions (164M physics frames) against the curriculum, with the league evaluating 200 episodes per opponent level as it went, ~40 minutes on a laptop CPU. A detail worth savoring: the GPU is <em>slower</em> here. For a net this small, kernel-dispatch overhead exceeds the matmul, and the true bottleneck is the physics simulation, which is pure CPU. The environment, not the network, sets the training clock.</p>
           <div class="table-scroll"><table class="fact-table">
             <tr><th></th><th>training (lab)</th><th>deployment (device)</th></tr>
             <tr><td>framework</td><td>PyTorch + Adam + autograd</td><td>none: 225 lines of Swift</td></tr>
@@ -245,7 +245,7 @@
             <tr><td>stochastic?</td><td>samples from the policy</td><td>deterministic argmax</td></tr>
             <tr><td>extra heads</td><td>value head (advantage estimation)</td><td>discarded at export</td></tr>
           </table></div>
-          <p>The compute ladder, run bottom-up: run it on an ARM Cortex-M0 (~5–10M int8 MAC/s at 48 MHz vs the pilot's 92k, 99% idle on a 3–4¢ part); train it on any CPU; design it with a frontier model. Every rung matched to its job. Design → simulate → train → quantize → deploy: the same pipeline that puts AI into phones, cameras, and cars, end to end on one desk.</p>
+          <p>The compute ladder, bottom to top: the trained net runs on an ARM Cortex-M0 (~5–10M int8 MAC/s at 48 MHz against the pilot's 92k, so it sits ~99% idle), and it trains on any laptop CPU. Design → simulate → train → quantize → deploy: the same pipeline that puts AI into phones, cameras, and cars, end to end on one desk.</p>
           <div class="go-deeper"><b>Go deeper</b>
             <a href="https://arxiv.org/abs/1806.08342">Krishnamoorthi 2018, Quantizing deep conv networks: a whitepaper</a> ·
             <a href="https://arxiv.org/abs/1510.00149">Han et al. 2015: Deep Compression</a> ·
@@ -291,8 +291,8 @@
         <blockquote>"Half a worm, flying a spaceship."</blockquote>
         <blockquote>"Never train against a lie."</blockquote>
         <blockquote>"We fixed the world and the score dropped 30 points. All 30 were cheating."</blockquote>
-        <blockquote>"The GPU was slower. At 6,000 parameters, physics is the supercomputer."</blockquote>
-        <blockquote>"The pilot's brain costs four cents and spends 99% of its life idle."</blockquote>
+        <blockquote>"The GPU was slower: for a net this small, the physics sim is the bottleneck, not the matmul."</blockquote>
+        <blockquote>"Training runs the net tens of millions of times so it can run once per frame forever."</blockquote>
       </div>
     </div>
 
