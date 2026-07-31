@@ -18,8 +18,8 @@
    invisible to browsers that never unlocked them.
 
    Sibling check.enc files are fetched by ABSOLUTE url derived from this
-   script's own src (captured below), so unlock works whether the site is
-   served at the apex root or under the mirror's /spacewar-mirror/ subpath.
+   script's own src (captured below), so unlock works wherever the page is
+   served: the apex root, the notebooks site's root, or any subpath.
 
    A private experiment page is ~10 lines of glue:
      <script src="../../assets/exp-crypto.js"></script>
