@@ -44,7 +44,7 @@
 <section class="page-head" style="padding-bottom:0;">
   <div class="wrap">
     <p class="crumb"><a href="../">Research</a> / the pilot</p>
-    <p class="eyebrow">Experiment 01</p>
+    <p class="eyebrow">Notebook 01</p>
     <h1>Half a worm, <span style="color:var(--cyan)">flying a spaceship</span></h1>
     <p class="lede">The robot pilots you duel in <a href="../../spacewar/">Spacewar: Orbital Duel</a> are hand-tuned code: every move written by a human. This page is about the other kind: a neural network smaller than half a worm's brain that started with <b>zero knowledge</b> (not even physics) and taught itself to fly, fight, cheat, get caught, and finally bend its shots around the black hole.</p>
     <p class="tier-legend">Every chapter reads plainly on its own. Under each one, <span class="t-learn">▸ FOR THE LEARNERS</span> rebuilds the machinery from first principles (written for any scientifically curious reader, no machine-learning background assumed, the occasional equation at most) and <span class="t-ds">▸ FOR THE DATA SCIENTISTS</span> is the actual lab notebook, in the field's own language, each ending with a few references that go deeper still. Whenever you get curious, the ladder is open: read a chapter's learner note, then its deep dive. Every sentence should land.</p>
@@ -140,9 +140,9 @@
       <details class="deep deep-ds">
         <summary>For the data scientists</summary>
         <div class="deep-body">
-          <p>The pipeline reads like a lab protocol. Measure the shipped game's physics from telemetry; build a headless (no-graphics) Python twin, 231 lines of numpy-free arithmetic, and refuse to proceed until the twin's orbits match the real game inside 2% (a formal fidelity gate: orbital period 1.8%, radius 0.9%, velocity 0.9%). Wrap it in the standard Gymnasium reset/step contract (the field's common environment interface). Even the thrust constant was verified empirically, by double-differentiating telemetry positions.</p>
-          <p>Training is a <b>single-file, hand-rolled PPO</b> (256 lines, CleanRL philosophy, no RL framework), then a league trainer mixing the sparring tiers with frozen snapshots of the agent's past selves. Clipped objective ε&nbsp;=&nbsp;0.2, GAE(λ&nbsp;=&nbsp;0.95), γ&nbsp;=&nbsp;0.995 (≈9-s credit half-life) over 90-second episodes, Adam at 3e-4, 8 parallel envs × 256-step rollouts = 2,048-step batches, minibatch 512, 4 epochs per update. Every evaluation episode is archived as replay JSON, the experiment's permanent record; the film is a derived artifact.</p>
-          <p>The survival pretask used Double DQN. Its collapse at lr&nbsp;1e-3 was the project's first textbook lesson: divergence consistent with the deadly triad, live on the loss curve. The entire learning stack (twin, environment, PPO, league) is about <b>1,300 lines of Python</b>.</p>
+          <p>The pipeline reads like a lab protocol. Measure the shipped game's physics from telemetry; build a headless (no-graphics) Python twin, 265 lines of numpy-free arithmetic, and refuse to proceed until the twin's orbits match the real game inside 2% (a formal fidelity gate: orbital period 1.8%, radius 0.9%, velocity 0.9%). Wrap it in the standard Gymnasium reset/step contract (the field's common environment interface). Even the thrust constant was verified empirically, by double-differentiating telemetry positions.</p>
+          <p>Training is a <b>single-file, hand-rolled PPO</b> (333 lines, CleanRL philosophy, no RL framework), then a league trainer mixing the sparring tiers with frozen snapshots of the agent's past selves. Clipped objective ε&nbsp;=&nbsp;0.2, GAE(λ&nbsp;=&nbsp;0.95), γ&nbsp;=&nbsp;0.995 (≈9-s credit half-life) over 90-second episodes, Adam at 3e-4, 8 parallel envs × 256-step rollouts = 2,048-step batches, minibatch 512, 4 epochs per update. Every evaluation episode is archived as replay JSON, the experiment's permanent record; the film is a derived artifact.</p>
+          <p>The survival pretask used Double DQN. Its collapse at lr&nbsp;1e-3 was the project's first textbook lesson: divergence consistent with the deadly triad, live on the loss curve. The entire learning stack (twin, environment, PPO, league) is about <b>1,400 lines of Python</b>.</p>
           <div class="go-deeper"><b>Go deeper</b>
             <a href="http://incompleteideas.net/book/the-book-2nd.html">Sutton &amp; Barto: Reinforcement Learning, 2nd ed. (ch. 13: policy gradient)</a> ·
             <a href="https://arxiv.org/abs/1707.06347">Schulman et al. 2017: Proximal Policy Optimization</a> ·
@@ -191,7 +191,7 @@
       <h2>The last lie was the lasers</h2>
       <div class="prose">
         <p>If you've played the game you know the secret: <b>your shots curve</b>. The black hole pulls on lasers too, and good players bend shots around the well. Here the lab got caught by its own rule: in the twin, the sparring partner's shots curved correctly. But nobody had given the learned pilot's <em>own</em> shots gravity. It trained believing its lasers flew straight, and when it was dropped into the real game on an iPad you could <em>see</em> the handicap: shot after shot missing on the same side, a pilot that didn't know gravity touches its bullets.</p>
-        <p>So the twin got curved lasers, and the network got to learn what human players learn. With every anti-cheat rule still enforced, the retrained <b>curve-reader</b> beats its entire sparring ladder, 95% of all duels. Then the real exam, the film's finale: dropped into the actual game engine, it enters the ladder at LEVEL 1 and climbs against the game's own defenders, bending shots around the well, until one of them stops it. Typical reach across eight measured runs: level 9 or 10. Its best run got past the game's toughest defender to level 11.</p>
+        <p>So the twin got curved lasers, and the network got to learn what human players learn. With every anti-cheat rule still enforced, the retrained <b>curve-reader</b> beat the sparring ladder of its day in 95% of duels. Then the real exam, the film's finale: dropped into the actual game engine, it enters the ladder at LEVEL 1 and climbs against the game's own defenders, bending shots around the well, until one of them stops it. Typical reach across eight measured runs: level 9 or 10. Its best run got past the game's toughest defender to level 11. (That 95% number has an epilogue: the lab later rebuilt its sparring ladder around the real opponent's own moves, and the top rungs became close matches. Chapter 07 is that story.)</p>
       </div>
       <details class="deep deep-learn">
         <summary>For the learners</summary>
@@ -205,7 +205,7 @@
         <summary>For the data scientists</summary>
         <div class="deep-body">
           <p>One asymmetry was a bug, the other is a feature. The bug: the twin integrated the scripted bot's projectiles under gravity, but the agent's own shots had been overlooked. They flew straight, so the agent could never learn the curve ("never train against a lie," violated in exactly the dimension that decides duels). The fix gave the learned pilot's shots the same curved physics, with the hand rule that vetoes doomed shots (the fire-gate's hole-guard) now forward-simulating the bent trajectory. The feature: the scripted opponents keep their straight lead-<em>aim</em> (faithful to the shipped bots), so curve-reading is the <em>learned</em> pilot's edge, mirroring the human player's edge in the real game. Trigger discipline is three hand rules: fire only ≤15° off the bow (spray was ugly), never through the hole's kill radius, and hold fire beyond ~1.25× muzzle-velocity × time-to-live reach.</p>
-          <p>Sim-to-real held the hard lesson: constraints that make the sim fairer don't preserve real-engine ranking. Versions that dominated the twin transferred unevenly (the straight-shooter scored <em>zero</em> real kills while the curve-reader kills cleanly). The prime suspect was <b>observation parity</b>: a units/sign/clock mismatch in the on-device feature extraction would make any policy play drunk in-engine. The audit ran (dump the 19 floats in-game, replay them through the twin's featurizer, diff element-wise): 18 of 19 features exact to 1e-16, the last within 1% (a millisecond-clock artifact), and 1,766 of 1,766 decisions picked the identical action, Swift vs Python. Acquitted. Behavioral fingerprinting then found the real gap: the sparring partner had been fighting as a hyperactive close-range sprayer while the real opponent is a patient long-range marksman, so the pilot had mastered the wrong teacher. One calibration pass against real-game telemetry, a retrain, and the measurement became the tournament: eight runs, each from LEVEL 1, median reach 9.5, best 11. Open problems are the fun part. Closing one is better.</p>
+          <p>Sim-to-real held the hard lesson: constraints that make the sim fairer don't preserve real-engine ranking. Versions that dominated the twin transferred unevenly (the straight-shooter scored <em>zero</em> real kills while the curve-reader kills cleanly). The prime suspect was <b>observation parity</b>: a units/sign/clock mismatch in the on-device feature extraction would make any policy play drunk in-engine. The audit ran (dump the 19 floats in-game, replay them through the twin's featurizer, diff element-wise): 18 of 19 features exact to 1e-16, the last within 1% (a millisecond clock artifact), and every decision picked the identical action, Swift vs Python. The audit has since been re-run on four captures across both device profiles, phone and tablet: 16,571 of 16,571 decisions identical, and on the tablet the element-wise diff surfaced a wrong velocity-normalizing constant (2.3%) that an independent hardware fit had already flagged, two roads to the same number. Acquitted, and then some. Behavioral fingerprinting then found the real gap: the sparring partner had been fighting as a hyperactive close-range sprayer while the real opponent is a patient long-range marksman, so the pilot had mastered the wrong teacher. One calibration pass against real-game telemetry, a retrain, and the measurement became the tournament: eight runs, each from LEVEL 1, median reach 9.5, best 11. Open problems are the fun part. Closing one is better.</p>
           <div class="go-deeper"><b>Go deeper</b>
             <a href="https://arxiv.org/abs/1703.06907">Tobin et al. 2017: Domain randomization for sim-to-real transfer</a> ·
             <a href="https://arxiv.org/abs/1808.00177">OpenAI 2018: Learning dexterous in-hand manipulation (sim-to-real at scale)</a> ·
@@ -255,9 +255,38 @@
       </details>
     </div>
 
+    <!-- ······································ the opponent ·· -->
+    <div class="chapter" id="opponent">
+      <p class="ch-tag">07 · The opponent</p>
+      <h2>The opponent was the gap</h2>
+      <div class="prose">
+        <p>The story could have ended at the tournament. Instead the lab went back to the one piece of the world that was still a stand-in: the sparring partner. Its ten tiers had been written in the same spirit as the game's robot, then calibrated against telemetry, but they were never the robot. So the lab rebuilt the ladder as a faithful port of the real opponent's own moves, rung by rung, each step landed and measured alone. The reigning champion's record collapsed on contact: a pilot that beat its old practice partner nine duels in ten won <b>19 of 200</b> against the real top rung. Retrain the same recipe against the ported ladder, changing nothing else, and it wins <b>104 of 200</b>. Not a better algorithm, not a bigger net: a truer teacher. "Never train against a lie" turned out to apply to the <em>opponent</em>, not just the physics.</p>
+        <p>Shipping that result surfaced the quieter lesson of the whole project. The trainer used to keep whichever checkpoint scored best across its two hundred noisy in-run evaluations, and the maximum of two hundred noisy numbers is a measurement of luck, not of skill. Measured across six training runs: 49 of 54 candidates scored lower on a fresh sample than on the one that picked them, by 6.1 points on average, and in <b>four runs of six the old rule shipped a genuinely weaker model</b> while a better one sat unused. The fix costs one extra evaluation and fits in a sentence: <b>select on one sample, report on another.</b></p>
+      </div>
+      <details class="deep deep-learn">
+        <summary>For the learners</summary>
+        <div class="deep-body">
+          <p>The first half is the sim-to-real chapter's lesson completing itself. A policy's world isn't just physics; the <b>opponent is part of the world</b>, because the opponent shapes which situations the learner ever meets. Practice against a stand-in and you become expert at the stand-in: every drill your teacher favors gets over-learned, every habit your teacher lacks goes unpunished. The port made the teacher and the exam the same thing, and the thirty-point jump at the top rung is what closing that gap was worth. Notice the echo of chapter 04: fixing the world made the <em>old</em> score look worse (nine-in-ten became 19-in-200), and that drop was the honest part.</p>
+          <p>The second half is a statistical trap with a name worth keeping: the <b>winner's curse</b>, the same effect that makes auction winners overpay and flashy scientific results shrink on replication. Any time you choose the best of many noisy measurements, the winning score overstates the winner: it was partly picked <em>for</em> its luck. Two hundred students guess on a multiple-choice exam; the top score is inflated by fortune even if the best student usually wins, and sometimes the best student doesn't win at all. The cure is structural, not statistical sophistication: make the choice on one sample, then measure the chosen one again on data that had no vote. The lab's trainer now does exactly that, nominating candidates during training and confirming them afterwards on fresh seeds. The same trap lives in A/B tests, hiring funnels, and every "keep the best model" line ever written; once you see it, you see it everywhere.</p>
+        </div>
+      </details>
+      <details class="deep deep-ds">
+        <summary>For the data scientists</summary>
+        <div class="deep-body">
+          <p>The port: the scripted ladder rewritten to fly the real robot's logic through L10 in seven measured steps (the superhuman L11+ layers stay unported, deliberately). Champions retrained per device profile, three seeds each, same league recipe and economics. Phone profile at 200 episodes a level on seeds nothing was selected on: panel mean 63.1% → 81.0%, L10 19 → 104 of 200, at a median of zero wall touches. Tablet moves less and only at the top: 63.7% → 70.0%, L10 14.2% → 34.2% at n=400 paired. The seed spread is the finding to respect: phone seeds landed at 63.1 / 78.3 / 79.6, so the worst seed is indistinguishable from the old champion, and a single-seed version of this result would have been a coin flip between "the opponent was everything" and "nothing changed".</p>
+          <p>Selection: the argmax-over-evals rule was measured at +6.1 points of flattery (worst +24.2), with 4 of 6 runs shipping a weaker checkpoint than nominate-then-confirm picks. And the yardstick itself had a blind spot: two tablet seeds tied on the panel mean to 0.14 se while disagreeing on L7 and L10 by McNemar chi 2.07 and 5.72 in <em>opposite directions</em>, so the mean canceled two genuinely different pilots into a tie. A related surprise fell out of the same data: the two seeds experience the L7→L10 difficulty step as 56.2 and 31.2 points, a 5.64 se difference, so how steep a ladder is depends on who is climbing it. The confirmation pass now scores the full ten-rung ladder and resolves in-noise ties toward the top rung. All of it, with the working code, is in the open lab's notes.</p>
+          <div class="go-deeper"><b>Go deeper</b>
+            <a href="https://github.com/stonej-gh/ml-toys/blob/main/docs/LEARNING-NOTES.md">The lab's learning notes, Stage 6 (the measured selection-bias case)</a> ·
+            <a href="https://github.com/stonej-gh/ml-toys/blob/main/experiments/03-generalization/README.md">Experiment 03: the full generalization matrix, rerunnable</a> ·
+            <a href="https://www.jmlr.org/papers/v11/cawley10a.html">Cawley &amp; Talbot 2010, On over-fitting in model selection</a>
+          </div>
+        </div>
+      </details>
+    </div>
+
     <!-- ······································ the eras ·· -->
     <div class="chapter" id="eras">
-      <p class="ch-tag">07 · The eras</p>
+      <p class="ch-tag">08 · The eras</p>
       <h2>Forty years of AI history, in one duel</h2>
       <div class="prose">
         <p>The blue ship (the robot you fight in the game) is a beautiful piece of 1960s-paradigm AI: expert rules, written and tuned by a human, the way chess programs were built from Shannon through Deep Blue. It's <em>good</em>. The orange ship is the other paradigm, the AlphaZero move (the chess AI that famously taught itself from nothing): no strategy encoded at all, just rules, reward, and self-play.</p>
@@ -286,18 +315,19 @@
 
     <!-- ······································ one-liners ·· -->
     <div class="chapter" id="remember">
-      <p class="ch-tag">08 · If you remember five things</p>
+      <p class="ch-tag">09 · If you remember six things</p>
       <div class="quote-strip">
         <blockquote>"Half a worm, flying a spaceship."</blockquote>
         <blockquote>"Never train against a lie."</blockquote>
         <blockquote>"We fixed the world and the score dropped 30 points. All 30 were cheating."</blockquote>
         <blockquote>"The GPU was slower: for a net this small, the physics sim is the bottleneck, not the matmul."</blockquote>
         <blockquote>"Training runs the net tens of millions of times so it can run once per decision forever."</blockquote>
+        <blockquote>"Select on one sample, report on another."</blockquote>
       </div>
     </div>
 
     <div class="cta-row" style="margin-top:64px;">
-      <a class="btn btn-primary" href="../spotter/">Next experiment: the net that watches the screen &rarr;</a>
+      <a class="btn btn-primary" href="../spotter/">Next notebook: the net that watches the screen &rarr;</a>
       <a class="btn btn-ghost" href="../../spacewar/">Meet the game</a>
       <a class="btn btn-ghost" href="../../support/">Join the beta</a>
     </div>

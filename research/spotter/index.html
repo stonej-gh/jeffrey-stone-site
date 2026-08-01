@@ -44,7 +44,7 @@
 <section class="page-head" style="padding-bottom:0;">
   <div class="wrap">
     <p class="crumb"><a href="../">Research</a> / the eye</p>
-    <p class="eyebrow">Experiment 02</p>
+    <p class="eyebrow">Notebook 02</p>
     <h1>The net that <span style="color:var(--cyan)">watches the screen</span></h1>
     <p class="lede">The <a href="../worm/">first experiment's pilot</a> got its senses served on a plate: nineteen tidy, hand-engineered numbers. Real systems don't get that gift: they get pixels. This experiment closes the gap. A <b>28,000-parameter</b> convolutional network watches raw game frames and paints what it understands (every ship, every laser, the black hole) live, while the game plays. Then it gets squeezed into 8-bit integers, and you get to try to tell the difference. Perception and policy: the two halves of an autonomy stack, both small enough to read.</p>
     <p class="tier-legend">Same rules as the pilot's notebook: the plain story reads on its own; <span class="t-learn">▸ FOR THE LEARNERS</span> rebuilds the machinery from first principles for any scientifically curious reader (this experiment is the more physical of the two, all sampling, resolution, and dynamic range); <span class="t-ds">▸ FOR THE DATA SCIENTISTS</span> is the working notebook, with references to go deeper.</p>
@@ -218,7 +218,7 @@
       <p class="ch-tag">06 · Eight bits</p>
       <h2>The outliers were the lasers</h2>
       <div class="prose">
-        <p>The trained net thinks in 32-bit floating point. Cheap silicon thinks in 8-bit integers. <b>Quantization</b> is the conversion. And it's a bargain: a quarter the memory, integer math instead of floating point, and if you do it right, nobody can tell. The film's alternating segment is that claim, live: float and int8, <b>at most six pixels different out of 61,440</b> on its worst frame.</p>
+        <p>The trained net thinks in 32-bit floating point. Cheap silicon thinks in 8-bit integers. <b>Quantization</b> is the conversion. And it's a bargain: a quarter the memory, integer math instead of floating point, and if you do it right, nobody can tell. The film's alternating segment is that claim, live: float and int8, <b>at most six pixels different out of 61,440</b> on its worst frame. Measured over the entire 741-frame held-out duel, the two disagree on 586 pixels of 45.5 million, and 333 of the frames match to the last pixel.</p>
         <p>The one real decision hiding in "do it right" made the best story in the project. Standard practice says: when choosing each signal's numeric range, clip the rarest, brightest extremes. Outliers waste your precious 256 levels. Here, standard practice failed one class: the lasers. On these clean synthetic frames the rare bright spikes aren't noise: <b>they <em>are</em> the lasers</b>. Clip them and the eye goes blind to exactly the thing it fought hardest to see. Keep the full range and everything passes. Know your signal before you trust a heuristic about it.</p>
       </div>
       <details class="deep deep-learn">
@@ -234,7 +234,7 @@
         <div class="deep-body">
           <p>Scheme: symmetric per-out-channel int8 weights; symmetric per-tensor activations; int32 bias and accumulators; no zero-points anywhere; per-channel requantize multipliers recorded in the export (a hardware target swaps them for fixed-point multiplier+shift pairs). Additive skips requantize to the sum tensor's scale: plain integer adds. The integer path is defined end to end in integer arithmetic, which makes it <b>bit-exact reproducible on any platform</b>: the bundle's verifier (next chapter) checks the integer path byte-for-byte, not approximately.</p>
           <p>Lesson five: 99.9-percentile activation calibration failed the int8 gate on the small classes (laser int8-vs-float IoU 0.963, below the 0.98 gate): the rare bright activations a percentile clips are the lasers. Max calibration passed everything, laser IoU vs float = <b>1.000</b>. On near-binary synthetic frames there is no outlier noise to trim; clipping only destroys signal. The percentile constant now sits in the code at 100.0 with the lesson documented above it.</p>
-          <p>Acceptance, measured: ≥99.99% per-pixel argmax agreement vs float; per-class IoU vs float ≥0.99 (gate 0.98); demo A/B on a busy held-out frame differs by 2 of 61,440 overlay pixels. PTQ only. No QAT needed at these margins.</p>
+          <p>Acceptance, measured: ≥99.99% per-pixel argmax agreement vs float; per-class IoU vs float ≥0.99 (gate 0.98); over the full 741-frame held-out episode, int8 and float disagree on 586 of 45.5M pixels (0.79 per frame, worst frame 6, and 333 frames bit-identical). PTQ only. No QAT needed at these margins.</p>
           <div class="go-deeper"><b>Go deeper</b>
             <a href="https://arxiv.org/abs/1806.08342">Krishnamoorthi 2018, Quantizing deep convolutional networks: a whitepaper</a> ·
             <a href="https://arxiv.org/abs/1712.05877">Jacob et al. 2017, Quantization and training for integer-arithmetic-only inference</a> ·
@@ -286,7 +286,7 @@
     </div>
 
     <div class="cta-row" style="margin-top:64px;">
-      <a class="btn btn-primary" href="../worm/">First experiment: the pilot &rarr;</a>
+      <a class="btn btn-primary" href="../worm/">First notebook: the pilot &rarr;</a>
       <a class="btn btn-ghost" href="../../spacewar/">Meet the game</a>
       <a class="btn btn-ghost" href="../../support/">Join the beta</a>
     </div>
