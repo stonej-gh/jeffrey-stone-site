@@ -368,3 +368,25 @@ footer { border-top: 1px solid var(--line); padding: 68px 0 54px; }
 .md-render td:first-child { color: var(--ink); }
 
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+/* ---------- sage theme: the plant app's three pages (/botanid/) ----------
+   Dark sage (the owner's call 2026-11-03, after a light-sage try read too
+   close to its background): deep green-grey ground, pale warm ink, light
+   sage where the site uses cyan. Scoped to body.theme-sage; nothing else on
+   the site changes. */
+body.theme-sage {
+  --void:   #1b231c;
+  --panel:  #242e25;
+  --panel-2:#2c382d;
+  --line:   #3b4b3d;
+  --ink:    #eef2e8;
+  --muted:  #b3c0ab;
+  --cyan:   #a3d193;
+  --cyan-dim: #6f9c66;
+  --learn:  #e4b46f;
+}
+.theme-sage .lede { color: #d3ddcb; }
+.theme-sage .idea { color: #d3ddcb; }
+.theme-sage .brand .dot { box-shadow: 0 0 14px 1px #a3d19399; }
+.theme-sage .btn-primary { color: #0f1a10; }
+.theme-sage .btn-primary:hover { background: #b9dfab; }
