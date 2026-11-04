@@ -369,7 +369,7 @@ footer { border-top: 1px solid var(--line); padding: 68px 0 54px; }
 
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 
-/* ---------- sage theme: the plant app's three pages (/botanid/) ----------
+/* ---------- sage theme: the plant app's three pages (/rabbitbrush/) ----------
    Dark sage (the owner's call 2026-11-03, after a light-sage try read too
    close to its background): deep green-grey ground, pale warm ink, light
    sage where the site uses cyan. Scoped to body.theme-sage; nothing else on
