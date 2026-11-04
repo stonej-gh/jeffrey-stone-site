@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Share | Jeffrey Stone</title>
-<meta name="description" content="Share jeffrey-stone.com phone to phone: scan the code, or copy the link. Home of Spacewar: Orbital Duel.">
+<meta name="description" content="Share jeffrey-stone.com phone to phone: scan the code, or copy the link. Home of Spacewar: Orbital Duel and Rabbitbrush: Plant ID.">
 <meta name="color-scheme" content="dark">
 <meta property="og:title" content="Share | Jeffrey Stone">
-<meta property="og:description" content="Scan to open jeffrey-stone.com on another phone. Home of Spacewar: Orbital Duel.">
+<meta property="og:description" content="Scan to open jeffrey-stone.com on another phone. Spacewar: Orbital Duel and Rabbitbrush: Plant ID, free, in beta.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Jeffrey Stone">
 <meta property="og:url" content="https://jeffrey-stone.com/share/">
@@ -72,7 +72,7 @@
   <div class="wrap">
     <p class="eyebrow">Share</p>
     <h1>Spread the word</h1>
-    <p class="lede">Know someone with an iPhone or iPad who'd love to beta-test Spacewar: Orbital Duel?</p>
+    <p class="lede">Know someone who'd like to beta-test Spacewar: Orbital Duel on iPhone, iPad or Android, or Rabbitbrush on iPhone?</p>
   </div>
 </div>
 
@@ -88,13 +88,13 @@
 
       <div class="share-copy">
         <p class="sub-label">Scan · tap · copy</p>
-        <h2>Three ways across</h2>
+        <h2>Across to another phone</h2>
         <p class="lede">Hold a camera to the code and it offers to open the site. On a phone already, use the share sheet or grab the link.</p>
         <div class="share-actions">
           <button class="btn btn-primary" id="copyBtn" type="button">Copy link</button>
           <button class="btn btn-ghost" id="shareBtn" type="button" hidden>Share&hellip;</button>
         </div>
-        <p class="share-second">Sharing the beta instead? Send testers to the <a href="../support/">TestFlight invite</a>.</p>
+        <p class="share-second">Sharing a beta instead? Send Spacewar testers to <a href="../support/">the beta page</a> and Rabbitbrush testers to <a href="../rabbitbrush/">its page</a>.</p>
       </div>
     </div>
   </div>
@@ -102,10 +102,6 @@
 
 <footer>
   <div class="wrap">
-    <div class="homage">
-      <p class="eyebrow">Standing on shoulders</p>
-      <p>A modern tribute to <em>Spacewar!</em>, created in 1962 by Steve Russell and friends on MIT's PDP&#8209;1, one of the first video games ever made. Sixty years on, the pull of the star still decides the duel.</p>
-    </div>
     <div class="foot-bar">
       <span>&copy; 2026 Jeffrey Stone</span>
       <span class="free">Free forever · no ads · no tracking · <a class="tip" href="https://buymeacoffee.com/jeffreystone"><span class="tip-chip"><img src="../assets/bmc-logo.svg" alt=""></span>Buy me a Coffee</a></span>
@@ -137,8 +133,8 @@
     shareBtn.hidden = false;
     shareBtn.addEventListener('click', function () {
       navigator.share({
-        title: 'Jeffrey Stone | Independent Games',
-        text: 'Spacewar: Orbital Duel. Battle at the singularity.',
+        title: 'Jeffrey Stone',
+        text: 'Spacewar: Orbital Duel and Rabbitbrush: Plant ID. Free, in beta.',
         url: url
       }).catch(function () {});
     });

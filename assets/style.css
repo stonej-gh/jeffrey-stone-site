@@ -106,8 +106,10 @@ header.nav {
 }
 .btn-primary { background: var(--cyan); color: #04110f; font-weight: 700; }
 .btn-primary:hover { background: #58ece2; text-decoration: none; }
-.btn-ghost { border-color: var(--line); color: var(--ink); }
-.btn-ghost:hover { border-color: var(--cyan-dim); color: var(--cyan); text-decoration: none; }
+/* The ghost button carries the accent in its border, so it reads as live on
+   the dark ground (a --line border looked disabled; owner, 2026-11-04). */
+.btn-ghost { border-color: var(--cyan-dim); color: var(--ink); }
+.btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); text-decoration: none; }
 
 /* ---------- section rhythm ---------- */
 section { padding: 92px 0; border-top: 1px solid var(--line); }
