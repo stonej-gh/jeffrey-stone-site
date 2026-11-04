@@ -86,37 +86,37 @@
       <p><a href="research/spotter/">The Spotter</a> lab can play Spacewar from nothing but what it sees on the screen, with a convolutional neural network that does image segmentation. It is based on the 2015 "U-Net" paper (Ronneberger et al.). CNNs took over image processing around 2012, built on ideas worked out in the '80s and '90s. The Spotter is rather contrived. I am working on a much more complex CNN lab that can identify rivers, and distinguish where the rapids are, from an aerial photograph.</p>
       <p><a href="rabbitbrush/">Rabbitbrush: Plant ID</a> brings the ML story very near to the present day. It relies on a transformer (the T in GPT) with an attention mechanism to build a network that is capable of distinguishing 4,000 plant species by their leaves, buds, flowers or bark. The Transformer paper, "Attention Is All You Need", was published by Google researchers in 2017. ChatGPT brought the approach to the mainstream in 2022.</p>
     </div>
-    <figure class="chart" style="margin:44px 0 0; max-width:60em;">
+    <figure class="chart" style="margin:44px 0 0; max-width:46em;">
       <figcaption style="margin-bottom:18px;">
         <p class="pitch" style="font-size:clamp(1.3rem,2.4vw,1.7rem); max-width:none;">Four nets, four orders of magnitude</p>
         <p class="mono-line muted" style="margin-top:8px; font-family:var(--font-mono); font-size:13px; color:var(--muted);">Parameters per network, log scale. Largest &divide; smallest &asymp; 18,000&times;.</p>
       </figcaption>
-      <svg viewBox="0 0 1200 440" width="100%" role="img" aria-label="Four nets, four orders of magnitude. Parameters per network on a log scale: the pilot 5,126; the spotter 28 thousand; river-seg 320 thousand; Rabbitbrush 92 million. Largest over smallest, about 18,000 times." style="display:block; font-family:var(--font-sans);">
-        <style>.lbl{fill:var(--ink);font-size:24px;font-weight:600} .val{fill:var(--ink);font-family:var(--font-mono);font-size:22px} .ax{fill:var(--muted);font-family:var(--font-mono);font-size:18px}</style>
-                <line x1="250" y1="50" x2="250" y2="352" stroke="var(--line)" stroke-width="1"/>
-        <text x="250" y="378" text-anchor="middle" class="ax">1 k</text>
-        <line x1="424" y1="50" x2="424" y2="352" stroke="var(--line)" stroke-width="1"/>
-        <text x="424" y="378" text-anchor="middle" class="ax">10 k</text>
-        <line x1="598" y1="50" x2="598" y2="352" stroke="var(--line)" stroke-width="1"/>
-        <text x="598" y="378" text-anchor="middle" class="ax">100 k</text>
-        <line x1="772" y1="50" x2="772" y2="352" stroke="var(--line)" stroke-width="1"/>
-        <text x="772" y="378" text-anchor="middle" class="ax">1 M</text>
-        <line x1="946" y1="50" x2="946" y2="352" stroke="var(--line)" stroke-width="1"/>
-        <text x="946" y="378" text-anchor="middle" class="ax">10 M</text>
-        <line x1="1120" y1="50" x2="1120" y2="352" stroke="var(--line)" stroke-width="1"/>
-        <text x="1120" y="378" text-anchor="middle" class="ax">100 M</text>
-        <text x="226" y="89.0" text-anchor="end" class="lbl">The pilot</text>
-        <rect x="250" y="60" width="124" height="44" rx="4" fill="var(--cyan)"><title>The pilot: 5,126 parameters</title></rect>
-        <text x="390" y="89.0" class="val">5,126</text>
-        <text x="226" y="167.0" text-anchor="end" class="lbl">The spotter</text>
-        <rect x="250" y="138" width="252" height="44" rx="4" fill="var(--cyan)"><title>The spotter: 28 k parameters</title></rect>
-        <text x="518" y="167.0" class="val">28 k</text>
-        <text x="226" y="245.0" text-anchor="end" class="lbl">River-seg</text>
-        <rect x="250" y="216" width="436" height="44" rx="4" fill="var(--cyan)"><title>River-seg: 320 k parameters</title></rect>
-        <text x="702" y="245.0" class="val">320 k</text>
-        <text x="226" y="323.0" text-anchor="end" class="lbl">Rabbitbrush</text>
-        <rect x="250" y="294" width="864" height="44" rx="4" fill="var(--cyan)"><title>Rabbitbrush: 92 M parameters</title></rect>
-        <text x="1130" y="323.0" class="val">92 M</text>
+      <svg viewBox="0 0 900 472" width="100%" role="img" aria-label="Four nets, four orders of magnitude. Parameters per network on a log scale: the pilot 5,126; the spotter 28 thousand; river-seg 320 thousand; Rabbitbrush 92 million. Largest over smallest, about 18,000 times." style="display:block; font-family:var(--font-sans);">
+        <style>.lbl{fill:var(--ink);font-size:30px;font-weight:600} .val{fill:var(--ink);font-family:var(--font-mono);font-size:27px} .ax{fill:var(--muted);font-family:var(--font-mono);font-size:23px}</style>
+        <line x1="0" y1="10" x2="0" y2="430" stroke="var(--line)" stroke-width="1"/>
+        <text x="0" y="458" text-anchor="start" class="ax">1 k</text>
+        <line x1="176" y1="10" x2="176" y2="430" stroke="var(--line)" stroke-width="1"/>
+        <text x="176" y="458" text-anchor="middle" class="ax">10 k</text>
+        <line x1="352" y1="10" x2="352" y2="430" stroke="var(--line)" stroke-width="1"/>
+        <text x="352" y="458" text-anchor="middle" class="ax">100 k</text>
+        <line x1="528" y1="10" x2="528" y2="430" stroke="var(--line)" stroke-width="1"/>
+        <text x="528" y="458" text-anchor="middle" class="ax">1 M</text>
+        <line x1="704" y1="10" x2="704" y2="430" stroke="var(--line)" stroke-width="1"/>
+        <text x="704" y="458" text-anchor="middle" class="ax">10 M</text>
+        <line x1="880" y1="10" x2="880" y2="430" stroke="var(--line)" stroke-width="1"/>
+        <text x="880" y="458" text-anchor="end" class="ax">100 M</text>
+        <text x="0" y="40" class="lbl">The pilot</text>
+        <rect x="0" y="54" width="125" height="38" rx="4" fill="var(--cyan)"><title>The pilot: 5,126 parameters</title></rect>
+        <text x="139" y="83.0" class="val">5,126</text>
+        <text x="0" y="148" class="lbl">The spotter</text>
+        <rect x="0" y="162" width="255" height="38" rx="4" fill="var(--cyan)"><title>The spotter: 28 k parameters</title></rect>
+        <text x="269" y="191.0" class="val">28 k</text>
+        <text x="0" y="256" class="lbl">River-seg</text>
+        <rect x="0" y="270" width="441" height="38" rx="4" fill="var(--cyan)"><title>River-seg: 320 k parameters</title></rect>
+        <text x="455" y="299.0" class="val">320 k</text>
+        <text x="0" y="364" class="lbl">Rabbitbrush</text>
+        <rect x="0" y="378" width="874" height="38" rx="4" fill="var(--cyan)"><title>Rabbitbrush: 92 M parameters</title></rect>
+        <text x="860" y="407.0" text-anchor="end" class="val" style="fill:#04110f">92 M</text>
       </svg>
     </figure>
     <div class="cta-row" style="margin-top:34px;">
