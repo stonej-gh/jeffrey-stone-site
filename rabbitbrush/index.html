@@ -4,20 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rabbitbrush | Jeffrey Stone</title>
-<meta name="description" content="Rabbitbrush, a plant identifier for the western US that runs on your phone. One photo, a ranked list of five species. Free, in beta.">
+<meta name="description" content="Rabbitbrush, a plant identifier for the western US that works offline, in airplane mode or out of cell range. One photo, a ranked list of five species. Free on the App Store, in beta on Android.">
 <meta name="color-scheme" content="dark">
-<meta property="og:title" content="Rabbitbrush: a plant identifier for the western US">
-<meta property="og:description" content="One photo, five ranked species, on your phone. Free, in beta.">
+<meta property="og:title" content="Rabbitbrush: an offline plant identifier for the western US">
+<meta property="og:description" content="Names a plant from a photo with no signal, in airplane mode or out of cell range. Free on the App Store, in beta on Android.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Jeffrey Stone">
 <meta property="og:url" content="https://jeffrey-stone.com/rabbitbrush/">
 <meta property="og:image" content="https://jeffrey-stone.com/assets/og-rabbitbrush.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Rabbitbrush: plant identifier. One photo, five ranked species, on your phone.">
+<meta property="og:image:alt" content="Rabbitbrush: plant identifier. Names a plant from a photo with no signal, in airplane mode or out of cell range. 4,191 species across eleven western states.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Rabbitbrush: a plant identifier for the western US">
-<meta name="twitter:description" content="One photo, five ranked species, on your phone. Free, in beta.">
+<meta name="twitter:title" content="Rabbitbrush: an offline plant identifier for the western US">
+<meta name="twitter:description" content="Names a plant from a photo with no signal, in airplane mode or out of cell range. Free on the App Store, in beta on Android.">
 <meta name="twitter:image" content="https://jeffrey-stone.com/assets/og-rabbitbrush.png">
 <link rel="icon" type="image/svg+xml" href="../assets/icon.svg">
 <link rel="icon" href="../assets/apple-touch-icon.png" sizes="180x180">
@@ -46,13 +46,18 @@
   <div class="wrap">
     <div class="flag">
       <p class="eyebrow" style="margin:0;">The app</p>
-      <span class="badge">iPhone &amp; Android beta</span>
+      <span class="badge">App Store &middot; Android beta</span>
     </div>
-    <h1>Rabbitbrush: a plant identifier for the western US, on your phone</h1>
-    <p class="lede">Take a photo of a plant, or pick one from your library, and get a ranked list of five species, each with its common name and a Wikipedia link. The classifier runs on the phone, on an iPhone in about a quarter of a second a photo. Nothing is uploaded to identify a photo.</p>
+    <h1>Rabbitbrush: a plant identifier for the western US that works offline</h1>
+    <p class="lede">Rabbitbrush names a plant from a photo with no signal at all, in airplane mode or anywhere out of cell range. Everything it needs is inside the app. Take a photo, or pick one from your library, and get a ranked list of five species, with their common names and links to Wikipedia. On an iPhone an answer takes about a quarter of a second, and no photo is uploaded to get it.</p>
     <div class="cta-row" style="margin-top:22px;">
+      <a class="btn btn-primary" href="https://apps.apple.com/app/id6823228139" target="_blank" rel="noopener">Get it on the App Store &rarr;</a>
+    </div>
+    <p class="mono-line muted" style="margin-top:12px; font-size:13px;">iPhone, iOS 18 or later &middot; free, no ads.</p>
+    <p class="lede" style="margin-top:28px;">The TestFlight beta is still open if you want new builds early.</p>
+    <div class="cta-row" style="margin-top:14px;">
       <a class="btn btn-ghost" href="https://apps.apple.com/app/testflight/id899247664" target="_blank" rel="noopener">1 &middot; Get TestFlight</a>
-      <a class="btn btn-primary" href="https://testflight.apple.com/join/nxtp4PD4" target="_blank" rel="noopener">2 &middot; Join the beta &rarr;</a>
+      <a class="btn btn-ghost" href="https://testflight.apple.com/join/nxtp4PD4" target="_blank" rel="noopener">2 &middot; Join the beta &rarr;</a>
     </div>
     <p class="mono-line muted" style="margin-top:12px; font-size:13px;">Already have <b>TestFlight</b>? Go straight to step 2 &middot; iPhone, iOS 18 or later &middot; limited spots.</p>
     <p class="mono-line muted" style="margin-top:6px; font-size:13px;">If TestFlight asks for a redemption code, there isn't one. Close it, come back here, and tap <b>Join</b> again.</p>
@@ -72,6 +77,11 @@
   <div class="wrap">
     <h2 class="sub-label">What you get</h2>
     <div class="controls">
+      <div class="ctrl" style="grid-column:1 / -1;">
+        <span class="tag">Offline</span>
+        <h3>No signal needed</h3>
+        <p>The classifier, the species list and the common names are inside the app, so identifying a photo needs no connection. On the iPhone, History, the field check and ranking by location work offline too. I checked it in airplane mode. Two things use a connection: opening a Wikipedia link, and sharing field checks. A field check made out of range is kept, and shared when the phone is back in range and the app is opened.</p>
+      </div>
       <div class="ctrl">
         <span class="tag">Knows</span>
         <h3>4,191 species, eleven states</h3>
@@ -99,19 +109,19 @@
 <section id="beta">
   <div class="wrap">
     <div class="flag">
-      <p class="eyebrow" style="margin:0;">Why a beta</p>
+      <p class="eyebrow" style="margin:0;">How it gets better</p>
     </div>
     <div class="teaser">
       <div class="body">
-        <p class="pitch">The testers are teaching the model.</p>
+        <p class="pitch">The people using it are teaching the model.</p>
         <p class="idea">Under every result there is a field check: which match was right, or the plant's name when the list missed it, and a note. The app keeps these on your phone. If you agree to share them, each one comes to me as you make it, and the misses are the list the next training round has to answer. A test set tells me how the model does on photos like the ones it trained on. You tell me how it does in the hand of someone standing in front of a plant. <a href="privacy/">What sharing sends, and what it never sends</a>, is written out in full.</p>
       </div>
     </div>
 
     <h2 class="sub-label">What to expect</h2>
     <div class="specs">
-      <span><b>Builds</b> &nbsp;new ones as the model improves</span>
-      <span><b>The model</b> &nbsp;changes between builds as the field checks come in</span>
+      <span><b>Updates</b> &nbsp;new versions as the model improves</span>
+      <span><b>The model</b> &nbsp;changes between versions as the field checks come in</span>
       <span><b>Needs</b> &nbsp;an iPhone on iOS 18 or later, or an Android phone on Android 10 or later</span>
       <span><b>Costs</b> &nbsp;nothing. No ads</span>
       <span><b>Accounts</b> &nbsp;none to create. On an iPhone, sharing field checks uses the iCloud account already on the phone; without one, nothing is sent. On Android, sharing needs only a connection</span>
