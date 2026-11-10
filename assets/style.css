@@ -110,6 +110,11 @@ header.nav {
    the dark ground (a --line border looked disabled; owner, 2026-11-04). */
 .btn-ghost { border-color: var(--cyan-dim); color: var(--ink); }
 .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); text-decoration: none; }
+/* Apple's App Store badge (assets/app-store-badge.svg, its artwork, not drawn
+   here): 52 px tall, above Apple's 40 px floor, with the row's gap as its
+   clear space. */
+.store-badge { display: inline-block; line-height: 0; }
+.store-badge img { height: 52px; width: auto; display: block; }
 
 /* ---------- section rhythm ---------- */
 section { padding: 92px 0; border-top: 1px solid var(--line); }
