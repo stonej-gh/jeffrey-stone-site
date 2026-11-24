@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Research | Jeffrey Stone</title>
-<meta name="description" content="The machine-learning lab notebooks: the net that flies the ship, the net that watches the screen, and the owl, a vision transformer that names a plant with nothing trained. Each written at three depths, from plain story to working data science.">
+<meta name="description" content="The machine-learning lab notebooks: the net that flies the ship, the net that watches the screen, and the owl, a vision transformer that names a plant with nothing trained. Each notebook is written at three depths, from plain story to working data science.">
 <meta name="color-scheme" content="dark">
 <meta property="og:title" content="Research: the lab notebooks">
 <meta property="og:description" content="Three lab notebooks: the net that flies the ship, the net that watches the screen, and the owl, a vision transformer that names a plant with nothing trained. Three depths: plain story, engineer's bridge, working data science.">
@@ -14,7 +14,7 @@
 <meta property="og:image" content="https://jeffrey-stone.com/assets/og-research.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="The lab notebooks: three networks, real experiments at three depths, with the films.">
+<meta property="og:image:alt" content="The lab notebooks: three networks, each notebook written at three depths, with the films.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Research: the lab notebooks">
 <meta name="twitter:description" content="Three lab notebooks: the net that flies the ship, the net that watches the screen, and the owl that names a plant with nothing trained.">
@@ -46,35 +46,23 @@
 <section class="page-head" style="padding-bottom:0;">
   <div class="wrap">
     <p class="eyebrow">Research</p>
-    <h1>The lab notebooks</h1>
-    <p class="lede">Behind <a href="../spacewar/">Spacewar: Orbital Duel</a> sits a small machine-learning lab, and these are its notebooks: real training runs and real failures, written up as they happened. Two are the game's small networks, built to show the whole pipeline from first principles to a shipped artifact. The third is the owl: a full-size vision transformer, borrowed rather than trained, written out in plain code and set to naming plants from a grocery store with nothing trained at all.</p>
-    <p class="tier-legend">Every experiment is written at <b style="color:var(--ink)">three depths</b>, and you choose per chapter: the plain story anyone can read; <span class="t-learn">▸ FOR THE LEARNERS</span>, which rebuilds the machinery from first principles for any scientifically curious reader (no machine-learning background assumed); and <span class="t-ds">▸ FOR THE DATA SCIENTISTS</span>, the working notebook in the field's own language, with references to go deeper still.</p>
+    <h1>The lab <span style="color:var(--cyan)">notebooks</span></h1>
+    <div class="lesson-brief">
+      <p class="lede">Behind <a href="../spacewar/">Spacewar: Orbital Duel</a> sits a small machine-learning lab, and these are its notebooks: real training runs and real failures, written up as they happened. Two are the game's small networks, built to show the whole pipeline from first principles to a shipped artifact. The third is the owl: a full-size vision transformer, borrowed rather than trained, written out in plain code and set to naming plants from a grocery store with nothing trained at all.</p>
+      <p class="tier-legend">Every notebook is written at <b style="color:var(--ink)">three depths</b>, and you choose per chapter: the plain story anyone can read; <span class="t-learn">▸ FOR THE LEARNERS</span>, which rebuilds the machinery from first principles for any scientifically curious reader (no machine-learning background assumed); and <span class="t-ds">▸ FOR THE DATA SCIENTISTS</span>, the working notebook in the field's own language, with references to go deeper still.</p>
+    </div>
   </div>
 </section>
 
-<section>
+<section class="flush">
   <div class="wrap">
     <div class="exp-grid" style="margin-top:0;">
-
-      <div class="exp-card soon">
-        <p class="ch-tag"><span class="soon-tag">Coming soon</span> Notebook 03 · the owl</p>
-        <h3>A network that was never told a name</h3>
-        <p>A vision transformer that learned to see from 142 million photos with no labels is shown ten photos of each of 24 plants from a grocery store, and names 95% of the rest. The whole network written out in numpy, two pictures of what it looks at, and how it says it does not know.</p>
-        <p class="exp-meta"><b>86M params</b> · self-supervision · attention · nothing trained</p>
-      </div>
 
       <a class="exp-card" href="worm/">
         <p class="ch-tag">Notebook 01 · the pilot</p>
         <h3>Half a worm, flying a spaceship</h3>
         <p>A 6,220-weight network (half a worm's brain) starts with zero knowledge and teaches itself to fly, fight, cheat, get caught, and bend lasers around the black hole. With the three-minute film.</p>
         <p class="exp-meta"><b>6,220 params</b> · reinforcement learning · self-play · sim-to-real</p>
-      </a>
-
-      <a class="exp-card" href="spotter/">
-        <p class="ch-tag">Notebook 02 · the spotter</p>
-        <h3>The net that watches the screen</h3>
-        <p>The pilot got its senses served on a plate. Real systems get pixels. A 28,000-parameter network watches raw game frames and paints every ship, every laser, and the hole. Then it gets squeezed into 8-bit integers you can't tell from the original.</p>
-        <p class="exp-meta"><b>28k params</b> · convolutional segmentation · int8 · pixels in, game out</p>
       </a>
 
       <a class="exp-card" href="https://github.com/stonej-gh/ml-toys#quickstart-the-pilot">
@@ -84,12 +72,26 @@
         <p class="exp-meta">open code · MIT · github.com/stonej-gh/ml-toys</p>
       </a>
 
+      <a class="exp-card" href="spotter/">
+        <p class="ch-tag">Notebook 02 · the spotter</p>
+        <h3>The net that watches the screen</h3>
+        <p>The pilot got its senses served on a plate. Real systems get pixels. A 28,000-parameter network watches raw game frames and paints every ship, every laser, and the hole. Then it gets squeezed into 8-bit integers you can't tell from the original.</p>
+        <p class="exp-meta"><b>28k params</b> · convolutional segmentation · int8 · pixels in, game out</p>
+      </a>
+
       <a class="exp-card" href="https://github.com/stonej-gh/ml-toys#quickstart-the-spotter">
         <p class="ch-tag">The code · the spotter's lab</p>
         <h3>Retrain the spotter yourself</h3>
         <p>The spotter's whole pipeline ships in the same repo: a renderer that labels its own frames, about five minutes of training on a laptop, and the frozen golden bundle any port can prove itself against, down to the last bit.</p>
         <p class="exp-meta">open code · MIT · github.com/stonej-gh/ml-toys</p>
       </a>
+
+      <div class="exp-card soon">
+        <p class="ch-tag"><span class="soon-tag">Coming soon</span> Notebook 03 · the owl</p>
+        <h3>A network that was never told a name</h3>
+        <p>A vision transformer that learned to see from 142 million photos with no labels is shown ten photos of each of 24 plants from a grocery store, and names 95% of the rest. The whole network written out in numpy, two pictures of what it looks at, and how it says it does not know.</p>
+        <p class="exp-meta"><b>86M params</b> · self-supervision · attention · nothing trained</p>
+      </div>
 
       <div class="exp-card soon">
         <p class="ch-tag"><span class="soon-tag">Coming soon</span> The code · the owl's lab</p>

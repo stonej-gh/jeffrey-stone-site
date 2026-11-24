@@ -512,3 +512,5 @@ a.net:hover { color: var(--cyan); text-decoration-style: solid; }
 .btn.soon { opacity: .55; cursor: default; pointer-events: none; }
 span.term.soon, span.net.soon { cursor: default; }
 svg g.soon { opacity: .55; }
+/* the three-depths legend when it sits in the head's box (/research/) */
+.lesson-brief .tier-legend { margin-top: 16px; max-width: none; }
