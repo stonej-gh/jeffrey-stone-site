@@ -66,8 +66,9 @@ header.nav {
 .nav-links a:hover { color: var(--ink); text-decoration: none; }
 .nav-links a[aria-current="page"] { color: var(--ink); }
 /* Mobile: no room for tabs beside the brand, so wrap them onto a second row
-   (keeps every tab reachable - the site has no hamburger menu). */
-@media (max-width: 620px) {
+   (keeps every tab reachable - the site has no hamburger menu). Nine tabs
+   need about 900px beside the brand, so a tablet held upright wraps too. */
+@media (max-width: 940px) {
   .nav-inner { flex-wrap: wrap; height: auto; padding-top: 11px; padding-bottom: 12px; row-gap: 9px; }
   .brand { order: 1; }
   .nav-links {
@@ -115,6 +116,16 @@ header.nav {
    clear space. */
 .store-badge { display: inline-block; line-height: 0; }
 .store-badge img { height: 52px; width: auto; display: block; }
+/* Google's Play badge (assets/google-play-badge.png, its artwork) carries its
+   own clear space inside the image, 41 px of 250 on every side; 78 px tall
+   with that margin pulled in sets its visible badge at 52 px, level with
+   Apple's. */
+.store-badge.play img { height: 78px; margin: -13px; }
+/* Google's Play badge (assets/google-play-badge.png, its artwork) carries its
+   own clear space inside the image, 41 px of 250 on every side; 78 px tall
+   with that margin pulled in sets its visible badge at 52 px, level with
+   Apple's. */
+.store-badge.play img { height: 78px; margin: -13px; }
 
 /* ---------- section rhythm ---------- */
 section { padding: 92px 0; border-top: 1px solid var(--line); }
@@ -386,7 +397,7 @@ footer { border-top: 1px solid var(--line); padding: 68px 0 54px; }
 
 /* ---------- sage theme: the plant app's three pages (/rabbitbrush/) ----------
    Dark sage (the owner's call 2026-11-03, after a light-sage try read too
-   close to its background): deep green-grey ground, pale warm ink, light
+   close to its background): deep green-gray ground, pale warm ink, light
    sage where the site uses cyan. Scoped to body.theme-sage; nothing else on
    the site changes. */
 body.theme-sage {
@@ -414,3 +425,90 @@ body.theme-sage {
   content: ""; position: fixed; inset: 0; z-index: -1;
   background: var(--void) url(rabbitbrush-bg.jpg) no-repeat right center / cover;
 }
+
+/* ---------- /learn/: the lesson toys (learn-lab.js) ---------- */
+/* bars drag sideways, so a finger moving down the page still scrolls it */
+.lab-frame canvas[data-lab="softmax"], .lab-frame canvas[data-lab="surprise"] { touch-action: pan-y; }
+.lab-bar input[type="range"].lab-wide { width: min(420px, 78vw); }
+.lab-read b.wide { display: inline-block; min-width: 13em; }
+/* a term in a notebook that a lesson explains: dotted, so it reads as a
+   definition waiting underneath, apart from an ordinary link */
+a.term { color: inherit; text-decoration: underline dotted var(--learn); text-underline-offset: 4px; }
+a.term:hover { color: var(--learn); text-decoration-style: solid; }
+/* where a lesson sits in the course */
+.lesson-rail { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 22px;
+  font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); letter-spacing: .04em; }
+.lesson-rail b { color: var(--ink); font-weight: 500; }
+.meet-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 28px; }
+@media (max-width: 860px) { .meet-grid { grid-template-columns: 1fr; } }
+.meet-grid .card { padding: 26px; }
+.meet-grid .card h3 { font-size: 1.08rem; }
+/* the course map on /learn/ */
+.course { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line);
+  border-radius: 14px; overflow: hidden; margin-top: 34px; }
+.course .row { display: grid; grid-template-columns: 4.5em 1fr auto; gap: 6px 22px; align-items: baseline;
+  background: var(--panel); padding: 20px 24px; color: inherit; }
+a.row:hover { background: var(--panel-2); text-decoration: none; }
+.course .n { font-family: var(--font-mono); font-size: 12.5px; color: var(--cyan); letter-spacing: .14em; }
+.course h3 { font-size: 1.12rem; margin: 0; }
+.course .what { grid-column: 2; color: var(--muted); font-size: 0.96rem; margin: 2px 0 0; }
+.course .st { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.course a.row .st { color: var(--cyan); }
+@media (max-width: 680px) { .course .row { grid-template-columns: 3em 1fr; } .course .st { grid-column: 2; } }
+.lab-frame canvas[data-lab="dot"] { touch-action: none; }
+.quiz { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 30px 18px 24px; }
+.quiz img { width: min(300px, 78vw); height: auto; aspect-ratio: 1; border-radius: 12px; background: #0b1019; display: block; }
+.quiz p { font-family: var(--font-mono); font-size: 13px; letter-spacing: .06em; color: var(--muted); margin: 0; min-height: 1.6em; }
+.lab-bar label { display: inline-flex; align-items: center; gap: 9px; letter-spacing: .06em; }
+.lesson-next { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 64px; }
+
+/* ---------- /learn/: lesson furniture ---------- */
+/* the lesson's summary sits in a box; no rule between it and the first chapter */
+.lesson-brief { border: 1px solid var(--line); border-radius: 14px; background: var(--panel);
+  padding: 24px 28px; margin-top: 26px; max-width: 46em; }
+.page-head .lesson-brief .lede { margin-top: 0; max-width: none; font-size: 1.08rem; }
+.lesson-brief .lesson-rail { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); }
+section.flush { border-top: none; padding-top: 64px; }
+/* where you are in the course: one box per lesson, in order */
+.steps { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 22px;
+  font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .04em; }
+.steps .lbl { color: var(--muted); margin-right: 8px; }
+.steps .lbl a { color: var(--muted); }
+.steps .s { display: inline-flex; align-items: center; justify-content: center; min-width: 34px; height: 28px;
+  padding: 0 8px; border: 1px solid var(--line); border-radius: 7px; color: #4d586b; }
+.steps a.s { color: var(--ink); }
+.steps a.s:hover { border-color: var(--cyan-dim); color: var(--cyan); text-decoration: none; }
+.steps .s.here { background: var(--cyan); border-color: transparent; color: #04110f; font-weight: 700; }
+/* the three nets by name: the same look whether or not the name is a link */
+.net { color: var(--ink); font-weight: 600; }
+a.net { text-decoration: underline dotted rgba(238,242,248,0.45); text-underline-offset: 4px; }
+a.net:hover { color: var(--cyan); text-decoration-style: solid; }
+/* a side trip: something off the lesson's path, set apart so the path stays plain */
+.side-trip { border-left: 2px solid var(--line); margin-top: 30px; padding: 4px 0 4px 20px; max-width: 38em; }
+.side-trip .k { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+.side-trip p { color: var(--muted); font-size: 0.96rem; margin: 6px 0 0; }
+.side-trip a { color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
+.side-trip a:hover { color: var(--ink); }
+/* three sizes of the same idea, as plain rows */
+.scale-rows { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line);
+  border-radius: 12px; overflow: hidden; margin-top: 26px; max-width: 46em; }
+.scale-rows div { display: grid; grid-template-columns: 7em 9.5em 1fr; gap: 4px 18px; align-items: baseline;
+  background: var(--panel); padding: 15px 20px; color: #b6c0d0; font-size: 0.98rem; }
+.scale-rows .n { font-family: var(--font-mono); font-size: 13px; color: var(--cyan); }
+@media (max-width: 680px) { .scale-rows div { grid-template-columns: 1fr 1fr; } .scale-rows div span:last-child { grid-column: 1 / -1; } }
+.lab-frame canvas[data-lab="neuron"] { touch-action: none; }
+
+/* ---------- held pages: "Coming soon" (scripts/hold.py) ----------
+   The publishers turn every link to a page the owner has not released into
+   one of these: same words, no link. Nothing in site/ uses them by hand. */
+.soon-tag { display: inline-block; font-family: var(--font-mono); font-size: 10.5px; font-weight: 500;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--learn);
+  border: 1px solid currentColor; border-radius: 6px; padding: 2px 7px; vertical-align: 0.2em; margin-left: 6px; }
+.exp-card .ch-tag .soon-tag { margin: 0 8px 0 0; }
+.exp-card.soon, .course .row.soon { cursor: default; }
+.exp-card.soon:hover { border-color: var(--line); }
+.exp-card.soon h3, .exp-card.soon p, .course .row.soon h3, .course .row.soon .what { opacity: .62; }
+.course .row.soon .st { color: var(--learn); }
+.btn.soon { opacity: .55; cursor: default; pointer-events: none; }
+span.term.soon, span.net.soon { cursor: default; }
+svg g.soon { opacity: .55; }

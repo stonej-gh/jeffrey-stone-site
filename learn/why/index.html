@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A machine you do not program | Jeffrey Stone</title>
+<meta name="description" content="This lesson explains why anyone would build a machine that learns. Its three toys ask you to tell rosemary from lavender, tune a two-knob machine by hand, and then watch it tune itself.">
+<meta name="color-scheme" content="dark">
+<meta property="og:title" content="A machine you do not program">
+<meta property="og:description" content="You can tell rosemary from lavender and cannot say how. Three toys show what it means for a machine to learn.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Jeffrey Stone">
+<meta property="og:url" content="https://jeffrey-stone.com/learn/why/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="A machine you do not program">
+<meta name="twitter:description" content="You can tell rosemary from lavender and cannot say how. Three toys show what it means for a machine to learn.">
+<link rel="icon" type="image/svg+xml" href="../../assets/icon.svg">
+<link rel="icon" href="../../assets/apple-touch-icon.png" sizes="180x180">
+<link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../../"><span class="dot"></span> Jeffrey&nbsp;Stone</a>
+    <nav class="nav-links">
+      <a href="../../">Home</a>
+      <a href="../../spacewar/">Spacewar</a>
+      <a href="../../rabbitbrush/">Rabbitbrush</a>
+      <a href="../../orbits/">Orbits</a>
+      <a href="../../learn/" aria-current="page">Learn</a>
+      <a href="../../research/">Research</a>
+      <a href="../../support/">Support</a>
+      <a href="../../privacy/">Privacy</a>
+      <a href="../../share/">Share</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-head" style="padding-bottom:0;">
+  <div class="wrap">
+    <p class="steps"><span class="lbl"><a href="../">Learn</a> · lesson</span><span class="s here" aria-current="page">00</span><span class="s soon" title="Coming soon">01</span><span class="s soon" title="Coming soon">02</span><span class="s soon" title="Coming soon">03</span><span class="s soon" title="Coming soon">04</span><span class="s soon" title="Coming soon">05</span><span class="s soon" title="Coming soon">06</span><span class="s soon" title="Coming soon">07</span></p>
+    <p class="eyebrow">Lesson 0 · three toys · eight minutes</p>
+    <h1>A machine you <span style="color:var(--cyan)">do not program</span></h1>
+    <div class="lesson-brief">
+      <p class="lede">Most software follows rules that somebody wrote down. The networks in the <a href="../../research/">lab notebooks</a> have none. Nobody told <span class="net">the Pilot</span> how to fly, and nobody told <span class="net">the Owl</span> what a rose is. This lesson is about why anyone would build a machine that way, and what learning means when a machine does it.</p>
+      <p class="lesson-rail"><span>You need: <b>nothing</b></span><span>You leave with: <b>model, weights, examples, training</b></span></p>
+    </div>
+  </div>
+</section>
+
+<section class="flush">
+  <div class="wrap">
+
+    <div class="chapter" id="rule" style="margin-top:0;">
+      <p class="ch-tag">01 · The rule you cannot write</p>
+      <h2>You can tell them apart. Now say how.</h2>
+      <div class="prose">
+        <p>Rosemary and lavender are both gray-green shrubs with needle leaves, sold side by side at the garden store. Try ten photos. Someone who gardens (or loves fresh herbs) will do well. If that isn't you, use the exercise become more familiar with the differences. Then try to write down the rules you used or learned. Can you write a set of rules clearly enough that a computer could follow them?</p>
+        <p>"Lavender has purple flowers" fails on every photo taken out of bloom. "Rosemary has shorter needles" needs a ruler, and a definition of a needle. Each rule you write grows exceptions, and the exceptions grow their own. For about fifty years people tried to program sight rule by rule, and it never worked well. You know something you cannot say.</p>
+      </div>
+      <div class="lab-frame">
+        <div class="quiz" id="herb-quiz">
+          <img src="../../assets/learn/herbs/00.jpg" width="240" height="240" alt="A photo of rosemary or lavender">
+          <p id="quiz-note">Photo 1 of 10</p>
+        </div>
+        <div class="lab-bar">
+          <button class="lab-btn primary" id="quiz-0" type="button">Rosemary</button>
+          <button class="lab-btn primary" id="quiz-1" type="button">Lavender</button>
+          <span class="lab-read">YOU <b id="quiz-score">0 of 0</b></span>
+          <button class="lab-btn" id="quiz-again" type="button">Start over</button>
+        </div>
+      </div>
+      <p class="lab-cap"><b>Rosemary or lavender.</b> These are ten real photos, five of each, from <span class="net soon" title="Coming soon">the Owl</span>'s notebook. The people who took them gave them to the public domain through iNaturalist.</p>
+    </div>
+
+    <div class="chapter" id="knobs">
+      <p class="ch-tag">02 · Knobs</p>
+      <h2>Build a machine with knobs, then turn them</h2>
+      <div class="prose">
+        <p>Here is the other way: Give up on writing the rule. Build a machine whose behavior depends on a few numbers (knobs) that you can adjust, and collect examples where you already know the right answer. Then turn the knobs until the machine gets the examples right.</p>
+        <p>Below, every dot is one photo. A network that has looked at 142 million photographs boiled each photo down to a list of numbers, and the dot's position comes from that list. (How it does that is the subject of lesson 6. For now, treat them as two measurements, like height and weight.) The machine is a straight line. Photos on one side it calls rosemary, and on the other, lavender. It has two knobs.</p>
+      </div>
+      <div class="lab-frame">
+        <canvas data-lab="knobs" width="960" height="500" aria-label="Interactive toy: 63 dots, one per photo, colored by whether the photo is rosemary or lavender. Two sliders tilt and slide a straight line; dots on the wrong side get a red ring. Selecting a dot shows its photo."></canvas>
+        <div class="lab-bar">
+          <label>TILT <input type="range" id="knobs-tilt" min="0" max="360" step="1" value="62" aria-label="Tilt of the line"></label>
+          <label>SLIDE <input type="range" id="knobs-shift" min="-1" max="1" step="0.01" value="0.3" aria-label="Position of the line"></label>
+          <span class="lab-read">RIGHT <b id="knobs-right">–</b></span>
+        </div>
+      </div>
+      <p class="lab-cap"><b>You are the learning.</b> Turn TILT and SLIDE until as few dots as you can manage wear a red ring. Click a dot to see the photo behind it. The best any straight line can do here is 61 of 63.</p>
+    </div>
+
+    <div class="chapter" id="learning">
+      <p class="ch-tag">03 · Learning</p>
+      <h2>Now let it turn its own knobs</h2>
+      <div class="prose">
+        <p>What you just did has a recipe. Look at the mistakes, turn each knob a little in the direction that shrinks them, and repeat. A machine can follow that recipe by itself, and when it does we say it is <b>learning</b>, or being <b>trained</b>. The knobs are called <b>weights</b> or <b>parameters</b>. The machine with its knobs is a <b>model</b>. The photos with known answers are the <b>training examples</b>.</p>
+        <p>Nobody typed in a rule about needles or flowers. The rule is wherever the knobs stopped.</p>
+      </div>
+      <div class="lab-frame">
+        <canvas data-lab="learner" width="960" height="500" aria-label="Interactive toy: the same 63 dots. The line starts in a random place, and a button makes the machine move it step by step toward fewer mistakes."></canvas>
+        <div class="lab-bar">
+          <button class="lab-btn primary" id="learner-run" type="button">Learn</button>
+          <button class="lab-btn" id="learner-step" type="button">One step</button>
+          <button class="lab-btn" id="learner-scramble" type="button">Scramble</button>
+          <span class="lab-read">RIGHT <b id="learner-right">–</b></span>
+          <span class="lab-read">STEPS <b id="learner-steps">0</b></span>
+        </div>
+      </div>
+      <p class="lab-cap"><b>Hands off.</b> The line starts somewhere random. <b>LEARN</b> takes sixty small steps, and each one looks at all 63 photos and nudges the line. It settles near 59 of 63, a little short of the best line you could find by hand, because it chases a smoother measure of wrongness than a count of red rings. Lesson 3 is about that measure.</p>
+    </div>
+
+    <div class="chapter" id="scale">
+      <p class="ch-tag">04 · Scale</p>
+      <h2>The same idea, with more knobs</h2>
+      <div class="prose">
+        <p>A line with two knobs can separate two herbs most of the time. The networks in the lab notebooks are this idea grown up: more knobs, arranged in layers, turned by the same kind of small steps.</p>
+      </div>
+      <div class="scale-rows">
+        <div><span><span class="net">The Pilot</span></span><span class="n">6,220 knobs</span><span>learned to fly and fight around a black hole by playing, with a score for winning and no examples of good flying</span></div>
+        <div><span><span class="net">The Spotter</span></span><span class="n">28,000 knobs</span><span>learned to find every ship and laser in a picture, from pictures that came with the answers painted in</span></div>
+        <div><span><span class="net">The Owl</span></span><span class="n">86 million knobs</span><span>learned to see from 142 million photos that came with no answers at all, and made the dots above</span></div>
+      </div>
+      <div class="prose" style="margin-top:28px;">
+        <p>There is a price. A machine that learns does what its examples and its score reward, and that is sometimes different from what you meant. <span class="net">The Pilot</span> learned to cheat before it learned to fight.</p>
+        <p>The next lesson looks inside the machine: what a knob is, and what the numbers do on their way through.</p>
+      </div>
+      <div class="side-trip">
+        <span class="k">Side trip, for later</span>
+        <p>Each of those three has a <a href="../../research/">lab notebook</a> that tells how it was built, cheating included. They read more easily after the first few lessons, and the lessons will point you to them when it is time.</p>
+      </div>
+    </div>
+
+    <div class="chapter" id="remember">
+      <p class="ch-tag">05 · If you remember four things</p>
+      <div class="quote-strip">
+        <blockquote>"Some things you can do and cannot explain."</blockquote>
+        <blockquote>"A model is a machine with knobs."</blockquote>
+        <blockquote>"Training is turning the knobs to fit examples."</blockquote>
+        <blockquote>"The rule is wherever the knobs stopped."</blockquote>
+      </div>
+    </div>
+
+    <div class="lesson-next">
+      <span class="btn btn-primary soon" aria-disabled="true">Next: numbers in, numbers out &middot; coming soon</span>
+      <a class="btn btn-ghost" href="../">The whole course</a>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="homage">
+      <p class="eyebrow">The fine print</p>
+      <p>The photos are from <span class="net soon" title="Coming soon">the Owl</span>'s lab in <a href="https://github.com/stonej-gh/ml-toys">ml-toys</a>, every one released to the public domain by its observer on iNaturalist. The two numbers behind each dot are the two directions in which <span class="net">the Owl</span>'s descriptions of these 63 photos differ most.</p>
+    </div>
+    <div class="foot-bar">
+      <span>&copy; 2026 Jeffrey Stone</span>
+      <span class="free">Free forever · no ads · no tracking · <a class="tip" href="https://buymeacoffee.com/jeffreystone"><span class="tip-chip"><img src="../../assets/bmc-logo.svg" alt=""></span>Buy me a Coffee</a></span>
+      <span>The mailbox is open: <a href="mailto:letters@jeffrey-stone.com">letters@jeffrey-stone.com</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="../../assets/learn/herbs-data.js"></script>
+<script src="../../assets/learn-lab.js"></script>
+</body>
+</html>

@@ -34,6 +34,7 @@
       <a href="spacewar/">Spacewar</a>
       <a href="rabbitbrush/">Rabbitbrush</a>
       <a href="orbits/">Orbits</a>
+      <a href="learn/">Learn</a>
       <a href="research/">Research</a>
       <a href="support/">Support</a>
       <a href="privacy/">Privacy</a>
@@ -49,7 +50,7 @@
     <div class="hero-content">
       <p class="eyebrow">Jeffrey Stone</p>
       <h1>Freedom to <span class="sweep">play</span></h1>
-      <p class="sub" style="max-width:38em;">I design high speed datapaths for a living: chips that encrypt, protect, compress, detect and calculate. Why would I then spend evenings and weekends designing labs and applications to give away for free? Quite simply, I am giving myself the freedom to follow wherever my curiosity leads. I am publishing the results in hopes that others will share that same joy of discovery.</p>
+      <p class="sub" style="max-width:38em;">The October 1977 issue of <em>Byte</em> magazine arrived when I was a teenager building my own computer. Its cover theme was "Implementing Space War". I have written an almost embarrassing number of Spacewar games in the years since. Then, I got curious about machine learning. I am publishing the results in hopes that others will share the joy of discovery.</p>
       <div class="cta-row">
         <a class="btn btn-primary" href="spacewar/">Spacewar: Orbital Duel &rarr;</a>
         <a class="btn btn-ghost" href="rabbitbrush/">Rabbitbrush: Plant ID &rarr;</a>
@@ -66,8 +67,8 @@
     </div>
     <h2>Spacewar: Orbital Duel</h2>
     <div class="prose" style="max-width:40em; margin-top:20px;">
-      <p>The October 1977 issue of <em>Byte</em> magazine arrived when I was a teenager building my own computer. Its cover theme was "Implementing Space War", and there on page 86 was an article by Dave Kruglinski, "How to Implement Space War (or Using Your Oscilloscope as a Telescope)". Everything about the article fascinated me, starting with the fact that a '70s era microcomputer, 1/1000th of what we carry in our pockets today, could make the calculations for a physically realistic orbital mechanics simulation.</p>
-      <p>I have written an almost embarrassing number of Spacewar games in the years since, tracking Moore's law with more and more sophisticated versions. I developed a ladder of 20 programmed levels. The game became more fun and more challenging, and looked great with some aesthetic flourishes as a mobile app. Then, I got curious about machine learning. The spine-tingling excitement of building a system that does not need detailed programming, but can learn to play a video game by trial and error, is frankly addictive, and it has led to so much more. For a start, Spacewar: Orbital Duel is based on a hybrid AI opponent, a neural pilot with a few scripted guard rails. Your opponent learned by playing. I never told it how.</p>
+      <p>There on page 86 of that <em>Byte</em> was an article by Dave Kruglinski, "How to Implement Space War (or Using Your Oscilloscope as a Telescope)". Everything about the article fascinated me, starting with the fact that a '70s era microcomputer, 1/1000th of what we carry in our pockets today, could make the calculations for a physically realistic orbital mechanics simulation.</p>
+      <p>My own versions tracked Moore's law, each more sophisticated than the last. I developed a ladder of 20 programmed levels. The game became more fun and more challenging, and looked great with some aesthetic flourishes as a mobile app. Then came the neural networks. The spine-tingling excitement of building a system that does not need detailed programming, but can learn to play a video game by trial and error, is frankly addictive, and it has led to so much more. For a start, Spacewar: Orbital Duel is based on a hybrid AI opponent, a neural pilot with a few scripted guard rails. Your opponent learned by playing. I never told it how.</p>
     </div>
     <div class="cta-row" style="margin-top:30px;">
       <a class="btn btn-primary" href="spacewar/">Meet the game &rarr;</a>
@@ -81,42 +82,52 @@
   <div class="wrap">
     <p class="eyebrow">The labs</p>
     <h2>Machine learning</h2>
-    <div class="prose" style="max-width:40em; margin-top:20px;">
-      <p>The neural network that you are playing against in Spacewar: Orbital Duel uses reinforcement learning in a deep neural network. This technology broke out in 2006 to 2012, but is based on concepts that date back to the 1940s and 1950s.</p>
-      <p><a href="research/spotter/">The Spotter</a> lab can play Spacewar from nothing but what it sees on the screen, with a convolutional neural network that does image segmentation. It is based on the 2015 "U-Net" paper (Ronneberger et al.). CNNs took over image processing around 2012, built on ideas worked out in the '80s and '90s. The Spotter is rather contrived. I am working on a much more complex CNN lab that can identify rivers, and distinguish where the rapids are, from an aerial photograph.</p>
-      <p><a href="rabbitbrush/">Rabbitbrush: Plant ID</a> brings the ML story very near to the present day. It relies on a transformer (the T in GPT) with an attention mechanism to build a network that is capable of distinguishing 4,000 plant species by their leaves, buds, flowers or bark. The Transformer paper, "Attention Is All You Need", was published by Google researchers in 2017. ChatGPT brought the approach to the mainstream in 2022.</p>
+    <div class="prose" style="max-width:40em; margin-top:6px;">
+      <h3 style="margin-top:34px;"><a href="research/worm/">The Pilot &rarr;</a></h3>
+      <p style="margin-top:10px;">The neural network that you are playing against in Spacewar: Orbital Duel uses reinforcement learning in a deep neural network. This technology broke out in 2006 to 2012, but is based on concepts that date back to the 1940s and 1950s.</p>
+      <h3 style="margin-top:34px;"><a href="research/spotter/">The Spotter &rarr;</a></h3>
+      <p style="margin-top:10px;">The Spotter lab can play Spacewar from nothing but what it sees on the screen, with a convolutional neural network that does image segmentation. It is based on the 2015 "U-Net" paper (Ronneberger et al.). CNNs took over image processing around 2012, built on ideas worked out in the '80s and '90s.</p>
+      <h3 style="margin-top:34px;">The Owl <span class="soon-tag">Coming soon</span></h3>
+      <p style="margin-top:10px;">In the Owl lab, a transformer that was never told the name of a plant learns 24 of them from ten photos each, and the notebook shows what it looks at. The transformer (the T in GPT) and its attention mechanism bring the ML story very near to the present day. The Transformer paper, "Attention Is All You Need", was published by Google researchers in 2017. ChatGPT brought the approach to the mainstream in 2022. <a href="rabbitbrush/">Rabbitbrush: Plant ID</a> relies on the same kind of network to distinguish 4,000 plant species by their leaves, buds, flowers or bark.</p>
     </div>
     <figure class="chart" style="margin:44px 0 0; max-width:46em;">
       <figcaption style="margin-bottom:18px;">
-        <p class="pitch" style="font-size:clamp(1.3rem,2.4vw,1.7rem); max-width:none;">Four nets, four orders of magnitude</p>
-        <p class="mono-line muted" style="margin-top:8px; font-family:var(--font-mono); font-size:13px; color:var(--muted);">Parameters per network, log scale. Largest &divide; smallest &asymp; 18,000&times;.</p>
+        <p class="pitch" style="font-size:clamp(1.3rem,2.4vw,1.7rem); max-width:none;">Three nets, four orders of magnitude</p>
+        <p class="mono-line muted" style="margin-top:8px; font-family:var(--font-mono); font-size:13px; color:var(--muted);">Parameters per network, log scale. Largest &divide; smallest &asymp; 17,000&times;. Each bar opens its notebook.</p>
       </figcaption>
-      <svg viewBox="0 0 900 472" width="100%" role="img" aria-label="Four nets, four orders of magnitude. Parameters per network on a log scale: the pilot 5,126; the spotter 28 thousand; river-seg 320 thousand; Rabbitbrush 92 million. Largest over smallest, about 18,000 times." style="display:block; font-family:var(--font-sans);">
-        <style>.lbl{fill:var(--ink);font-size:30px;font-weight:600} .val{fill:var(--ink);font-family:var(--font-mono);font-size:27px} .ax{fill:var(--muted);font-family:var(--font-mono);font-size:23px}</style>
-        <line x1="0" y1="10" x2="0" y2="430" stroke="var(--line)" stroke-width="1"/>
-        <text x="0" y="458" text-anchor="start" class="ax">1 k</text>
-        <line x1="176" y1="10" x2="176" y2="430" stroke="var(--line)" stroke-width="1"/>
-        <text x="176" y="458" text-anchor="middle" class="ax">10 k</text>
-        <line x1="352" y1="10" x2="352" y2="430" stroke="var(--line)" stroke-width="1"/>
-        <text x="352" y="458" text-anchor="middle" class="ax">100 k</text>
-        <line x1="528" y1="10" x2="528" y2="430" stroke="var(--line)" stroke-width="1"/>
-        <text x="528" y="458" text-anchor="middle" class="ax">1 M</text>
-        <line x1="704" y1="10" x2="704" y2="430" stroke="var(--line)" stroke-width="1"/>
-        <text x="704" y="458" text-anchor="middle" class="ax">10 M</text>
-        <line x1="880" y1="10" x2="880" y2="430" stroke="var(--line)" stroke-width="1"/>
-        <text x="880" y="458" text-anchor="end" class="ax">100 M</text>
-        <text x="0" y="40" class="lbl">The pilot</text>
-        <rect x="0" y="54" width="125" height="38" rx="4" fill="var(--cyan)"><title>The pilot: 5,126 parameters</title></rect>
-        <text x="139" y="83.0" class="val">5,126</text>
-        <text x="0" y="148" class="lbl">The spotter</text>
-        <rect x="0" y="162" width="255" height="38" rx="4" fill="var(--cyan)"><title>The spotter: 28 k parameters</title></rect>
-        <text x="269" y="191.0" class="val">28 k</text>
-        <text x="0" y="256" class="lbl">River-seg</text>
-        <rect x="0" y="270" width="441" height="38" rx="4" fill="var(--cyan)"><title>River-seg: 320 k parameters</title></rect>
-        <text x="455" y="299.0" class="val">320 k</text>
-        <text x="0" y="364" class="lbl">Rabbitbrush</text>
-        <rect x="0" y="378" width="874" height="38" rx="4" fill="var(--cyan)"><title>Rabbitbrush: 92 M parameters</title></rect>
-        <text x="860" y="407.0" text-anchor="end" class="val" style="fill:#04110f">92 M</text>
+      <svg viewBox="0 0 900 400" width="100%" role="img" aria-label="Three nets, four orders of magnitude. Parameters per network on a log scale: the pilot, which flies the ship, 5,126; the spotter, which reads the screen, 28 thousand; the owl, which names plants, 86 million. Largest over smallest, about 17,000 times. Rabbitbrush runs a network of the owl's size, 92 million." style="display:block; font-family:var(--font-sans);">
+        <style>.lbl{fill:var(--ink);font-size:30px;font-weight:600} .does{fill:var(--muted);font-size:24px;font-weight:400} .val{fill:var(--ink);font-family:var(--font-mono);font-size:27px} .ax{fill:var(--muted);font-family:var(--font-mono);font-size:23px} .note{fill:var(--muted);font-size:23px} a:hover .bar{fill:#58ece2} a:hover .lbl{text-decoration:underline}</style>
+        <line x1="0" y1="10" x2="0" y2="360" stroke="var(--line)" stroke-width="1"/>
+        <text x="0" y="388" text-anchor="start" class="ax">1 k</text>
+        <line x1="176" y1="10" x2="176" y2="360" stroke="var(--line)" stroke-width="1"/>
+        <text x="176" y="388" text-anchor="middle" class="ax">10 k</text>
+        <line x1="352" y1="10" x2="352" y2="360" stroke="var(--line)" stroke-width="1"/>
+        <text x="352" y="388" text-anchor="middle" class="ax">100 k</text>
+        <line x1="528" y1="10" x2="528" y2="360" stroke="var(--line)" stroke-width="1"/>
+        <text x="528" y="388" text-anchor="middle" class="ax">1 M</text>
+        <line x1="704" y1="10" x2="704" y2="360" stroke="var(--line)" stroke-width="1"/>
+        <text x="704" y="388" text-anchor="middle" class="ax">10 M</text>
+        <line x1="880" y1="10" x2="880" y2="360" stroke="var(--line)" stroke-width="1"/>
+        <text x="880" y="388" text-anchor="end" class="ax">100 M</text>
+        <a href="research/worm/">
+          <title>The pilot: 5,126 parameters. Open the notebook.</title>
+          <text x="0" y="40" class="lbl">The pilot <tspan class="does">&#183; flies the ship</tspan></text>
+          <rect class="bar" x="0" y="54" width="125" height="38" rx="4" fill="var(--cyan)"/>
+          <text x="139" y="83" class="val">5,126</text>
+        </a>
+        <a href="research/spotter/">
+          <title>The spotter: 28 k parameters. Open the notebook.</title>
+          <text x="0" y="148" class="lbl">The spotter <tspan class="does">&#183; reads the screen</tspan></text>
+          <rect class="bar" x="0" y="162" width="255" height="38" rx="4" fill="var(--cyan)"/>
+          <text x="269" y="191" class="val">28 k</text>
+        </a>
+        <g class="soon">
+          <title>The owl: 86 M parameters. The notebook is coming soon.</title>
+          <text x="0" y="256" class="lbl">The owl <tspan class="does">&#183; names plants</tspan></text>
+          <rect class="bar" x="0" y="270" width="869" height="38" rx="4" fill="var(--cyan)"/>
+          <text x="855" y="299" text-anchor="end" class="val" style="fill:#04110f">86 M</text>
+        </g>
+        <text x="0" y="340" class="note">Rabbitbrush runs a network of the owl's size: 92 M.</text>
       </svg>
     </figure>
     <div class="cta-row" style="margin-top:34px;">
@@ -127,12 +138,16 @@
 
 <section id="work">
   <div class="wrap">
+    <p class="eyebrow">Why free</p>
+    <div class="prose" style="max-width:40em; margin:20px 0 44px;">
+      <p>I design high speed datapaths for a living: chips that encrypt, protect, compress, detect and calculate. Why would I then spend evenings and weekends designing labs and applications to give away for free? Quite simply, I am giving myself the freedom to follow wherever my curiosity leads.</p>
+    </div>
     <div class="creed" style="max-width:44em;">
       <div class="line"><span class="k">Made by</span><span>Jeffrey Stone, solo developer, from design to code to release.</span></div>
       <div class="line"><span class="k">Platform</span><span>Spacewar: iPhone, iPad and Android phones, one-finger playable. Rabbitbrush: iPhone and Android phones.</span></div>
       <div class="line"><span class="k">Price</span><span>Free, and always will be: no ads, no paywalls. The site and the game collect nothing; Rabbitbrush collects nothing unless you turn sharing on.</span></div>
       <div class="line"><span class="k">Tip jar</span><span>If a game or a notebook made your day, you can <a href="https://buymeacoffee.com/jeffreystone">buy me a coffee</a>.</span></div>
-      <div class="line"><span class="k">Now</span><span>Spacewar: Orbital Duel, in beta on iOS and Android. <a href="rabbitbrush/">Rabbitbrush</a>, an offline plant identifier for the western US, on the <a href="https://apps.apple.com/app/id6823228139">App Store</a> for iPhone and in beta on Android (<a href="rabbitbrush/support/">testers, start here</a>).</span></div>
+      <div class="line"><span class="k">Now</span><span>Spacewar: Orbital Duel, in beta on iOS and Android. <a href="rabbitbrush/">Rabbitbrush</a>, an offline plant identifier for the western US, on the <a href="https://apps.apple.com/app/id6823228139">App Store</a> for iPhone and on <a href="https://play.google.com/store/apps/details?id=com.jeffreystone.rabbitbrush">Google Play</a> for Android.</span></div>
     </div>
   </div>
 </section>
